@@ -21,11 +21,8 @@ function checkPalindrome (palindrome) {
 
 function extractNumber(strokaWithNumber){
   let numberFromStroka = '';
-  console.log(strokaWithNumber);
-  for (let i = 0; i <= strokaWithNumber.length; i++){
-    console.log(strokaWithNumber[i]);
-
-    if (strokaWithNumber[i].typeof === 'number') {
+  for (let i = 0; i < strokaWithNumber.length; i++){
+    if (parseInt(strokaWithNumber[i],10) >= 0) {
       numberFromStroka += strokaWithNumber[i];
     }
   }
