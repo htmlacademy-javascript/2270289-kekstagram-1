@@ -34,31 +34,27 @@ function addStrokaToStroka (beginStroka, minLengthS, addStroka){
   //
   let beetwenStroka = '';
   let resultStroka = '';
-  let difference = 0;
-  let nomer = 0;
-  //
+  let numberAdditional = Math.trunc((minLengthS - beginStroka.length) / addStroka.length);
+  let ostatokSymbols = (minLengthS - beginStroka.length) % addStroka.length;
+
   if (beginStroka.length <= minLengthS) {
     if (beginStroka.length + addStroka.length > minLengthS) {
-      console.log('Путь 1');
-      difference = minLengthS - beginStroka.length;
-      console.log('difference =' + difference);
-      resultStroka = addStroka.slice(0,difference) + beginStroka;
+      resultStroka = addStroka.slice(0,minLengthS - beginStroka.length) + beginStroka;
     }
     else {
-      console.log('Путь addStroka + beginStroka');
-      beetwenStroka = addStroka + beginStroka;
-      nomer = 0;
-      while (beetwenStroka.length < minLengthS) {
-        beetwenStroka += addStroka[nomer];
-        nomer += 1;
+      if (numberAdditional > 0) {
+        beetwenStroka = beginStroka;
+        for (let i = 0; i < numberAdditional; i++){
+          beetwenStroka = addStroka + beetwenStroka;
+        }
+      }
+      if (ostatokSymbols > 0) {
+        beetwenStroka = addStroka.slice(0,ostatokSymbols) + beetwenStroka;
       }
       resultStroka = beetwenStroka;
     }
-
-    //for (let i = 0; i < minLengthS; i++)
-    //      resultStroka += beetwenStroka[i];
-    //
   }
+  else resultStroka = beginStroka;
   console.log('Вызываем функцию: addStrokaToStroka ("' + beginStroka + '", ' + minLengthS + ', "' + addStroka + '")');
   console.log(resultStroka);
 }
