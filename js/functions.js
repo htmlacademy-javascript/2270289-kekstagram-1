@@ -58,3 +58,9 @@ function addStrokaToStroka (beginStroka, minLengthS, addStroka){
   console.log('Вызываем функцию: addStrokaToStroka ("' + beginStroka + '", ' + minLengthS + ', "' + addStroka + '")');
   console.log(resultStroka);
 }
+
+function validateForLowEqualLength (stroka,lengthStroka){
+  console.log('validateForLowEqualLength("' + stroka + '",' + lengthStroka + ') ');
+  console.log((stroka.length <= lengthStroka) ? true: false);
+  return (stroka.length <= lengthStroka) ? true: false;
+}
