@@ -1,66 +1,69 @@
 
 function checkPalindrome (palindrome) {
-  let strokaContrary = '';
-  let strokaWithoutSpace = '';
-  let palindromeLow = palindrome.toLowerCase();
+  let stringContrary = '';
+  let stringWithoutSpace = '';
+  const palindromeLow = palindrome.toLowerCase();
 
   if (palindromeLow.indexOf(' ') === -1) {
-    strokaContrary = palindromeLow.slice(-palindromeLow.length);
-    if (strokaContrary === palindromeLow) console.log('Строка ' + palindrome + ' - является полиндромом!')
-    else console.log('Строка ' + palindrome + ' - НЕ является полиндромом!');
-  }
-  else {
-    strokaWithoutSpace = palindromeLow.replaceAll(' ','');
-    console.log('strokaWithoutSpace= ' + strokaWithoutSpace);
-    strokaContrary = strokaWithoutSpace.slice(-strokaWithoutSpace.length);
-
-    if (strokaContrary === strokaWithoutSpace) console.log('Строка "' + palindrome + '" - является полиндромом!')
-    else console.log('Строка "' + palindrome + '" - НЕ является полиндромом!');
-  }
-}
-
-function extractNumber(strokaWithNumber){
-  let numberFromStroka = '';
-  for (let i = 0; i < strokaWithNumber.length; i++){
-    if (parseInt(strokaWithNumber[i],10) >= 0) {
-      numberFromStroka += strokaWithNumber[i];
+    stringContrary = palindromeLow.slice(-palindromeLow.length);
+    if (stringContrary === palindromeLow) {
+      return true;
+    }
+    else {
+      return false;
     }
   }
-  console.log('Строка изначальная - ' + strokaWithNumber);
-  console.log('Число из строки - ' + numberFromStroka);
+  else {
+    stringWithoutSpace = palindromeLow.replaceAll(' ','');
+    stringContrary = stringWithoutSpace.slice(-stringWithoutSpace.length);
+    if (stringContrary === stringWithoutSpace) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 }
 
-function addStrokaToStroka (beginStroka, minLengthS, addStroka){
-  //
-  let beetwenStroka = '';
-  let resultStroka = '';
-  let numberAdditional = Math.trunc((minLengthS - beginStroka.length) / addStroka.length);
-  let ostatokSymbols = (minLengthS - beginStroka.length) % addStroka.length;
+function extractNumberFromString(stringWithNumber){
+  let numberFromString = '';
+  for (let i = 0; i < stringWithNumber.length; i++){
+    if (parseInt(stringWithNumber[i],10) >= 0) {
+      numberFromString += stringWithNumber[i];
+    }
+  }
+  return numberFromString;
+}
 
-  if (beginStroka.length <= minLengthS) {
-    if (beginStroka.length + addStroka.length > minLengthS) {
-      resultStroka = addStroka.slice(0,minLengthS - beginStroka.length) + beginStroka;
+function addStringToAdressFile (beginString, minLength, addString){
+  let calcString = '';
+  let resultString = '';
+  const numberAdditional = Math.trunc((minLength - beginString.length) / addString.length);
+  const residueSymbols = (minLength - beginString.length) % addString.length;
+
+  if (beginString.length <= minLength) {
+    if (beginString.length + addString.length > minLength) {
+      resultString = addString.slice(0,minLength - beginString.length) + beginString;
     }
     else {
       if (numberAdditional > 0) {
-        beetwenStroka = beginStroka;
+        calcString = beginString;
         for (let i = 0; i < numberAdditional; i++){
-          beetwenStroka = addStroka + beetwenStroka;
+          calcString = addString + calcString;
         }
       }
-      if (ostatokSymbols > 0) {
-        beetwenStroka = addStroka.slice(0,ostatokSymbols) + beetwenStroka;
+      if (residueSymbols > 0) {
+        calcString = addString.slice(0,residueSymbols) + calcString;
       }
-      resultStroka = beetwenStroka;
+      resultString = calcString;
     }
   }
-  else resultStroka = beginStroka;
-  console.log('Вызываем функцию: addStrokaToStroka ("' + beginStroka + '", ' + minLengthS + ', "' + addStroka + '")');
-  console.log(resultStroka);
+  else {
+    resultString = beginString;
+  }
+  return resultString;
 }
 
-function validateForLowEqualLength (stroka,lengthStroka){
-  console.log('validateForLowEqualLength("' + stroka + '",' + lengthStroka + ') ');
-  console.log((stroka.length <= lengthStroka) ? true: false);
-  return (stroka.length <= lengthStroka) ? true: false;
+function validateForLowEqualLength (stringCheck,lengthString){
+  return stringCheck.length <= lengthString;
 }
