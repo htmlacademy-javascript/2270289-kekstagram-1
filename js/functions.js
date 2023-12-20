@@ -1,28 +1,17 @@
 
 function checkPalindrome (palindrome) {
   let stringContrary = '';
-  let stringWithoutSpace = '';
   const palindromeLow = palindrome.toLowerCase();
 
-  if (palindromeLow.indexOf(' ') === -1) {
-    stringContrary = palindromeLow.slice(-palindromeLow.length);
-    if (stringContrary === palindromeLow) {
-      return true;
-    }
-    else {
-      return false;
-    }
+  if (palindromeLow.indexOf(' ') !== -1) {
+    palindrome = palindromeLow.replaceAll(' ','');
+  } else {
+    palindrome = palindromeLow;
   }
-  else {
-    stringWithoutSpace = palindromeLow.replaceAll(' ','');
-    stringContrary = stringWithoutSpace.slice(-stringWithoutSpace.length);
-    if (stringContrary === stringWithoutSpace) {
-      return true;
-    }
-    else {
-      return false;
-    }
+  for (let i = palindrome.length - 1; i >= 0; i--) {
+    stringContrary += palindrome[i];
   }
+  return (stringContrary === palindrome);
 }
 
 function extractNumberFromString(stringWithNumber){
@@ -44,8 +33,7 @@ function addStringToAdressFile (beginString, minLength, addString){
   if (beginString.length <= minLength) {
     if (beginString.length + addString.length > minLength) {
       resultString = addString.slice(0,minLength - beginString.length) + beginString;
-    }
-    else {
+    } else {
       if (numberAdditional > 0) {
         calcString = beginString;
         for (let i = 0; i < numberAdditional; i++){
@@ -57,8 +45,7 @@ function addStringToAdressFile (beginString, minLength, addString){
       }
       resultString = calcString;
     }
-  }
-  else {
+  } else {
     resultString = beginString;
   }
   return resultString;
