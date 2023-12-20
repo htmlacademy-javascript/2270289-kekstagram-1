@@ -3,11 +3,8 @@ function checkPalindrome (palindrome) {
   let stringContrary = '';
   const palindromeLow = palindrome.toLowerCase();
 
-  if (palindromeLow.indexOf(' ') !== -1) {
-    palindrome = palindromeLow.replaceAll(' ','');
-  } else {
-    palindrome = palindromeLow;
-  }
+  palindrome = (palindromeLow.indexOf(' ') !== -1) ? palindromeLow.replaceAll(' ','') : palindromeLow;
+
   for (let i = palindrome.length - 1; i >= 0; i--) {
     stringContrary += palindrome[i];
   }
