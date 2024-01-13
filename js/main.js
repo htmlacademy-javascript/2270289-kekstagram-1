@@ -20,21 +20,6 @@ const typeFilePhoto = '.jpg';
 const countUserPublication = 25;
 const countAvatar = 6;
 
-const comment = {
-  id: 0,
-  avatar: '',
-  message: '',
-  name: '',
-};
-
-const userPublicPhoto = {
-  id: 0,
-  url: '',
-  description: '',
-  likes: 0,
-  comments: []
-};
-
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a,b));
   const upper = Math.floor(Math.max(a,b));
