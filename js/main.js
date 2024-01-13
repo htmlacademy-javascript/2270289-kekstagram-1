@@ -41,4 +41,3 @@ createUserPublication = () => {
   const randomCountComents = getRandomInteger (1,3);
 };
 
-
