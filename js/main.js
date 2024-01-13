@@ -73,9 +73,11 @@ createComment = () => {
   };
 };
 
+const previousValuesID = [];
+const previousValuesUrlID = [];
+
 createUserPublication = () => {
-  const previousValuesID = [];
-  const previousValuesUrlID = [];
+
   const randomComments = [];
 
   const randomIdPhotoPublications = randomIDWithArray(1,25,previousValuesID);
