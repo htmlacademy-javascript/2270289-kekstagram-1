@@ -56,14 +56,15 @@ function randomIDWithArray(min,max,previousValues) {
   return currentValue;
 };
 
+const previousValuesIDComment = [];
+
 createComment = () => {
-  const previousValuesID = [];
 
   const randomAvatar = pathToAvatar + getRandomInteger(1,countAvatar) + typeFileAvatar;
   const randomName = getRandomArrayElement(namesGlossary);
   const randomMessage = getRandomArrayElement(commentsGlossary);
 
-  const randomID = randomIDWithArray(1,10000,previousValuesID);
+  const randomID = randomIDWithArray(1,10000,previousValuesIDComment);
 
   return {
     id: randomID,
@@ -73,15 +74,15 @@ createComment = () => {
   };
 };
 
-const previousValuesID = [];
-const previousValuesUrlID = [];
+const previousValuesIDPhoto = [];
+const previousValuesUrlIDPhoto = [];
 
 createUserPublication = () => {
 
   const randomComments = [];
 
-  const randomIdPhotoPublications = randomIDWithArray(1,25,previousValuesID);
-  const randomUrlPublications = pathToPhoto + randomIDWithArray(1,25,previousValuesUrlID) + typeFilePhoto;
+  const randomIdPhotoPublications = randomIDWithArray(1,25,previousValuesIDPhoto);
+  const randomUrlPublications = pathToPhoto + randomIDWithArray(1,25,previousValuesUrlIDPhoto) + typeFilePhoto;
   const randomCountLikes = getRandomInteger (15,200);
   const randomCountComents = getRandomInteger (1,3);
 
@@ -99,4 +100,6 @@ createUserPublication = () => {
   };
 };
 
-const publicationWizards = Array.from({length: countUserPublication},createUserPublication);
+const publicationsEnrollment = Array.from({length: countUserPublication},createUserPublication);
+
+console.log(publicationsEnrollment);
