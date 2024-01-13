@@ -1,8 +1,6 @@
 /**/
-
-const commentsGlossary = ['Всё отлично!','В целом всё неплохо.','Но не всё.','Когда вы делаете фотографию, хорошо бы убирать палец из кадра.','В конце концов это просто непрофессионально.','Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.','Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.','Лица у людей на фотке перекошены, как будто их избивают.','Как можно было поймать такой неудачный момент?!'];
-const namesGlossaryMan = ['Андрей','Серафим','Николай','Сергей','Максим','Алексей','Александр','Никита'];
-const namesGlossaryWoman = ['Марина','Ирина','Снежана','Анастасия','Ксения','Галина','Ольга','Эльвира','Елена'];
+const commentsGlossary = ['Всё отлично!','В целом всё неплохо. Но не всё.','Когда вы делаете фотографию, хорошо бы убирать палец из кадра.','В конце концов это просто непрофессионально.','Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.','Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.','Лица у людей на фотке перекошены, как будто их избивают.','Как можно было поймать такой неудачный момент?!'];
+const namesGlossary = ['Андрей','Серафим','Николай','Сергей','Максим','Алексей','Никита','Марина','Ирина','Снежана','Анастасия','Ксения','Галина','Эльвира','Елена'];
 
 const pathToAvatar = 'img/avatar';
 const typeFileAvatar = '.svg';
@@ -31,8 +29,35 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-createComment = () => {
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
+createComment = () => {
+  const previousValuesID = [];
+
+  const randomAvatar = pathToAvatar + getRandomInteger(1,countAvatar) + typeFileAvatar;
+  const randomName = getRandomArrayElement(namesGlossary);
+  const randomMessage = getRandomArrayElement(commentsGlossary);
+
+  const randomID = function () {
+    let currentValue = getRandomInteger(1, 10000);
+
+    if (previousValuesID.length >= (10000)) {
+      //console.error('Перебраны все числа из диапазона от 1 до 10000');
+      return null;
+    }
+    while (previousValuesID.includes(currentValue)) {
+      currentValue = getRandomInteger(1, 10000);
+    }
+    previousValuesID.push(currentValue);
+    return currentValue;
+  };
+
+  return {
+    id: randomID(),
+    avatar: randomAvatar,
+    message: randomMessage,
+    name: randomName,
+  };
 };
 
 createUserPublication = () => {
