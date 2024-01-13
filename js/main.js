@@ -1,17 +1,28 @@
 /**/
-const commentsGlossary = ['Всё отлично!','В целом всё неплохо. Но не всё.','Когда вы делаете фотографию, хорошо бы убирать палец из кадра.','В конце концов это просто непрофессионально.','Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.','Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.','Лица у людей на фотке перекошены, как будто их избивают.','Как можно было поймать такой неудачный момент?!'];
+const commentsGlossary = [
+  'Всё отлично!',
+  'В целом всё неплохо. Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра.',
+  'В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают.',
+  'Как можно было поймать такой неудачный момент?!'
+];
 const namesGlossary = ['Андрей','Серафим','Николай','Сергей','Максим','Алексей','Никита','Марина','Ирина','Снежана','Анастасия','Ксения','Галина','Эльвира','Елена'];
 
 const pathToAvatar = 'img/avatar';
 const typeFileAvatar = '.svg';
+const pathToPhoto = 'photos/';
+const typeFilePhoto = '.jpg';
 const countUserPublication = 25;
 const countAvatar = 6;
 
 const comment = {
   id: 0,
   avatar: '',
+  message: '',
   name: '',
-  message: ''
 };
 
 const userPublicPhoto = {
@@ -31,6 +42,20 @@ const getRandomInteger = (a, b) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
+function randomIDWithArray(min,max,previousValues) {
+  let currentValue = getRandomInteger(min, max);
+
+  if (previousValues.length >= (max - min + 1)) {
+    //console.error('Перебраны все числа из диапазона от 1 до 10000');
+    return null;
+  }
+  while (previousValues.includes(currentValue)) {
+    currentValue = getRandomInteger(min, max);
+  }
+  previousValues.push(currentValue);
+  return currentValue;
+};
+
 createComment = () => {
   const previousValuesID = [];
 
@@ -38,22 +63,10 @@ createComment = () => {
   const randomName = getRandomArrayElement(namesGlossary);
   const randomMessage = getRandomArrayElement(commentsGlossary);
 
-  const randomID = function () {
-    let currentValue = getRandomInteger(1, 10000);
-
-    if (previousValuesID.length >= (10000)) {
-      //console.error('Перебраны все числа из диапазона от 1 до 10000');
-      return null;
-    }
-    while (previousValuesID.includes(currentValue)) {
-      currentValue = getRandomInteger(1, 10000);
-    }
-    previousValuesID.push(currentValue);
-    return currentValue;
-  };
+  const randomID = randomIDWithArray(1,10000,previousValuesID);
 
   return {
-    id: randomID(),
+    id: randomID,
     avatar: randomAvatar,
     message: randomMessage,
     name: randomName,
@@ -61,8 +74,27 @@ createComment = () => {
 };
 
 createUserPublication = () => {
-  const randomIdPhotoPublications = getRandomInteger (1,25);
+  const previousValuesID = [];
+  const previousValuesUrlID = [];
+  const randomComments = [];
+
+  const randomIdPhotoPublications = randomIDWithArray(1,25,previousValuesID);
+  const randomUrlPublications = pathToPhoto + randomIDWithArray(1,25,previousValuesUrlID) + typeFilePhoto;
   const randomCountLikes = getRandomInteger (15,200);
   const randomCountComents = getRandomInteger (1,3);
+
+  for (let i = 0; i <= randomCountComents; i++) {
+    randomComments.push(createComment());
+    //
+  }
+
+  return {
+    id: randomIdPhotoPublications,
+    url: randomUrlPublications,
+    description: '',
+    likes: randomCountLikes,
+    comments: randomComments
+  };
 };
 
+const publicationWizards = Array.from({length: countUserPublication},createUserPublication);
