@@ -11,6 +11,8 @@ const commentsGlossary = [
 ];
 const namesGlossary = ['Андрей','Серафим','Николай','Сергей','Максим','Алексей','Никита','Марина','Ирина','Снежана','Анастасия','Ксения','Галина','Эльвира','Елена'];
 
+const descriptionPhotoGlossary = ['Интересная','Необычная','Мутная','Яркая','Старая','Красивая','Ну и фото...'];
+
 const pathToAvatar = 'img/avatar';
 const typeFileAvatar = '.svg';
 const pathToPhoto = 'photos/';
@@ -83,6 +85,7 @@ createUserPublication = () => {
 
   const randomIdPhotoPublications = randomIDWithArray(1,25,previousValuesIDPhoto);
   const randomUrlPublications = pathToPhoto + randomIDWithArray(1,25,previousValuesUrlIDPhoto) + typeFilePhoto;
+  const randomDescriptionPhoto = descriptionPhotoGlossary[getRandomInteger (0,descriptionPhotoGlossary.length - 1)];
   const randomCountLikes = getRandomInteger (15,200);
   const randomCountComents = getRandomInteger (1,3);
 
@@ -94,12 +97,10 @@ createUserPublication = () => {
   return {
     id: randomIdPhotoPublications,
     url: randomUrlPublications,
-    description: '',
+    description: randomDescriptionPhoto,
     likes: randomCountLikes,
     comments: randomComments
   };
 };
 
 const publicationsEnrollment = Array.from({length: countUserPublication},createUserPublication);
-
-console.log(publicationsEnrollment);
