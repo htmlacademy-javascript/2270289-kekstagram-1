@@ -1,4 +1,3 @@
-/**/
 const commentsGlossary = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -10,7 +9,6 @@ const commentsGlossary = [
   'Как можно было поймать такой неудачный момент?!'
 ];
 const namesGlossary = ['Андрей','Серафим','Николай','Сергей','Максим','Алексей','Никита','Марина','Ирина','Снежана','Анастасия','Ксения','Галина','Эльвира','Елена'];
-
 const descriptionPhotoGlossary = ['Интересная','Необычная','Мутная','Яркая','Старая','Красивая','Ну и фото...'];
 
 const pathToAvatar = 'img/avatar';
@@ -33,7 +31,6 @@ function randomIDWithArray(min,max,previousValues) {
   let currentValue = getRandomInteger(min, max);
 
   if (previousValues.length >= (max - min + 1)) {
-    //console.error('Перебраны все числа из диапазона от 1 до 10000');
     return null;
   }
   while (previousValues.includes(currentValue)) {
@@ -41,16 +38,14 @@ function randomIDWithArray(min,max,previousValues) {
   }
   previousValues.push(currentValue);
   return currentValue;
-};
+}
 
 const previousValuesIDComment = [];
 
-createComment = () => {
-
+const createComment = () => {
   const randomAvatar = pathToAvatar + getRandomInteger(1,countAvatar) + typeFileAvatar;
   const randomName = getRandomArrayElement(namesGlossary);
   const randomMessage = getRandomArrayElement(commentsGlossary);
-
   const randomID = randomIDWithArray(1,10000,previousValuesIDComment);
 
   return {
@@ -64,20 +59,15 @@ createComment = () => {
 const previousValuesIDPhoto = [];
 const previousValuesUrlIDPhoto = [];
 
-createUserPublication = () => {
-
-  const randomComments = [];
+const createUserPublication = () => {
 
   const randomIdPhotoPublications = randomIDWithArray(1,25,previousValuesIDPhoto);
   const randomUrlPublications = pathToPhoto + randomIDWithArray(1,25,previousValuesUrlIDPhoto) + typeFilePhoto;
   const randomDescriptionPhoto = descriptionPhotoGlossary[getRandomInteger (0,descriptionPhotoGlossary.length - 1)];
   const randomCountLikes = getRandomInteger (15,200);
-  const randomCountComents = getRandomInteger (1,3);
+  const randomCountComents = getRandomInteger (1,15);
 
-  for (let i = 0; i <= randomCountComents; i++) {
-    randomComments.push(createComment());
-    //
-  }
+  const randomComments = Array.from({length:randomCountComents},createComment);
 
   return {
     id: randomIdPhotoPublications,
@@ -89,3 +79,5 @@ createUserPublication = () => {
 };
 
 const publicationsEnrollment = Array.from({length: countUserPublication},createUserPublication);
+
+//export {publicationsEnrollment};
