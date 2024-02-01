@@ -1,4 +1,4 @@
-import {getRandomInteger,getRandomArrayElement,randomIDWithArray} from './utils.js';
+import {getRandomInteger,getRandomArrayElement,getRandomID} from './utils.js';
 
 const commentsGlossary = [
   'Всё отлично!',
@@ -19,41 +19,27 @@ const PATH_TO_PHOTO = 'photos/';
 const TYPE_FILE_PHOTO = '.jpg';
 const countUserPublication = 25;
 const countAvatar = 6;
-const previousValuesIDComment = [];
+const generatorCommentID = getRandomID(1,10000);
+const generatorPhotoID = getRandomID(1,25);
 
 const createComment = () => {
-  //const randomAvatar = PATH_TO_AVATAR + getRandomInteger(1,countAvatar) + TYPE_FILE_AVATAR;
-  const randomAvatar = `${PATH_TO_AVATAR}${getRandomInteger(1,countAvatar)}${TYPE_FILE_AVATAR}`;
-  const randomName = getRandomArrayElement(namesGlossary);
-  const randomMessage = getRandomArrayElement(commentsGlossary);
-  const randomID = randomIDWithArray(1,10000,previousValuesIDComment);
-
+  const randomID = generatorCommentID();
   return {
     id: randomID,
-    avatar: randomAvatar,
-    message: randomMessage,
-    name: randomName,
+    avatar: `${PATH_TO_AVATAR}${getRandomInteger(1,countAvatar)}${TYPE_FILE_AVATAR}`,
+    message: getRandomArrayElement(commentsGlossary),
+    name: getRandomArrayElement(namesGlossary),
   };
 };
 
-const previousValuesIDPhoto = [];
-const previousValuesUrlIDPhoto = [];
-
 const createUserPublication = () => {
-  const randomIdPhotoPublications = randomIDWithArray(1,25,previousValuesIDPhoto);
-  const randomUrlPublications = PATH_TO_PHOTO + randomIDWithArray(1,25,previousValuesUrlIDPhoto) + TYPE_FILE_PHOTO;
-  const randomDescriptionPhoto = descriptionPhotoGlossary[getRandomInteger (0,descriptionPhotoGlossary.length - 1)];
-  const randomCountLikes = getRandomInteger (15,200);
-  const randomCountComments = getRandomInteger (1,15);
-
-  const randomComments = Array.from({length:randomCountComments},createComment);
-
+  const idPhotoPublication = generatorPhotoID();
   return {
-    id: randomIdPhotoPublications,
-    url: randomUrlPublications,
-    description: randomDescriptionPhoto,
-    likes: randomCountLikes,
-    comments: randomComments
+    id: idPhotoPublication,
+    url: `${PATH_TO_PHOTO}${idPhotoPublication}${TYPE_FILE_PHOTO}`,
+    description: descriptionPhotoGlossary[getRandomInteger (0,descriptionPhotoGlossary.length - 1)],
+    likes: getRandomInteger (15,200),
+    comments: Array.from({length:getRandomInteger (1,15)},createComment)
   };
 };
 
