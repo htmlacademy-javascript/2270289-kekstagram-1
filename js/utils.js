@@ -20,6 +20,4 @@ function randomIDWithArray(min,max,previousValues) {
   return currentValue;
 }
 
-export {getRandomInteger};
-export {getRandomArrayElement};
-export {randomIDWithArray};
+export {getRandomInteger, getRandomArrayElement, randomIDWithArray};

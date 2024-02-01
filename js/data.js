@@ -1,6 +1,4 @@
-import {getRandomInteger} from './utils.js';
-import {getRandomArrayElement} from './utils.js';
-import {randomIDWithArray} from './utils.js';
+import {getRandomInteger,getRandomArrayElement,randomIDWithArray} from './utils.js';
 
 const commentsGlossary = [
   'Всё отлично!',
@@ -15,16 +13,17 @@ const commentsGlossary = [
 const namesGlossary = ['Андрей','Серафим','Николай','Сергей','Максим','Алексей','Никита','Марина','Ирина','Снежана','Анастасия','Ксения','Галина','Эльвира','Елена'];
 const descriptionPhotoGlossary = ['Интересная','Необычная','Мутная','Яркая','Старая','Красивая','Ну и фото...'];
 
-const pathToAvatar = 'img/avatar';
-const typeFileAvatar = '.svg';
-const pathToPhoto = 'photos/';
-const typeFilePhoto = '.jpg';
+const PATH_TO_AVATAR = 'img/avatar';
+const TYPE_FILE_AVATAR = '.svg';
+const PATH_TO_PHOTO = 'photos/';
+const TYPE_FILE_PHOTO = '.jpg';
 const countUserPublication = 25;
 const countAvatar = 6;
 const previousValuesIDComment = [];
 
 const createComment = () => {
-  const randomAvatar = pathToAvatar + getRandomInteger(1,countAvatar) + typeFileAvatar;
+  //const randomAvatar = PATH_TO_AVATAR + getRandomInteger(1,countAvatar) + TYPE_FILE_AVATAR;
+  const randomAvatar = `${PATH_TO_AVATAR}${getRandomInteger(1,countAvatar)}${TYPE_FILE_AVATAR}`;
   const randomName = getRandomArrayElement(namesGlossary);
   const randomMessage = getRandomArrayElement(commentsGlossary);
   const randomID = randomIDWithArray(1,10000,previousValuesIDComment);
@@ -42,12 +41,12 @@ const previousValuesUrlIDPhoto = [];
 
 const createUserPublication = () => {
   const randomIdPhotoPublications = randomIDWithArray(1,25,previousValuesIDPhoto);
-  const randomUrlPublications = pathToPhoto + randomIDWithArray(1,25,previousValuesUrlIDPhoto) + typeFilePhoto;
+  const randomUrlPublications = PATH_TO_PHOTO + randomIDWithArray(1,25,previousValuesUrlIDPhoto) + TYPE_FILE_PHOTO;
   const randomDescriptionPhoto = descriptionPhotoGlossary[getRandomInteger (0,descriptionPhotoGlossary.length - 1)];
   const randomCountLikes = getRandomInteger (15,200);
-  const randomCountComents = getRandomInteger (1,15);
+  const randomCountComments = getRandomInteger (1,15);
 
-  const randomComments = Array.from({length:randomCountComents},createComment);
+  const randomComments = Array.from({length:randomCountComments},createComment);
 
   return {
     id: randomIdPhotoPublications,
