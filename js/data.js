@@ -43,6 +43,9 @@ const createUserPublication = () => {
   };
 };
 
-const publicationsEnrollment = Array.from({length: countUserPublication},createUserPublication);
+function getPublicationsEnrollment () {
+  return Array.from({length: countUserPublication},createUserPublication);
+}
+//const publicationsEnrollment =
 
-export {publicationsEnrollment};
+export {getPublicationsEnrollment};
