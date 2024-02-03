@@ -1,6 +1,4 @@
-import {getRandomInteger} from './utils.js';
-import {getRandomArrayElement} from './utils.js';
-import {randomIDWithArray} from './utils.js';
+import {getRandomInteger,getRandomArrayElement,getRandomID} from './utils.js';
 
 const commentsGlossary = [
   'Всё отлично!',
@@ -15,49 +13,39 @@ const commentsGlossary = [
 const namesGlossary = ['Андрей','Серафим','Николай','Сергей','Максим','Алексей','Никита','Марина','Ирина','Снежана','Анастасия','Ксения','Галина','Эльвира','Елена'];
 const descriptionPhotoGlossary = ['Интересная','Необычная','Мутная','Яркая','Старая','Красивая','Ну и фото...'];
 
-const pathToAvatar = 'img/avatar';
-const typeFileAvatar = '.svg';
-const pathToPhoto = 'photos/';
-const typeFilePhoto = '.jpg';
+const PATH_TO_AVATAR = 'img/avatar';
+const TYPE_FILE_AVATAR = '.svg';
+const PATH_TO_PHOTO = 'photos/';
+const TYPE_FILE_PHOTO = '.jpg';
 const countUserPublication = 25;
 const countAvatar = 6;
-const previousValuesIDComment = [];
+const generatorCommentID = getRandomID(1,10000);
+const generatorPhotoID = getRandomID(1,25);
 
 const createComment = () => {
-  const randomAvatar = pathToAvatar + getRandomInteger(1,countAvatar) + typeFileAvatar;
-  const randomName = getRandomArrayElement(namesGlossary);
-  const randomMessage = getRandomArrayElement(commentsGlossary);
-  const randomID = randomIDWithArray(1,10000,previousValuesIDComment);
-
+  const randomID = generatorCommentID();
   return {
     id: randomID,
-    avatar: randomAvatar,
-    message: randomMessage,
-    name: randomName,
+    avatar: `${PATH_TO_AVATAR}${getRandomInteger(1,countAvatar)}${TYPE_FILE_AVATAR}`,
+    message: getRandomArrayElement(commentsGlossary),
+    name: getRandomArrayElement(namesGlossary),
   };
 };
-
-const previousValuesIDPhoto = [];
-const previousValuesUrlIDPhoto = [];
 
 const createUserPublication = () => {
-  const randomIdPhotoPublications = randomIDWithArray(1,25,previousValuesIDPhoto);
-  const randomUrlPublications = pathToPhoto + randomIDWithArray(1,25,previousValuesUrlIDPhoto) + typeFilePhoto;
-  const randomDescriptionPhoto = descriptionPhotoGlossary[getRandomInteger (0,descriptionPhotoGlossary.length - 1)];
-  const randomCountLikes = getRandomInteger (15,200);
-  const randomCountComents = getRandomInteger (1,15);
-
-  const randomComments = Array.from({length:randomCountComents},createComment);
-
+  const idPhotoPublication = generatorPhotoID();
   return {
-    id: randomIdPhotoPublications,
-    url: randomUrlPublications,
-    description: randomDescriptionPhoto,
-    likes: randomCountLikes,
-    comments: randomComments
+    id: idPhotoPublication,
+    url: `${PATH_TO_PHOTO}${idPhotoPublication}${TYPE_FILE_PHOTO}`,
+    description: descriptionPhotoGlossary[getRandomInteger (0,descriptionPhotoGlossary.length - 1)],
+    likes: getRandomInteger (15,200),
+    comments: Array.from({length:getRandomInteger (1,15)},createComment)
   };
 };
 
-const publicationsEnrollment = Array.from({length: countUserPublication},createUserPublication);
+function getPublicationsEnrollment () {
+  return Array.from({length: countUserPublication},createUserPublication);
+}
+//const publicationsEnrollment =
 
-export {publicationsEnrollment};
+export {getPublicationsEnrollment};
