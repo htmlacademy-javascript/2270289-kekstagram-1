@@ -25,4 +25,7 @@ function getRandomID(min,max) {
   };
 }
 
-export {getRandomInteger, getRandomArrayElement, getRandomID};
+const isEscapeKey = (evt) => evt.key === 'Escape'; // вернет true если в объекте события evt, свойство key равно Escape (Нажата ESC)
+const isEnterKey = (evt) => evt.key === 'Enter'; // (Нажата Enter)
+
+export {getRandomInteger, getRandomArrayElement, getRandomID, isEscapeKey, isEnterKey};
