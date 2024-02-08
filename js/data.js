@@ -13,7 +13,7 @@ const commentsGlossary = [
 const namesGlossary = ['Андрей','Серафим','Николай','Сергей','Максим','Алексей','Никита','Марина','Ирина','Снежана','Анастасия','Ксения','Галина','Эльвира','Елена'];
 const descriptionPhotoGlossary = ['Интересная','Необычная','Мутная','Яркая','Старая','Красивая','Ну и фото...'];
 
-const PATH_TO_AVATAR = 'img/avatar';
+const PATH_TO_AVATAR = 'img/avatar-';
 const TYPE_FILE_AVATAR = '.svg';
 const PATH_TO_PHOTO = 'photos/';
 const TYPE_FILE_PHOTO = '.jpg';

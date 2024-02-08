@@ -6,17 +6,19 @@ const bigPicture = bigPictureDiv.querySelector('img');
 const bigPictureLikesCount = bigPictureSection.querySelector('.likes-count');
 
 const bigPictureCommentsCount = bigPictureSection.querySelector('.comments-count');
-const bigPictureSocialComments = bigPictureSection.querySelector('.social__comments');
-const socialCommentsImage = bigPictureSocialComments.querySelector('img');
-const socialCommentsText = bigPictureSocialComments.querySelector('p');
 
 const bigPictureSocial = bigPictureSection.querySelector('.big-picture__social');
 const bigPictureSocialCaption = bigPictureSocial.querySelector('.social__caption');
 
 const bigPictureCancel = bigPictureSection.querySelector('.big-picture__cancel');
 
-const bigPictureSocialCommentCount = bigPictureSection.querySelector('.social__comment-count');
 const bigPictureSocialCommentsLoader = bigPictureSection.querySelector('.social__comments-loader');
+
+const bigPictureSocialCommentCount = bigPictureSection.querySelector('.social__comment-count');
+const bigPictureSocialComments = bigPictureSection.querySelector('.social__comments');
+const saveBigPictureSocialComments = bigPictureSocialComments.cloneNode(true); // Сохраним изначальную разметку .social__comments
+//console.log('saveBigPictureSocialComments = ' + saveBigPictureSocialComments);
+const socialCommentsFragment = document.createDocumentFragment();
 
 const closeBigPicture = function () {
   bigPictureSection.classList.add('hidden');
@@ -34,34 +36,19 @@ const onDocumentKeyDown = function (evt) {
   }
 };
 
-const openBigPicture = function (miniature,listUsers) {
+const openBigPicture = function (miniature,picture) {
 
-  let indexUser = 0;
-  console.log(miniature.src);
-  //console.log(listUsers);
-/*
-  for (let i = 0; i < listUsers.length; i++) {
-    const user = listUsers[i];
-    console.log(user);
-    if (user.url === miniature.src) {
-      indexUser = i;
-    }
-  }
+  const parentMiniature = miniature.parentElement; // Получим ссылку на родительский элемент миниатюры (элемент - ссылка <a></a>)
 
-  console.log('indexUser = ' + indexUser);
-  console.log('listUsers[indexUser].description = '+listUsers[indexUser].description);
-
-  const comments = listUsers[indexUser].comments;
-*/
-  const parentMiniature = miniature.parentElement; // Получим ссылку на родительский элемент миниатюры (ссылка <a></a>)
-  bigPictureSection.classList.remove('hidden');
-  document.body.classList.add('modal-open');
+  bigPictureSection.classList.remove('hidden'); // показываем секцию большой фотографии
   bigPictureSocialCommentCount.classList.add('hidden');
   bigPictureSocialCommentsLoader.classList.add('hidden');
+
+  document.body.classList.add('modal-open');
   bigPicture.src = miniature.src;
 
-  bigPictureCancel.addEventListener('click',closeBigPicture);
-  document.addEventListener('keydown',onDocumentKeyDown);
+  bigPictureCancel.addEventListener('click',closeBigPicture); // обработчик на закратие секции  большой фотграфии при щелчке на кнопке закрытия
+  document.addEventListener('keydown',onDocumentKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
 
   const parentMiniaturePictureInfo = parentMiniature.querySelector('.picture__info');
   const parentMiniaturePictureComments = parentMiniaturePictureInfo.querySelector('.picture__comments');
@@ -70,18 +57,31 @@ const openBigPicture = function (miniature,listUsers) {
   bigPictureLikesCount.textContent = parentMiniaturePictureLikes.textContent;
   bigPictureCommentsCount.textContent = parentMiniaturePictureComments.textContent;
 
-  socialCommentsImage.classList.add('social__picture');
-  socialCommentsImage.src = '';
-  socialCommentsImage.alt = '';
-  socialCommentsImage.width = 35;
-  socialCommentsImage.height = 35;
-  socialCommentsText.textContent = ' ';
+  //socialCommentsImage.classList.add('social__picture');
 
-  bigPictureSocialCaption.textContent = listUsers[indexUser].description;
+  const pictureCommentTemplate = bigPictureSocialComments.querySelector('.social__comment');
 
-  //console.log('miniature.src = ' + miniature.src);
-  //console.log('parentMiniature.classList = ' + parentMiniature.classList);
+  picture.comments.forEach(({avatar,message,name}) => {
+    const pictureComment = pictureCommentTemplate.cloneNode(true);
+    const pictureCommentImage = pictureComment.querySelector('img');
+    const pictureCommentText = pictureComment.querySelector('p');
+
+    pictureCommentImage.src = avatar;
+    pictureCommentImage.width = 35;
+    pictureCommentImage.height = 35;
+    pictureCommentImage.alt = name;
+    pictureCommentText.textContent = message;
+
+    socialCommentsFragment.appendChild(pictureComment);
+  });
+
+  bigPictureSocialComments.innerHTML = '';
+  bigPictureSocialComments.appendChild(socialCommentsFragment);
+
+  bigPictureSocialCaption.textContent = picture.description;
+  //console.log(picture.description);
+  //console.log(picture);
+  console.log("idPicrure = " + picture.id);
 };
-
 
 export {openBigPicture};
