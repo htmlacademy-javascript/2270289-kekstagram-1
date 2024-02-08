@@ -25,35 +25,10 @@ function renderingPictureUsers() {
     if (evt.target.matches('.picture__img')) {
       const idUser = evt.target.getAttribute('data-id-picturelist');
 
-      //  let indexList = 0;
-      //  console.log("idUser = " + idUser);
-      // массив.some((текущий_элемент_массива, индекс_текущего_элемента, ссылка_на_весь_массив) => {})
-      //
-      /*
-      const indexList = () => {
-        if isInArray = pictureList.some((picture,indexPicture) => {
-        return 1 === 1;});
-      }
-*/
-      const indexList = pictureList.findIndex((picture,indexPicture) => {
-        console.log(picture.id);
+      const indexList = pictureList.findIndex((picture) => {
         return picture.id == idUser;
       });
 
-//      let indexList = pictureList.findIndex(item => item.id === idUser);
-      console.log("idUser = " + idUser);
-      console.log("indexList = " + indexList);
-/*
-      for (let i = 0; i < pictureList.length; i++) {
-        console.log("pictureList[i].id = " + pictureList[i].id);
-        if (pictureList[i].id === idUser) {
-          indexList = i;
-          console.log('Индекс в цикле равен = ' + indexList);
-          break;
-        }
-      }
-*/
-      //arr.indexOf(item, from)
       openBigPicture(evt.target,pictureList[indexList]);
     }
   };

@@ -17,7 +17,6 @@ const bigPictureSocialCommentsLoader = bigPictureSection.querySelector('.social_
 const bigPictureSocialCommentCount = bigPictureSection.querySelector('.social__comment-count');
 const bigPictureSocialComments = bigPictureSection.querySelector('.social__comments');
 const saveBigPictureSocialComments = bigPictureSocialComments.cloneNode(true); // Сохраним изначальную разметку .social__comments
-//console.log('saveBigPictureSocialComments = ' + saveBigPictureSocialComments);
 const socialCommentsFragment = document.createDocumentFragment();
 
 const closeBigPicture = function () {
@@ -57,8 +56,6 @@ const openBigPicture = function (miniature,picture) {
   bigPictureLikesCount.textContent = parentMiniaturePictureLikes.textContent;
   bigPictureCommentsCount.textContent = parentMiniaturePictureComments.textContent;
 
-  //socialCommentsImage.classList.add('social__picture');
-
   const pictureCommentTemplate = bigPictureSocialComments.querySelector('.social__comment');
 
   picture.comments.forEach(({avatar,message,name}) => {
@@ -79,9 +76,6 @@ const openBigPicture = function (miniature,picture) {
   bigPictureSocialComments.appendChild(socialCommentsFragment);
 
   bigPictureSocialCaption.textContent = picture.description;
-  //console.log(picture.description);
-  //console.log(picture);
-  console.log("idPicrure = " + picture.id);
 };
 
 export {openBigPicture};
