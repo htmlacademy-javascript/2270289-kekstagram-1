@@ -13,9 +13,9 @@ const bigPictureSocialCaption = bigPictureSocial.querySelector('.social__caption
 const bigPictureCancel = bigPictureSection.querySelector('.big-picture__cancel');
 
 const bigPictureSocialCommentsLoader = bigPictureSection.querySelector('.social__comments-loader');
-
 const bigPictureSocialCommentCount = bigPictureSection.querySelector('.social__comment-count');
 const bigPictureSocialComments = bigPictureSection.querySelector('.social__comments');
+
 const saveBigPictureSocialComments = bigPictureSocialComments.cloneNode(true); // Сохраним изначальную разметку .social__comments
 const socialCommentsFragment = document.createDocumentFragment();
 
@@ -40,8 +40,8 @@ const openBigPicture = function (miniature,picture) {
   const parentMiniature = miniature.parentElement; // Получим ссылку на родительский элемент миниатюры (элемент - ссылка <a></a>)
 
   bigPictureSection.classList.remove('hidden'); // показываем секцию большой фотографии
-  bigPictureSocialCommentCount.classList.add('hidden');
-  bigPictureSocialCommentsLoader.classList.add('hidden');
+  //bigPictureSocialCommentCount.classList.add('hidden');
+  //bigPictureSocialCommentsLoader.classList.add('hidden');
 
   document.body.classList.add('modal-open');
   bigPicture.src = miniature.src;
@@ -71,6 +71,16 @@ const openBigPicture = function (miniature,picture) {
 
     socialCommentsFragment.appendChild(pictureComment);
   });
+
+  const arrayCommentsFragment = Array.from(socialCommentsFragment.children);
+
+  console.log(arrayCommentsFragment);
+
+  const arrayDefinedNumberComments = function (arrayElements,indexBegin,indexEnd) {
+    return arrayElements.slice(indexBegin,indexEnd);
+  };
+
+  console.log(arrayDefinedNumberComments(arrayCommentsFragment,0,5));
 
   bigPictureSocialComments.innerHTML = '';
   bigPictureSocialComments.appendChild(socialCommentsFragment);
