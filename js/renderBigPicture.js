@@ -19,7 +19,7 @@ const bigPictureSocialComments = bigPictureSection.querySelector('.social__comme
 const socialCommentsFragment = document.createDocumentFragment();
 
 let indexBeginViewComments = 0;
-const countViewComments = 5;
+const COUNT_VIEW_COMMENTS = 5;
 
 const closeBigPicture = function () {
   bigPictureSection.classList.add('hidden');
@@ -27,6 +27,7 @@ const closeBigPicture = function () {
   bigPictureSocialCommentCount.classList.remove('hidden');
   bigPictureSocialCommentsLoader.classList.remove('hidden');
   document.removeEventListener('keydown',onDocumentKeyDown);
+  bigPictureSocialCommentsLoader.removeEventListener('click',loadNextMessage);
   indexBeginViewComments = 0;
 };
 
@@ -60,6 +61,15 @@ const createRangeElementsForFragment = function (template,tagOne,tagTwo,indexBeg
   }
   return commentsFragment;
 };
+
+function loadNextMessage(picture) {
+  indexBeginViewComments += 5;
+  const commentsUpBoundary = (indexBeginViewComments + COUNT_VIEW_COMMENTS) < picture.comments.length ? indexBeginViewComments + COUNT_VIEW_COMMENTS : picture.comments.length;
+  bigPictureSocialCommentCount.innerHTML = `показаны комментарии с ${indexBeginViewComments} по ${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML}`;
+  bigPictureSocialComments.innerHTML = '';
+  const pictureCommentTemplate = bigPictureSocialComments.querySelector('.social__comment');
+  bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplate,'img','p',indexBeginViewComments,COUNT_VIEW_COMMENTS,picture));
+}
 
 
 const openBigPicture = function (miniature,picture) {
@@ -107,12 +117,32 @@ const openBigPicture = function (miniature,picture) {
 
     });
     */
+    bigPictureCommentsCount.textContent = picture.comments.length;
+    bigPictureSocialCommentCount.innerHTML = `${picture.comments.length} из ${bigPictureCommentsCount.outerHTML} комментариев`;
     bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplate,'img','p',0,picture.comments.length,picture));
     //bigPictureSocialComments.appendChild(socialCommentsFragment);
   } else {
     console.log('Зашли в блок где "БОЛЬШЕ 5"');
-    bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplate,'img','p',indexBeginViewComments,countViewComments,picture));
+    const commentsUpBoundary = (indexBeginViewComments + COUNT_VIEW_COMMENTS) < picture.comments.length ? indexBeginViewComments + COUNT_VIEW_COMMENTS : picture.comments.length;
+    bigPictureCommentsCount.textContent = picture.comments.length;
+    /*
+    if (indexBeginViewComments <= 5) {
+      console.log('indexBeginViewComments = ' + indexBeginViewComments + '| commentsUpBoundary = ' + commentsUpBoundary);
+      //bigPictureCommentsCount.textContent = picture.comments.length;
+      bigPictureSocialCommentCount.innerHTML = `${picture.comments.length} из ${bigPictureCommentsCount.outerHTML} комментариев`;
+      //bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplate,'img','p',0,picture.comments.length,picture));
+    } else {
+    */
+      console.log('indexBeginViewComments = ' + indexBeginViewComments + '| commentsUpBoundary = ' + commentsUpBoundary);
+      bigPictureSocialCommentCount.innerHTML = `показаны комментарии с ${indexBeginViewComments + 1} по ${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML}`;
+      //bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplate,'img','p',0,picture.comments.length,picture));
+      bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplate,'img','p',indexBeginViewComments,COUNT_VIEW_COMMENTS,picture));
+    //}
+    //bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplate,'img','p',indexBeginViewComments,COUNT_VIEW_COMMENTS,picture));
   }
+
+  //bigPictureSocialCommentsLoader.addEventListener('click',loadNextMessage(picture));
+
 
   bigPictureSocialCaption.textContent = picture.description;
 };
