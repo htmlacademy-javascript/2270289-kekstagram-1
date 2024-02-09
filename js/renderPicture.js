@@ -24,11 +24,7 @@ function renderingPictureUsers() {
   const onClickPicture = function (evt) {
     if (evt.target.matches('.picture__img')) {
       const idUser = evt.target.getAttribute('data-id-picturelist');
-
-      const indexList = pictureList.findIndex((picture) => {
-        return +picture.id  === +idUser;
-      });
-
+      const indexList = pictureList.findIndex((picture) => +picture.id === +idUser);
       openBigPicture(evt.target,pictureList[indexList]);
     }
   };

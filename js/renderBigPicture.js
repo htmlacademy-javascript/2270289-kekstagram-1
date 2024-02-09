@@ -18,13 +18,16 @@ const bigPictureSocialComments = bigPictureSection.querySelector('.social__comme
 
 const socialCommentsFragment = document.createDocumentFragment();
 
+let indexBeginViewComments = 0;
+const countViewComments = 5;
+
 const closeBigPicture = function () {
   bigPictureSection.classList.add('hidden');
   document.body.classList.remove('modal-open');
   bigPictureSocialCommentCount.classList.remove('hidden');
   bigPictureSocialCommentsLoader.classList.remove('hidden');
-
   document.removeEventListener('keydown',onDocumentKeyDown);
+  indexBeginViewComments = 0;
 };
 
 function onDocumentKeyDown (evt) {
@@ -33,6 +36,31 @@ function onDocumentKeyDown (evt) {
     closeBigPicture();
   }
 }
+
+const createRangeElementsForFragment = function (template,tagOne,tagTwo,indexBegin,countView,element) {
+
+  const commentsFragment = document.createDocumentFragment();
+
+  console.log('комментарии из функции...');
+  console.log('indexBegin: ' + indexBegin);
+  console.log('countView: ' + countView );
+
+  for (let i = indexBegin; i < indexBegin + countView; i++) {
+    const comment = template.cloneNode(true);
+    const commentImage = comment.querySelector(tagOne);
+    const commentText = comment.querySelector(tagTwo);
+
+    commentImage.src = element.comments[i].avatar;
+    commentImage.width = 35;
+    commentImage.height = 35;
+    commentImage.alt = element.comments[i].name;
+    commentText.textContent = element.comments[i].message;
+
+    commentsFragment.appendChild(comment);
+  }
+  return commentsFragment;
+};
+
 
 const openBigPicture = function (miniature,picture) {
 
@@ -57,42 +85,34 @@ const openBigPicture = function (miniature,picture) {
 
   const pictureCommentTemplate = bigPictureSocialComments.querySelector('.social__comment');
 
-  picture.comments.forEach(({avatar,message,name}) => {
-    const pictureComment = pictureCommentTemplate.cloneNode(true);
-    const pictureCommentImage = pictureComment.querySelector('img');
-    const pictureCommentText = pictureComment.querySelector('p');
-
-    pictureCommentImage.src = avatar;
-    pictureCommentImage.width = 35;
-    pictureCommentImage.height = 35;
-    pictureCommentImage.alt = name;
-    pictureCommentText.textContent = message;
-
-    socialCommentsFragment.appendChild(pictureComment);
-  });
-
-  const createRangeElementsForFragment = function (template,tagOne,innerElementTwo,indexBegin,countView,elements) {
-
-    for (let i=indexBegin; i < indexBegin + countView; i++) {
-      const comment = template.cloneNode(true);
-      const commentImage = pictureComment.querySelector('img');
-      const commentText = pictureComment.querySelector('p');
-
-    };
-  };
-
-  const arrayCommentsFragment = Array.from(socialCommentsFragment.children);
-
-  console.log(arrayCommentsFragment);
-
-  const arrayDefinedNumberComments = function (arrayElements,indexBegin,indexEnd) {
-    return arrayElements.slice(indexBegin,indexEnd);
-  };
-
-  console.log(arrayDefinedNumberComments(arrayCommentsFragment,0,5));
-
   bigPictureSocialComments.innerHTML = '';
-  bigPictureSocialComments.appendChild(socialCommentsFragment);
+  console.log(picture);
+  console.log('picture.comments.length = ' + picture.comments.length);
+
+  if (picture.comments.length <= 5) {
+    console.log('Зашли в блок где "меньше 5"');
+    /*
+    picture.comments.forEach(({avatar,message,name}) => {
+      const pictureComment = pictureCommentTemplate.cloneNode(true);
+      const pictureCommentImage = pictureComment.querySelector('img');
+      const pictureCommentText = pictureComment.querySelector('p');
+
+      pictureCommentImage.src = avatar;
+      pictureCommentImage.width = 35;
+      pictureCommentImage.height = 35;
+      pictureCommentImage.alt = name;
+      pictureCommentText.textContent = message;
+
+      socialCommentsFragment.appendChild(pictureComment);
+
+    });
+    */
+    bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplate,'img','p',0,picture.comments.length,picture));
+    //bigPictureSocialComments.appendChild(socialCommentsFragment);
+  } else {
+    console.log('Зашли в блок где "БОЛЬШЕ 5"');
+    bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplate,'img','p',indexBeginViewComments,countViewComments,picture));
+  }
 
   bigPictureSocialCaption.textContent = picture.description;
 };
