@@ -16,7 +16,6 @@ const bigPictureSocialCommentsLoader = bigPictureSection.querySelector('.social_
 const bigPictureSocialCommentCount = bigPictureSection.querySelector('.social__comment-count');
 const bigPictureSocialComments = bigPictureSection.querySelector('.social__comments');
 
-const saveBigPictureSocialComments = bigPictureSocialComments.cloneNode(true); // Сохраним изначальную разметку .social__comments
 const socialCommentsFragment = document.createDocumentFragment();
 
 const closeBigPicture = function () {
@@ -28,12 +27,12 @@ const closeBigPicture = function () {
   document.removeEventListener('keydown',onDocumentKeyDown);
 };
 
-const onDocumentKeyDown = function (evt) {
+function onDocumentKeyDown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeBigPicture();
   }
-};
+}
 
 const openBigPicture = function (miniature,picture) {
 
@@ -71,6 +70,16 @@ const openBigPicture = function (miniature,picture) {
 
     socialCommentsFragment.appendChild(pictureComment);
   });
+
+  const createRangeElementsForFragment = function (template,tagOne,innerElementTwo,indexBegin,countView,elements) {
+
+    for (let i=indexBegin; i < indexBegin + countView; i++) {
+      const comment = template.cloneNode(true);
+      const commentImage = pictureComment.querySelector('img');
+      const commentText = pictureComment.querySelector('p');
+
+    };
+  };
 
   const arrayCommentsFragment = Array.from(socialCommentsFragment.children);
 

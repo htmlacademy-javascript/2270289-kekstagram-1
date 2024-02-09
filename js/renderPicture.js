@@ -26,7 +26,7 @@ function renderingPictureUsers() {
       const idUser = evt.target.getAttribute('data-id-picturelist');
 
       const indexList = pictureList.findIndex((picture) => {
-        return picture.id == idUser;
+        return +picture.id  === +idUser;
       });
 
       openBigPicture(evt.target,pictureList[indexList]);
