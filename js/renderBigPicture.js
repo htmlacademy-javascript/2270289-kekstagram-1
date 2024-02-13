@@ -74,42 +74,6 @@ const createRangeElementsForFragment = function (template,tagOne,tagTwo,indexBeg
 };
 
 
-function loadNextMessage(picture) {
-  /*
-  indexBeginViewComments += 5;
-  const commentsUpBoundary = (indexBeginViewComments + COUNT_VIEW_COMMENTS) < picture.comments.length ? indexBeginViewComments + COUNT_VIEW_COMMENTS : picture.comments.length;
-  bigPictureSocialCommentCount.innerHTML = `показаны комментарии с ${indexBeginViewComments} по ${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML}`;
-  bigPictureSocialComments.innerHTML = '';
-  const pictureCommentTemplate = bigPictureSocialComments.querySelector('.social__comment');
-  bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplate,'img','p',indexBeginViewComments,COUNT_VIEW_COMMENTS,picture));
-  */
-  if (picture.comments.length > 5) {
-    console.log('Входим в click');
-    console.log('В click, indexBeginViewComments ДО присвоения = ' + indexBeginViewComments);
-    console.log('В click, commentsUpBoundary ДО присвоения = ' + commentsUpBoundary)
-
-    indexBeginViewComments += 5;
-    commentsUpBoundary = (indexBeginViewComments + COUNT_VIEW_COMMENTS) < picture.comments.length ? indexBeginViewComments + COUNT_VIEW_COMMENTS : picture.comments.length;
-
-    console.log('В click, indexBeginViewComments ПОСЛЕ присвоения = ' + indexBeginViewComments);
-    console.log('В click, commentsUpBoundary ПОСЛЕ присвоения = ' + commentsUpBoundary)
-
-    if (indexBeginViewComments > commentsUpBoundary) {
-      indexBeginViewComments -= 5;
-      console.log('В click, indexBeginViewComments УМЕНЬШИЛИ = ' + indexBeginViewComments);
-      console.log('В click, commentsUpBoundary ПОСЛЕ_ = ' + commentsUpBoundary)
-    }
-
-    console.log('indexBeginViewComments = ' + indexBeginViewComments + '| commentsUpBoundary = ' + commentsUpBoundary);
-    bigPictureSocialComments.innerHTML = '';
-    //const pictureCommentTemplate = bigPictureSocialComments.querySelector('.social__comment');
-    //bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplate,'img','p',indexBeginViewComments,COUNT_VIEW_COMMENTS,picture));
-    bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplateClone,'img','p',indexBeginViewComments,commentsUpBoundary,picture));
-    bigPictureSocialCommentCount.innerHTML = `показаны комментарии с ${indexBeginViewComments} по ${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML}`;
-  }
-}
-
-
 const openBigPicture = function (miniature,picture) {
 
   const parentMiniature = miniature.parentElement; // Получим ссылку на родительский элемент миниатюры (элемент - ссылка <a></a>)
@@ -133,6 +97,31 @@ const openBigPicture = function (miniature,picture) {
   console.log(picture);
   console.log('picture.comments.length = ' + picture.comments.length);
 
+  function loadNextMessage() {
+    if (picture.comments.length > 5 && indexBeginViewComments < picture.comments.length) {
+      console.log('Входим в click');
+      console.log('В click, indexBeginViewComments ДО присвоения = ' + indexBeginViewComments);
+      console.log('В click, commentsUpBoundary ДО присвоения = ' + commentsUpBoundary)
+
+      indexBeginViewComments += 5;
+      commentsUpBoundary = (indexBeginViewComments + COUNT_VIEW_COMMENTS) < picture.comments.length ? indexBeginViewComments + COUNT_VIEW_COMMENTS : picture.comments.length;
+
+      console.log('В click, indexBeginViewComments ПОСЛЕ присвоения = ' + indexBeginViewComments);
+      console.log('В click, commentsUpBoundary ПОСЛЕ присвоения = ' + commentsUpBoundary)
+
+      if (indexBeginViewComments > commentsUpBoundary) {
+        indexBeginViewComments -= 5;
+        console.log('В click, indexBeginViewComments УМЕНЬШИЛИ = ' + indexBeginViewComments);
+        console.log('В click, commentsUpBoundary ПОСЛЕ_ = ' + commentsUpBoundary)
+      }
+
+      console.log('indexBeginViewComments = ' + indexBeginViewComments + '| commentsUpBoundary = ' + commentsUpBoundary);
+      bigPictureSocialComments.innerHTML = '';
+      bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplateClone,'img','p',indexBeginViewComments,commentsUpBoundary,picture));
+      bigPictureSocialCommentCount.innerHTML = `показаны комментарии с ${indexBeginViewComments} по ${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML}`;
+    }
+  }
+
   if (picture.comments.length <= 5) {
     console.log('Зашли в блок где "меньше 5"');
     commentsUpBoundary = picture.comments.length;
@@ -145,7 +134,7 @@ const openBigPicture = function (miniature,picture) {
   bigPictureCommentsCount.textContent = picture.comments.length;
   bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplateClone,'img','p',indexBeginViewComments,commentsUpBoundary,picture));
 
-  bigPictureSocialCommentsLoader.addEventListener('click', loadNextMessage(picture));
+  bigPictureSocialCommentsLoader.addEventListener('click', loadNextMessage);
 
   bigPictureSocialCaption.textContent = picture.description;
 };
