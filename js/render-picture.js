@@ -1,5 +1,5 @@
 import {getPublicationsEnrollment} from './data.js';
-import {openBigPicture} from './renderBigPicture.js';
+import {openBigPicture} from './render-big-picture.js';
 
 const pictureList = getPublicationsEnrollment();
 

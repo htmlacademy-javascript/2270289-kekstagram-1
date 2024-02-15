@@ -1,4 +1,4 @@
 
-import {renderingPictureUsers} from './renderPicture.js';
+import {renderingPictureUsers} from './render-picture.js';
 
 renderingPictureUsers();

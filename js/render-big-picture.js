@@ -17,11 +17,13 @@ const bigPictureSocialCommentCount = bigPictureSection.querySelector('.social__c
 const bigPictureSocialComments = bigPictureSection.querySelector('.social__comments');
 
 const pictureCommentTemplate = bigPictureSocialComments.querySelector('.social__comment');
-const pictureCommentTemplateClone = pictureCommentTemplate.cloneNode(true)
+const pictureCommentTemplateClone = pictureCommentTemplate.cloneNode(true);
 
 let indexBeginViewComments = 0;
 const COUNT_VIEW_COMMENTS = 5;
 let commentsUpBoundary = COUNT_VIEW_COMMENTS;
+let commentsDownBoundary = 0;
+
 
 
 const createRangeElementsForFragment = function (template,tagOne,tagTwo,indexBegin,boundaryUp,element) {
@@ -55,8 +57,10 @@ const openBigPicture = function (miniature,picture) {
     bigPictureSocialCommentsLoader.classList.remove('hidden');
     document.removeEventListener('keydown',onDocumentKeyDown);
     bigPictureSocialCommentsLoader.removeEventListener('click',loadNextMessage);
+    bigPictureSocialCommentsLoader.classList.remove('hidden');
     indexBeginViewComments = 0;
     commentsUpBoundary = COUNT_VIEW_COMMENTS;
+    commentsDownBoundary = 0;
   };
 
   function onDocumentKeyDown (evt) {
@@ -86,33 +90,35 @@ const openBigPicture = function (miniature,picture) {
   bigPictureSocialComments.innerHTML = '';
 
   function loadNextMessage() {
-    if (picture.comments.length > 5 && indexBeginViewComments < picture.comments.length) {
+//    if (picture.comments.length > 5 && commentsDownBoundary < picture.comments.length) {
 
-      indexBeginViewComments += 5;
-      commentsUpBoundary = (indexBeginViewComments + COUNT_VIEW_COMMENTS) < picture.comments.length ? indexBeginViewComments + COUNT_VIEW_COMMENTS : picture.comments.length;
+    commentsDownBoundary += COUNT_VIEW_COMMENTS;
+    commentsUpBoundary = (commentsDownBoundary + COUNT_VIEW_COMMENTS) < picture.comments.length ? commentsDownBoundary + COUNT_VIEW_COMMENTS : picture.comments.length;
 
-      if (indexBeginViewComments > commentsUpBoundary) {
-        indexBeginViewComments -= 5;
-      }
-
-      bigPictureSocialComments.innerHTML = '';
-      bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplateClone,'img','p',indexBeginViewComments,commentsUpBoundary,picture));
-      bigPictureSocialCommentCount.innerHTML = `показаны комментарии с ${indexBeginViewComments} по ${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML}`;
+//      if (commentsDownBoundary > commentsUpBoundary) {
+//        commentsDownBoundary -= 5;
+//      }
+    bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplateClone,'img','p',commentsDownBoundary,commentsUpBoundary,picture));
+    bigPictureSocialCommentCount.innerHTML = `${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML} комментариев`;
+    if (commentsUpBoundary === picture.comments.length) {
+      bigPictureSocialCommentsLoader.classList.add('hidden');
     }
+//    }
   }
 
   if (picture.comments.length <= 5) {
     commentsUpBoundary = picture.comments.length;
-    bigPictureSocialCommentCount.innerHTML = `${picture.comments.length} из ${bigPictureCommentsCount.outerHTML} комментариев`;
-  } else {
-    bigPictureSocialCommentCount.innerHTML = `показаны комментарии с ${indexBeginViewComments + 1} по ${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML}`;
   }
+  bigPictureSocialCommentCount.innerHTML = `${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML} комментариев`;
   bigPictureCommentsCount.textContent = picture.comments.length;
-  bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplateClone,'img','p',indexBeginViewComments,commentsUpBoundary,picture));
 
+  bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplateClone,'img','p',commentsDownBoundary,commentsUpBoundary,picture));
   bigPictureSocialCommentsLoader.addEventListener('click', loadNextMessage);
 
   bigPictureSocialCaption.textContent = picture.description;
+  if (picture.comments.length <= 5) {
+    bigPictureSocialCommentsLoader.classList.add('hidden');
+  }
 };
 
 export {openBigPicture};
