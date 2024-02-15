@@ -1,4 +1,4 @@
-import {isEscapeKey} from './utils.js';
+import {isEscapeKey,pluralize} from './utils.js';
 import {createRangeElementsForFragment} from './render-comments.js';
 
 const bigPictureSection = document.querySelector('.big-picture');
@@ -54,13 +54,14 @@ const openBigPicture = function (picture) {
 
   bigPictureCancel.addEventListener('click',closeBigPicture); // обработчик на закратие секции  большой фотграфии при щелчке на кнопке закрытия
   document.addEventListener('keydown',onDocumentKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
+  const commentDeclension = pluralize(picture.comments.length,['комментария','комментариев','комментариев']); // Для склонение слова в зависимости от количества
 
   function loadNextMessage() {
     commentsDownBoundary += COUNT_VIEW_COMMENTS;
     commentsUpBoundary = (commentsDownBoundary + COUNT_VIEW_COMMENTS) < picture.comments.length ? commentsDownBoundary + COUNT_VIEW_COMMENTS : picture.comments.length;
 
     bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplateClone,'img','p',commentsDownBoundary,commentsUpBoundary,picture));
-    bigPictureSocialCommentCount.innerHTML = `${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML} комментариев`;
+    bigPictureSocialCommentCount.innerHTML = `${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML} ${commentDeclension}`;
     if (commentsUpBoundary === picture.comments.length) {
       bigPictureSocialCommentsLoader.classList.add('hidden');
     }
@@ -71,7 +72,7 @@ const openBigPicture = function (picture) {
   }
 
   bigPictureSocialComments.innerHTML = '';
-  bigPictureSocialCommentCount.innerHTML = `${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML} комментариев`;
+  bigPictureSocialCommentCount.innerHTML = `${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML} ${commentDeclension}`;
   bigPictureCommentsCount.textContent = picture.comments.length;
 
   bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplateClone,'img','p',commentsDownBoundary,commentsUpBoundary,picture));
