@@ -1,4 +1,5 @@
 import {isEscapeKey} from './utils.js';
+import {createRangeElementsForFragment} from './render-comments.js';
 
 const bigPictureSection = document.querySelector('.big-picture');
 const bigPictureDiv = bigPictureSection.querySelector('.big-picture__img');
@@ -22,27 +23,6 @@ const pictureCommentTemplateClone = pictureCommentTemplate.cloneNode(true);
 const COUNT_VIEW_COMMENTS = 5;
 let commentsUpBoundary = COUNT_VIEW_COMMENTS;
 let commentsDownBoundary = 0;
-
-const createRangeElementsForFragment = function (template,tagOne,tagTwo,indexBegin,boundaryUp,element) {
-
-  const commentsFragment = document.createDocumentFragment();
-
-  for (let i = indexBegin; i < boundaryUp; i++) {
-
-    const comment = template.cloneNode(true);
-    const commentImage = comment.querySelector(tagOne);
-    const commentText = comment.querySelector(tagTwo);
-
-    commentImage.src = element.comments[i].avatar;
-    commentImage.width = 35;
-    commentImage.height = 35;
-    commentImage.alt = element.comments[i].name;
-    commentText.textContent = element.comments[i].message;
-
-    commentsFragment.appendChild(comment);
-  }
-  return commentsFragment;
-};
 
 const openBigPicture = function (picture) {
 
