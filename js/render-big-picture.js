@@ -58,10 +58,11 @@ const openBigPicture = function (picture) {
 
   function loadNextMessage() {
     commentsDownBoundary += COUNT_VIEW_COMMENTS;
-    commentsUpBoundary = (commentsDownBoundary + COUNT_VIEW_COMMENTS) < picture.comments.length ? commentsDownBoundary + COUNT_VIEW_COMMENTS : picture.comments.length;
+    const increaseBoundary = commentsDownBoundary + COUNT_VIEW_COMMENTS;
+    commentsUpBoundary = increaseBoundary < picture.comments.length ? increaseBoundary : picture.comments.length;
 
     bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplateClone,'img','p',commentsDownBoundary,commentsUpBoundary,picture));
-    bigPictureSocialCommentCount.innerHTML = `${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML} ${commentDeclension}`;
+    bigPictureSocialCommentCount.innerHTML = `${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML} ${commentDeclension}`; // Использую innerHTML, вместо textContent, для того чтобы внутри элемента сохранить тэг span, который был в изначальной разметке.
     if (commentsUpBoundary === picture.comments.length) {
       bigPictureSocialCommentsLoader.classList.add('hidden');
     }
