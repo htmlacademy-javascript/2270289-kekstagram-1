@@ -1,5 +1,5 @@
 import {getPublicationsEnrollment} from './data.js';
-import {openBigPicture} from './renderBigPicture.js';
+import {openBigPicture} from './render-big-picture.js';
 
 const pictureList = getPublicationsEnrollment();
 
@@ -25,7 +25,7 @@ function renderingPictureUsers() {
     if (evt.target.matches('.picture__img')) {
       const idUser = evt.target.getAttribute('data-id-picturelist');
       const indexList = pictureList.findIndex((picture) => +picture.id === +idUser);
-      openBigPicture(evt.target,pictureList[indexList]);
+      openBigPicture(pictureList[indexList]);
     }
   };
 
