@@ -48,7 +48,7 @@ buttonScaleControlValue.onchange = function () {
 function validateFormUploadFoto (evt) {
   messageErrorValidHashTag = '';
   messageErrorValidCommentField = '';
-  console.log('вход в валидацию ');
+  //console.log('вход в валидацию ');
   evt.preventDefault();
   const isValid = pristine.validate();
 
@@ -114,7 +114,10 @@ inputUploadFile.onchange = function () {
 function onDocumentFormKeyDown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeFormUploadFoto ();
+    const idElement = String(evt.target.id);
+    if (idElement !== 'hashtags' && idElement !== 'commentfield') {
+      closeFormUploadFoto ();
+    }
   }
 }
 

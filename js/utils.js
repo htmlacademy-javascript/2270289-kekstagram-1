@@ -40,24 +40,24 @@ function pluralize(count, words) {
 }
 
 function checkHashTag(elements, maxCount, re) {
-  console.log('Вход в функцию!');
-  console.log(elements);
-  console.log('maxCount = ' + maxCount);
-  console.log('re = ' + re);
+  //console.log('Вход в функцию!');
+  //console.log(elements);
+  //console.log('maxCount = ' + maxCount);
+  //console.log('re = ' + re);
   if (elements.length <= maxCount) {
     for (let i = 0; i < elements.length; i++) {
       const hashTag = elements[i];
-      console.log('hashTag = ' + hashTag);
+      //console.log('hashTag = ' + hashTag);
       const regularItem = re.test(hashTag);
-      console.log('regularItem = ' + regularItem);
+      //console.log('regularItem = ' + regularItem);
       if (regularItem === false) {
         return `Хэш тэг под номером ${i + 1} не валиден!`;
       }
       for (let j = 1; j < elements.length; j++) {
-        console.log('hashTag = ' + hashTag);
-        console.log('hashTag.toLowerCase() = ' + hashTag.toLowerCase());
-        console.log('elements[j] = ' + elements[j]);
-        console.log('elements[j].toLowerCase() = ' + elements[j].toLowerCase());
+        //console.log('hashTag = ' + hashTag);
+        //console.log('hashTag.toLowerCase() = ' + hashTag.toLowerCase());
+        //console.log('elements[j] = ' + elements[j]);
+        //console.log('elements[j].toLowerCase() = ' + elements[j].toLowerCase());
         if (i < j) {
           if (hashTag.toLowerCase() === elements[j].toLowerCase()) {
             return ' Все хэшТэги должны быть разными! ';
