@@ -1,4 +1,4 @@
-import {isEscapeKey} from './utils.js';
+import {isEscapeKey, checkHashTag} from './utils.js';
 
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const inputUploadFile = document.querySelector('#upload-file');
@@ -46,6 +46,8 @@ buttonScaleControlValue.onchange = function () {
 };
 
 function validateFormUploadFoto (evt) {
+  messageErrorValidHashTag = '';
+  messageErrorValidCommentField = '';
   console.log('вход в валидацию ');
   evt.preventDefault();
   const isValid = pristine.validate();
@@ -55,23 +57,18 @@ function validateFormUploadFoto (evt) {
   } else {
     console.log('форма НЕ валидна');
   }
+  console.log('messageErrorValidHashTag = ' + messageErrorValidHashTag);
+  console.log('messageErrorValidCommentField = ' + messageErrorValidCommentField);
+
 }
 
 // Функция обработчик валидации поля ХэшТэг
 function validateHashTag (value) {
   if (value !== '') {
     const hashtags = value.split(HASHTAG_DIVIDER);
-    if (hashtags.length <= MAX_COUNT_HASHTAG) {
-      hashtags.forEach((value,index) => {
-        const regularItem = regularHashTag.test(value);
-        if (regularItem === false) {
-          messageErrorValidHashTag = `Хэш тэг под номером ${index + 1} не валиден!`;
-          return false;
-        }
-      });
-      return true;
-    } else {
-      messageErrorValidHashTag = `Максимально возможное количество ХэшТэгов равно ${MAX_COUNT_HASHTAG}`;
+    const resultVerifyHashTag = checkHashTag(hashtags, MAX_COUNT_HASHTAG, regularHashTag);
+    if (resultVerifyHashTag !== 'Valid') {
+      messageErrorValidHashTag = resultVerifyHashTag;
       return false;
     }
   }

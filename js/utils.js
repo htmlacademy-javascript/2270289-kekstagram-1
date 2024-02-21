@@ -39,5 +39,53 @@ function pluralize(count, words) {
   return `${words[ (count % 100 > 4 && count % 100 < 20) ? 2 : cases[ Math.min(count % 10, 5)] ]}`;
 }
 
+function checkHashTag(elements, maxCount, re) {
+  console.log('Вход в функцию!');
+  console.log(elements);
+  console.log('maxCount = ' + maxCount);
+  console.log('re = ' + re);
+  if (elements.length <= maxCount) {
+    for (let i = 0; i < elements.length; i++) {
+      const hashTag = elements[i];
+      console.log('hashTag = ' + hashTag);
+      const regularItem = re.test(hashTag);
+      console.log('regularItem = ' + regularItem);
+      if (regularItem === false) {
+        return `Хэш тэг под номером ${i + 1} не валиден!`;
+      }
+      for (let j = 1; j < elements.length; j++) {
+        console.log('hashTag = ' + hashTag);
+        console.log('hashTag.toLowerCase() = ' + hashTag.toLowerCase());
+        console.log('elements[j] = ' + elements[j]);
+        console.log('elements[j].toLowerCase() = ' + elements[j].toLowerCase());
+        if (i < j) {
+          if (hashTag.toLowerCase() === elements[j].toLowerCase()) {
+            return ' Все хэшТэги должны быть разными! ';
+          }
+        }
+      }
+    }
+  } else {
+    return ` Максимальное количество хэшТэгов равно ${maxCount}! `;
+  }
+  return 'Valid';
+}
 
-export {getRandomInteger, getRandomArrayElement, getRandomID, isEscapeKey, isEnterKey, pluralize};
+/*
+if (hashtags.length <= MAX_COUNT_HASHTAG) {
+      hashtags.forEach((value,index) => {
+        const regularItem = regularHashTag.test(value);
+        if (regularItem === false) {
+          messageErrorValidHashTag = `Хэш тэг под номером ${index + 1} не валиден!`;
+          return false;
+        }
+      });
+      return true;
+    } else {
+      messageErrorValidHashTag = `Максимально возможное количество ХэшТэгов равно ${MAX_COUNT_HASHTAG}`;
+      return false;
+    }
+*/
+
+
+export {getRandomInteger, getRandomArrayElement, getRandomID, isEscapeKey, isEnterKey, pluralize, checkHashTag};
