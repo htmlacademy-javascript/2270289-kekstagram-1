@@ -39,26 +39,38 @@ function pluralize(count, words) {
   return `${words[ (count % 100 > 4 && count % 100 < 20) ? 2 : cases[ Math.min(count % 10, 5)] ]}`;
 }
 
+
+const errorsCheckHashTag = {
+  0: 'Valid',
+  1: 'Максимальное количество хэшТэгов равно 5',
+  2: 'Все хэшТэги должны быть разными!',
+  3: 'Имеется не правильно записанный хэштэг.'
+};
+
 function checkHashTag(elements, maxCount, re) {
   if (elements.length <= maxCount) {
     for (let i = 0; i < elements.length; i++) {
       const hashTag = elements[i];
       const regularItem = re.test(hashTag);
       if (regularItem === false) {
-        return `Хэш тэг под номером ${i + 1} не валиден!`;
+        return 3;
       }
       for (let j = 1; j < elements.length; j++) {
         if (i < j) {
           if (hashTag.toLowerCase() === elements[j].toLowerCase()) {
-            return ' Все хэшТэги должны быть разными! ';
+            return 2;
           }
         }
       }
     }
   } else {
-    return ` Максимальное количество хэшТэгов равно ${maxCount}! `;
+    return 1;
   }
-  return 'Valid';
+  return 0;
 }
 
-export {getRandomInteger, getRandomArrayElement, getRandomID, isEscapeKey, isEnterKey, pluralize, checkHashTag};
+function getErrorMessage (numberError) {
+  return errorsCheckHashTag[numberError];
+}
+
+export {getRandomInteger, getRandomArrayElement, getRandomID, isEscapeKey, isEnterKey, pluralize, checkHashTag, getErrorMessage};
