@@ -1,4 +1,4 @@
-import {isEscapeKey, checkHashTag} from './utils.js';
+import {checkHashTag} from './utils.js';
 
 const formUpload = document.querySelector('#upload-select-image');
 
