@@ -6,6 +6,7 @@ const inputHashTag = formUpload.querySelector('#hashtags');
 const textareaComment = formUpload.querySelector('#comment-field');
 
 const MAX_COUNT_HASHTAG = 5; // максимальное количество хэштэгов в строке
+const MAX_COUNT_COMMENT_SYMBOLS = 140; // максимальное количество символов в комментарии
 const HASHTAG_DIVIDER = ' ';
 const regularHashTag = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/; // регулярное выражение для проверки валидности введенного хештега
 let messageErrorValidHashTag = '';
@@ -43,7 +44,7 @@ function validateHashTag (value) {
 
 // Функция обработчик валидации поля Комментарий
 function validateCommentField (value) {
-  if (value.length > 140) {
+  if (value.length > MAX_COUNT_COMMENT_SYMBOLS) {
     messageErrorValidCommentField = 'Комментарий не может содержать более 140 символов.';
     return false;
   }
