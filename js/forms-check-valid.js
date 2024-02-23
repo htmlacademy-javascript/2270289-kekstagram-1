@@ -3,7 +3,7 @@ import {checkHashTag} from './utils.js';
 const formUpload = document.querySelector('#upload-select-image');
 
 const inputHashTag = formUpload.querySelector('#hashtags');
-const textareaComment = formUpload.querySelector('#commentfield');
+const textareaComment = formUpload.querySelector('#comment-field');
 
 const MAX_COUNT_HASHTAG = 5; // максимальное количество хэштэгов в строке
 const HASHTAG_DIVIDER = ' ';

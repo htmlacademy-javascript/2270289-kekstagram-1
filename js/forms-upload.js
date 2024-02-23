@@ -44,7 +44,7 @@ function onDocumentFormKeyDown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     const idElement = String(evt.target.id);
-    if (idElement !== 'hashtags' && idElement !== 'commentfield') {
+    if (idElement !== 'hashtags' && idElement !== 'comment-field') {
       closeFormUploadPhoto ();
     }
   }
