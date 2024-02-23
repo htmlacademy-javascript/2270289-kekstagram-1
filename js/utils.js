@@ -43,16 +43,14 @@ function checkHashTag(elements, maxCount, re) {
   if (elements.length <= maxCount) {
     for (let i = 0; i < elements.length; i++) {
       const hashTag = elements[i];
-      if (hashTag.length > 2) {
-        const regularItem = re.test(hashTag);
-        if (regularItem === false) {
-          return `Хэш тэг под номером ${i + 1} не валиден!`;
-        }
-        for (let j = 1; j < elements.length; j++) {
-          if (i < j) {
-            if (hashTag.toLowerCase() === elements[j].toLowerCase()) {
-              return ' Все хэшТэги должны быть разными! ';
-            }
+      const regularItem = re.test(hashTag);
+      if (regularItem === false) {
+        return `Хэш тэг под номером ${i + 1} не валиден!`;
+      }
+      for (let j = 1; j < elements.length; j++) {
+        if (i < j) {
+          if (hashTag.toLowerCase() === elements[j].toLowerCase()) {
+            return ' Все хэшТэги должны быть разными! ';
           }
         }
       }
