@@ -1,4 +1,5 @@
-import {isEscapeKey, checkHashTag} from './utils.js';
+import {isEscapeKey} from './utils.js';
+import {validateFormUploadFoto} from './forms-check-valid.js';
 
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const inputUploadFile = document.querySelector('#upload-file');
@@ -12,123 +13,51 @@ const buttonScaleControlValue = document.querySelector('.scale__control--value')
 const buttonScaleControlSmaller = document.querySelector('.scale__control--smaller');
 const buttonScaleControlBigger = document.querySelector('.scale__control--bigger');
 
-const pristine = new Pristine(formUpload,{
-  classTo: 'img-upload__field-wrapper', // Элемент, на который будут добавляться классы
-  errorClass: 'img-upload__field-wrapper--invalid', // Класс, обозначающий невалидное поле
-  successClass: 'img-upload__field-wrapper--valid', // Класс, обозначающий валидное поле
-  errorTextParent: 'img-upload__field-wrapper', // Элемент, куда будет выводиться текст с ошибкой
-  errorTextTag: 'span', // Тег, который будет обрамлять текст ошибки
-  errorTextClass: 'form__error' // Класс для элемента с текстом ошибки
-});
-const inputHashTag = formUpload.querySelector('#hashtags');
-const textareaComment = formUpload.querySelector('#commentfield');
-
-const MAX_COUNT_HASHTAG = 5; // максимальное количество хэштэгов в строке
-const HASHTAG_DIVIDER = ' ';
-const regularHashTag = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/; // регулярное выражение для проверки валидности введенного хештега
-let messageErrorValidHashTag = '';
-let messageErrorValidCommentField = '';
-
 function onClickButtonScaleControlSmaller () {
   if (buttonScaleControlValue.value > 25 && buttonScaleControlValue.value < 100) {
     buttonScaleControlValue.value -= 25;
   }
 }
 
-function onclickButtonScaleControlBigger () {
+function onClickButtonScaleControlBigger () {
   if (buttonScaleControlValue.value < 100 && buttonScaleControlValue.value > 25) {
     buttonScaleControlValue.value += 25;
   }
 }
 
-buttonScaleControlValue.onchange = function () {
-  //console.log('buttonScaleControlValue.value = ' + buttonScaleControlValue.value);
-};
-
-function validateFormUploadFoto (evt) {
-  messageErrorValidHashTag = '';
-  messageErrorValidCommentField = '';
-  //console.log('вход в валидацию ');
-  evt.preventDefault();
-  const isValid = pristine.validate();
-
-  if (isValid) {
-    console.log('форма валидна');
-  } else {
-    console.log('форма НЕ валидна');
-  }
-  console.log('messageErrorValidHashTag = ' + messageErrorValidHashTag);
-  console.log('messageErrorValidCommentField = ' + messageErrorValidCommentField);
-
-}
-
-// Функция обработчик валидации поля ХэшТэг
-function validateHashTag (value) {
-  if (value !== '') {
-    const hashtags = value.split(HASHTAG_DIVIDER);
-    const resultVerifyHashTag = checkHashTag(hashtags, MAX_COUNT_HASHTAG, regularHashTag);
-    if (resultVerifyHashTag !== 'Valid') {
-      messageErrorValidHashTag = resultVerifyHashTag;
-      return false;
-    }
-  }
-  return true;
-}
-
-// Функция обработчик валидации поля Комментарий
-function validateCommentField (value) {
-  if (value.length > 140) {
-    messageErrorValidCommentField = 'Комментарий не может содержать более 140 символов.';
-    return false;
-  }
-  return true;
-}
-
-// добавляем валидатор на поле ХэшТег
-pristine.addValidator(
-  inputHashTag,
-  validateHashTag,
-  messageErrorValidHashTag
-);
-
-// добавляем валидатор на поле Комментарий
-pristine.addValidator(
-  textareaComment,
-  validateCommentField,
-  messageErrorValidCommentField);
-
-inputUploadFile.onchange = function () {
+function onChangeInputFile () {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  buttonUploadCancel.addEventListener('click',closeFormUploadFoto);
+  buttonUploadCancel.addEventListener('click',closeFormUploadPhoto);
   document.addEventListener('keydown',onDocumentFormKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
   imgUploadPreview.src = URL.createObjectURL(inputUploadFile.files[0]);
 
   buttonScaleControlSmaller.addEventListener('click',onClickButtonScaleControlSmaller);
-  buttonScaleControlBigger.addEventListener('click',onclickButtonScaleControlBigger);
+  buttonScaleControlBigger.addEventListener('click',onClickButtonScaleControlBigger);
 
   formUpload.addEventListener('submit',validateFormUploadFoto);
+}
 
-};
+inputUploadFile.addEventListener('change', onChangeInputFile);
 
 function onDocumentFormKeyDown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     const idElement = String(evt.target.id);
     if (idElement !== 'hashtags' && idElement !== 'commentfield') {
-      closeFormUploadFoto ();
+      closeFormUploadPhoto ();
     }
   }
 }
 
-function closeFormUploadFoto () {
+function closeFormUploadPhoto () {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  buttonUploadCancel.removeEventListener('click',closeFormUploadFoto);
+  buttonUploadCancel.removeEventListener('click',closeFormUploadPhoto);
   inputUploadFile.value = null;
 
   buttonScaleControlSmaller.removeEventListener('click',onClickButtonScaleControlSmaller);
-  buttonScaleControlBigger.removeEventListener('click',onclickButtonScaleControlBigger);
+  buttonScaleControlBigger.removeEventListener('click',onClickButtonScaleControlBigger);
 
   formUpload.removeEventListener('submit',validateFormUploadFoto);
 }
