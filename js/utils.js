@@ -49,10 +49,6 @@ function checkHashTag(elements, maxCount, re) {
           return `Хэш тэг под номером ${i + 1} не валиден!`;
         }
         for (let j = 1; j < elements.length; j++) {
-          //console.log('hashTag = ' + hashTag);
-          //console.log('hashTag.toLowerCase() = ' + hashTag.toLowerCase());
-          //console.log('elements[j] = ' + elements[j]);
-          //console.log('elements[j].toLowerCase() = ' + elements[j].toLowerCase());
           if (i < j) {
             if (hashTag.toLowerCase() === elements[j].toLowerCase()) {
               return ' Все хэшТэги должны быть разными! ';
