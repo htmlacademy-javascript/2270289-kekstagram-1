@@ -30,7 +30,7 @@ function validateFormUploadFoto (evt) {
 
 // Функция обработчик валидации поля ХэшТэг
 function validateHashTag (value) {
-  if (value !== '') {
+  if (value.length !== 0) {
     const hashtags = value.trim().replaceAll(/ +/g, ' ').split(HASHTAG_DIVIDER); // Добавили удаление концевых пробелов, а также удаление лишних прбелов внутри строки
     const resultVerifyHashTag = checkHashTag(hashtags, MAX_COUNT_HASHTAG, regularHashTag);
     if (resultVerifyHashTag !== 'Valid') {
