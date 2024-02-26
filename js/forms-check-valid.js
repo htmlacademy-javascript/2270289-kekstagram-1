@@ -8,7 +8,6 @@ const MAX_COUNT_HASHTAG = 5; // максимальное количество х
 const MAX_COUNT_COMMENT_SYMBOLS = 140; // максимальное количество символов в комментарии
 const HASHTAG_DIVIDER = ' ';
 const regularHashTag = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/; // регулярное выражение для проверки валидности введенного хештега
-//let messageErrorValidCommentField = '';
 
 const errorCodes = {
   Valid: 0,
@@ -64,8 +63,6 @@ const pristine = new Pristine(formUpload,{
 
 
 function validateFormUploadFoto (evt) {
-  //messageErrorValidHashTag = '';
-  //messageErrorValidCommentField = '';
   currentErrorCode = errorCodes.Valid;
   evt.preventDefault();
   pristine.validate();
