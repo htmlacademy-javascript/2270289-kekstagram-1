@@ -6,19 +6,44 @@ const imageUploadPreview = document.querySelector('.img-upload__preview');
 
 const listEffects = document.querySelector('.effects__list');
 
-
+//const listIdRadioButtons = ['effect-none','effect-chrome','effect-sepia','effect-marvin','effect-phobos','effect-heat'];
+const effectsMap = {
+  none : 'effect-none',
+  chrome: 'effect-chrome',
+  sepia: 'effect-sepia',
+  marvin: 'effect-marvin',
+  phobos: 'effect-phobos',
+  heat: 'effect-heat'
+};
 
 function onClickListEffects (evt) {
-  const liElements = listEffects.children;
-  console.log('liElements = ' + liElements);
-  for (let liItem of liElements) {
-    console.log('liItem = ' + liItem);
-    const radioButton = liItem.querySelector('input[type="radio"]');
-    console.log('radioButton = ' + radioButton);
-    console.log('radioButton.id = ' + radioButton.id);
-    if (evt.target.id === radioButton.id) {
-      console.log('Урррра мы наши элемент - это ' + radioButton.id);
+  // При переключении эффектов, уровень насыщенности сбрасывается до начального значения (100%)
+  // : слайдер, CSS-стиль изображения и значение поля должны обновляться.
+  switch (evt.target.id) {
+    case effectsMap.none : {
+      // CSS-стили filter удаляются.;  слайдер и его контейнер (элемент .img-upload__effect-level) скрываются.
     }
+      break;
+    case effectsMap.chrome : {
+      // filter: grayscale(0..1) с шагом 0.1;
+    }
+      break;
+    case effectsMap.sepia : {
+      // filter: sepia(0..1) с шагом 0.1;
+    }
+      break;
+    case effectsMap.marvin : {
+      // filter: invert(0..100%) с шагом 1%;
+    }
+      break;
+    case effectsMap.phobos : {
+      // filter: blur(0..3px) с шагом 0.1px;
+    }
+      break;
+    case effectsMap.heat : {
+      // filter: brightness(1..3) с шагом 0.1;
+    }
+      break;
   }
 }
 
