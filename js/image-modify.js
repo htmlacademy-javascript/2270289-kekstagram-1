@@ -1,3 +1,5 @@
+//import { name } from "browser-sync";
+
 const buttonScaleControlValue = document.querySelector('.scale__control--value');
 const buttonScaleControlSmaller = document.querySelector('.scale__control--smaller');
 const buttonScaleControlBigger = document.querySelector('.scale__control--bigger');
@@ -22,13 +24,28 @@ noUiSlider.create(sliderElement,{
   connect: 'lower',
 });
 
-sliderElement.noUiSlider.on('update', (...rest) => {
-  sliderValue.value = sliderElement.noUiSlider.get();
-  console.log(sliderValue.value);
-  console.log(rest);
-});
+function returnFilterDependesFromFilter (filter, value) {
+  if (filter.length !== 0) {
+    //
+    const nameFilter = filter.slice(0,filter.indexOf('('));
+    if (nameFilter === 'blur') {
+      //return `${nameFilter}(${value}px)`;
+      return [nameFilter,`${value}px`];
+    } else {
+      //return `${nameFilter}(${value})`;
+      return [nameFilter,`${value}`];
+    }
+  }
+}
 
-//const listIdRadioButtons = ['effect-none','effect-chrome','effect-sepia','effect-marvin','effect-phobos','effect-heat'];
+sliderElement.noUiSlider.on('update', () => {
+  sliderValue.value = sliderElement.noUiSlider.get();
+  const imagePreviewComputedStyle = getComputedStyle(imagePreview);
+  const newFilter = returnFilterDependesFromFilter(imagePreviewComputedStyle.filter,sliderValue.value);
+  imagePreview.style.setProperty(newFilter[0],newFilter[1]);
+  console.log('newFilter[0] = ' + newFilter[0]);
+  console.log('newFilter[1] = ' + newFilter[1]);
+});
 
 const effectToIdMap = {
   none : 'effect-none',
@@ -60,14 +77,17 @@ const inputIdToClassMap = {
 function onClickListEffects (evt) {
   // При переключении эффектов, уровень насыщенности сбрасывается до начального значения (100%)
   // : слайдер, CSS-стиль изображения и значение поля должны обновляться.
-  console.log(effectToIdMap);
-  console.log(inputIdToEffectMap);
-  console.log(inputIdToClassMap);
-  console.log(inputIdToClassMap[evt.target.id]);
+  //imagePreview.style.filter = 'none';
+  //console.log(effectToIdMap);
+  //console.log(inputIdToEffectMap);
+  //console.log(inputIdToClassMap);
+  //console.log(inputIdToClassMap[evt.target.id]);
+  imagePreview.className = '';
   imagePreview.classList.add(inputIdToClassMap[evt.target.id]);
 
   switch (evt.target.id) {
     case effectToIdMap.none : {
+      imagePreview.className = '';
       // CSS-стили filter удаляются.;  слайдер и его контейнер (элемент .img-upload__effect-level) скрываются.
 
     }
@@ -79,9 +99,9 @@ function onClickListEffects (evt) {
           min : 0,
           max : 1,
         },
-        start : 1,
         step : 0.1,
       });
+      sliderElement.noUiSlider.set(1);
     }
       break;
     case effectToIdMap.sepia : {
@@ -91,9 +111,9 @@ function onClickListEffects (evt) {
           min : 0,
           max : 1,
         },
-        start : 1,
         step : 0.1,
       });
+      sliderElement.noUiSlider.set(1);
     }
       break;
     case effectToIdMap.marvin : {
@@ -103,9 +123,9 @@ function onClickListEffects (evt) {
           min : 0,
           max : 100,
         },
-        start : 100,
         step : 1,
       });
+      sliderElement.noUiSlider.set(100);
     }
       break;
     case effectToIdMap.phobos : {
@@ -115,9 +135,9 @@ function onClickListEffects (evt) {
           min : 0,
           max : 3,
         },
-        start : 3,
         step : 0.1,
       });
+      sliderElement.noUiSlider.set(3);
     }
       break;
     case effectToIdMap.heat : {
@@ -127,12 +147,18 @@ function onClickListEffects (evt) {
           min : 1,
           max : 3,
         },
-        start : 3,
         step : 0.1,
       });
+      sliderElement.noUiSlider.set(3);
     }
       break;
   }
+  const imagePreviewComputedStyle = getComputedStyle(imagePreview);
+  const newFilter = returnFilterDependesFromFilter(imagePreviewComputedStyle.filter,sliderValue.value);
+  imagePreview.style.setProperty(newFilter[0],newFilter[1]);
+  imagePreview.style.filter = `${newFilter[0]}(${newFilter[1]})`;
+  //imagePreview.style.webkitFilter =
+
 }
 
 function onClickButtonScaleControlSmaller () {
