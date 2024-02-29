@@ -1,4 +1,3 @@
-//import { name } from "browser-sync";
 
 const buttonScaleControlValue = document.querySelector('.scale__control--value');
 const buttonScaleControlSmaller = document.querySelector('.scale__control--smaller');
@@ -40,13 +39,25 @@ function returnFilterDependesFromFilter (filter, value) {
 
 sliderElement.noUiSlider.on('update', () => {
   sliderValue.value = sliderElement.noUiSlider.get();
-  const imagePreviewComputedStyle = getComputedStyle(imagePreview);
-  const newFilter = returnFilterDependesFromFilter(imagePreviewComputedStyle.filter,sliderValue.value);
-  imagePreview.style.setProperty(newFilter[0],newFilter[1]);
-  console.log('newFilter[0] = ' + newFilter[0]);
-  console.log('newFilter[1] = ' + newFilter[1]);
+  console.log('Событие здесь! ');
 });
 
+function onClickSliderElement() {
+
+  const imagePreviewComputedStyle = getComputedStyle(imagePreview);
+  const newFilter = returnFilterDependesFromFilter(imagePreviewComputedStyle.filter,sliderValue.value);
+  imagePreview.style.setProperty(newFilter[0],newFilter[1],'important');
+  console.log('newFilter[0] = ' + newFilter[0]);
+  console.log('newFilter[1] = ' + newFilter[1]);
+  console.log('А сейчас Событие здесь! ');
+  console.log('imagePreview.style.getPropertyValue = ' + imagePreview.style.getPropertyValue('filter'));
+  console.log('imagePreview.style.getPropertyPriority = ' + imagePreview.style.getPropertyPriority('filter'));
+  const dopFilter = `${newFilter[0]}(${newFilter[1]})`;
+  console.log('dopFilter = "' + dopFilter + '"');
+  //imagePreview.attributeStyleMap.set('size','10');
+  console.log('imagePreview.computedStyleMap().get("filter") = ' + imagePreview.computedStyleMap().get('filter'));
+
+}
 const effectToIdMap = {
   none : 'effect-none',
   chrome: 'effect-chrome',
@@ -153,10 +164,10 @@ function onClickListEffects (evt) {
     }
       break;
   }
-  const imagePreviewComputedStyle = getComputedStyle(imagePreview);
-  const newFilter = returnFilterDependesFromFilter(imagePreviewComputedStyle.filter,sliderValue.value);
-  imagePreview.style.setProperty(newFilter[0],newFilter[1]);
-  imagePreview.style.filter = `${newFilter[0]}(${newFilter[1]})`;
+  //const imagePreviewComputedStyle = getComputedStyle(imagePreview);
+  //const newFilter = returnFilterDependesFromFilter(imagePreviewComputedStyle.filter,sliderValue.value);
+  //imagePreview.style.setProperty(newFilter[0],newFilter[1]);
+  //imagePreview.style.filter = `${newFilter[0]}(${newFilter[1]})`;
   //imagePreview.style.webkitFilter =
 
 }
@@ -187,6 +198,7 @@ function addEventOnElementsWrapper () {
   buttonScaleControlBigger.addEventListener('click',onClickButtonScaleControlBigger);
   buttonScaleControlValue.addEventListener('change',onChangeScaleControlValue);
   listEffects.addEventListener('click', onClickListEffects);
+  sliderElement.addEventListener('click', onClickSliderElement);
 }
 
 function removeEventOnElementsWrapper () {
@@ -194,6 +206,7 @@ function removeEventOnElementsWrapper () {
   buttonScaleControlBigger.removeEventListener('click',onClickButtonScaleControlBigger);
   buttonScaleControlValue.removeEventListener('change',onChangeScaleControlValue);
   listEffects.removeEventListener('click', onClickListEffects);
+  sliderElement.removeEventListener('click', onClickSliderElement);
 }
 
 export {addEventOnElementsWrapper, removeEventOnElementsWrapper};
