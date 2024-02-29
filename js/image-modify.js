@@ -27,36 +27,26 @@ function returnFilterDependesFromFilter (filter, value) {
   if (filter.length !== 0) {
     //
     const nameFilter = filter.slice(0,filter.indexOf('('));
+    const returnFilter = `${nameFilter}(${value})`;
+    /*
     if (nameFilter === 'blur') {
-      //return `${nameFilter}(${value}px)`;
-      return [nameFilter,`${value}px`];
+      return `${nameFilter}(${value}px)`;
     } else {
-      //return `${nameFilter}(${value})`;
-      return [nameFilter,`${value}`];
+      return `${nameFilter}(${value})`;
     }
+    */
+    return nameFilter === 'blur' ? `${returnFilter}px` : returnFilter ;
   }
 }
 
 sliderElement.noUiSlider.on('update', () => {
   sliderValue.value = sliderElement.noUiSlider.get();
-  console.log('Событие здесь! ');
 });
 
 function onClickSliderElement() {
-
   const imagePreviewComputedStyle = getComputedStyle(imagePreview);
   const newFilter = returnFilterDependesFromFilter(imagePreviewComputedStyle.filter,sliderValue.value);
-  imagePreview.style.setProperty(newFilter[0],newFilter[1],'important');
-  console.log('newFilter[0] = ' + newFilter[0]);
-  console.log('newFilter[1] = ' + newFilter[1]);
-  console.log('А сейчас Событие здесь! ');
-  console.log('imagePreview.style.getPropertyValue = ' + imagePreview.style.getPropertyValue('filter'));
-  console.log('imagePreview.style.getPropertyPriority = ' + imagePreview.style.getPropertyPriority('filter'));
-  const dopFilter = `${newFilter[0]}(${newFilter[1]})`;
-  console.log('dopFilter = "' + dopFilter + '"');
-  //imagePreview.attributeStyleMap.set('size','10');
-  console.log('imagePreview.computedStyleMap().get("filter") = ' + imagePreview.computedStyleMap().get('filter'));
-
+  imagePreview.attributeStyleMap.set('filter',newFilter);
 }
 const effectToIdMap = {
   none : 'effect-none',
@@ -94,6 +84,7 @@ function onClickListEffects (evt) {
   //console.log(inputIdToClassMap);
   //console.log(inputIdToClassMap[evt.target.id]);
   imagePreview.className = '';
+  imagePreview.attributeStyleMap.delete('filter');
   imagePreview.classList.add(inputIdToClassMap[evt.target.id]);
 
   switch (evt.target.id) {
