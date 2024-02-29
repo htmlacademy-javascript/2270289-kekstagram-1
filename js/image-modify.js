@@ -1,4 +1,3 @@
-
 const buttonScaleControlValue = document.querySelector('.scale__control--value');
 const buttonScaleControlSmaller = document.querySelector('.scale__control--smaller');
 const buttonScaleControlBigger = document.querySelector('.scale__control--bigger');
