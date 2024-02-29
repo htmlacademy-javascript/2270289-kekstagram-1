@@ -12,7 +12,6 @@ const fieldSetForUiSlider = document.querySelector('.img-upload__effect-level');
 const sliderValue = fieldSetForUiSlider.querySelector('.effect-level__value');
 const sliderElement = fieldSetForUiSlider.querySelector('.effect-level__slider');
 
-
 noUiSlider.create(sliderElement,{
   range : {
     min: 0,
@@ -25,17 +24,14 @@ noUiSlider.create(sliderElement,{
 
 function returnFilterDependesFromFilter (filter, value) {
   if (filter.length !== 0) {
-    //
     const nameFilter = filter.slice(0,filter.indexOf('('));
-    const returnFilter = `${nameFilter}(${value})`;
-    /*
     if (nameFilter === 'blur') {
       return `${nameFilter}(${value}px)`;
+    } else if ((nameFilter === 'invert')) {
+      return `${nameFilter}(${value}%)`;
     } else {
       return `${nameFilter}(${value})`;
     }
-    */
-    return nameFilter === 'blur' ? `${returnFilter}px` : returnFilter ;
   }
 }
 
@@ -76,22 +72,16 @@ const inputIdToClassMap = {
 };
 
 function onClickListEffects (evt) {
-  // При переключении эффектов, уровень насыщенности сбрасывается до начального значения (100%)
-  // : слайдер, CSS-стиль изображения и значение поля должны обновляться.
-  //imagePreview.style.filter = 'none';
-  //console.log(effectToIdMap);
-  //console.log(inputIdToEffectMap);
-  //console.log(inputIdToClassMap);
-  //console.log(inputIdToClassMap[evt.target.id]);
   imagePreview.className = '';
   imagePreview.attributeStyleMap.delete('filter');
   imagePreview.classList.add(inputIdToClassMap[evt.target.id]);
+  fieldSetForUiSlider.classList.remove('hidden');
 
   switch (evt.target.id) {
     case effectToIdMap.none : {
       imagePreview.className = '';
       // CSS-стили filter удаляются.;  слайдер и его контейнер (элемент .img-upload__effect-level) скрываются.
-
+      fieldSetForUiSlider.classList.add('hidden');
     }
       break;
     case effectToIdMap.chrome : {
@@ -155,12 +145,6 @@ function onClickListEffects (evt) {
     }
       break;
   }
-  //const imagePreviewComputedStyle = getComputedStyle(imagePreview);
-  //const newFilter = returnFilterDependesFromFilter(imagePreviewComputedStyle.filter,sliderValue.value);
-  //imagePreview.style.setProperty(newFilter[0],newFilter[1]);
-  //imagePreview.style.filter = `${newFilter[0]}(${newFilter[1]})`;
-  //imagePreview.style.webkitFilter =
-
 }
 
 function onClickButtonScaleControlSmaller () {
