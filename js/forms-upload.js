@@ -1,5 +1,6 @@
 import {isEscapeKey} from './utils.js';
 import {validateFormUploadFoto} from './forms-check-valid.js';
+import {addEventOnElementsWrapper, removeEventOnElementsWrapper} from './image-modify.js';
 
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const inputUploadFile = document.querySelector('#upload-file');
@@ -9,21 +10,6 @@ const imgUploadPreview = divImgUploadPreview.querySelector('img');
 
 const formUpload = document.querySelector('#upload-select-image');
 
-const buttonScaleControlValue = document.querySelector('.scale__control--value');
-const buttonScaleControlSmaller = document.querySelector('.scale__control--smaller');
-const buttonScaleControlBigger = document.querySelector('.scale__control--bigger');
-
-function onClickButtonScaleControlSmaller () {
-  if (buttonScaleControlValue.value > 25 && buttonScaleControlValue.value < 100) {
-    buttonScaleControlValue.value -= 25;
-  }
-}
-
-function onClickButtonScaleControlBigger () {
-  if (buttonScaleControlValue.value < 100 && buttonScaleControlValue.value > 25) {
-    buttonScaleControlValue.value += 25;
-  }
-}
 
 function onChangeInputFile () {
   imgUploadOverlay.classList.remove('hidden');
@@ -32,10 +18,9 @@ function onChangeInputFile () {
   document.addEventListener('keydown',onDocumentFormKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
   imgUploadPreview.src = URL.createObjectURL(inputUploadFile.files[0]);
 
-  buttonScaleControlSmaller.addEventListener('click',onClickButtonScaleControlSmaller);
-  buttonScaleControlBigger.addEventListener('click',onClickButtonScaleControlBigger);
-
   formUpload.addEventListener('submit',validateFormUploadFoto);
+
+  addEventOnElementsWrapper();
 }
 
 inputUploadFile.addEventListener('change', onChangeInputFile);
@@ -56,8 +41,7 @@ function closeFormUploadPhoto () {
   buttonUploadCancel.removeEventListener('click',closeFormUploadPhoto);
   inputUploadFile.value = null;
 
-  buttonScaleControlSmaller.removeEventListener('click',onClickButtonScaleControlSmaller);
-  buttonScaleControlBigger.removeEventListener('click',onClickButtonScaleControlBigger);
-
   formUpload.removeEventListener('submit',validateFormUploadFoto);
+
+  removeEventOnElementsWrapper();
 }

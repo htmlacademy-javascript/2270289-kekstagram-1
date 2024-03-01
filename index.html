@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="vendor/nouislider/nouislider.css ">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Кекстаграм</title>
 </head>
@@ -46,10 +47,9 @@
 
                   <!-- Изменение размера изображения -->
                   <fieldset class="img-upload__scale  scale">
-                    <button type="button" class="scale__control  scale__control--smaller">Уменьшить</button>
-                    <input type="range" class="scale__control  scale__control--value" title="Image Scale" name="scale"
-                    step="25" min="25" max="100" value="100" readonly>
-                    <button type="button" class="scale__control  scale__control--bigger">Увеличить</button>
+                    <button type="button" class="scale__control  scale__control--smaller" id="button-smaller-image">Уменьшить</button>
+                    <input type="text" class="scale__control  scale__control--value" title="Image Scale" name="scale" value="100" readonly>
+                    <button type="button" class="scale__control  scale__control--bigger" id="button-bigger-image">Увеличить</button>
                   </fieldset>
 
                   <!-- Предварительный просмотр изображения -->
@@ -124,8 +124,7 @@
                   </div>
                   <div class="img-upload__field-wrapper">
                     <textarea class="text__description" name="description" placeholder="Ваш комментарий..."
-                    id = "comment-field" >
-                    </textarea>
+                    id = "comment-field" ></textarea>
                   </div>
                 </fieldset>
 
@@ -238,6 +237,7 @@
     <div class="img-upload__message  img-upload__message--loading">Загружаем...</div>
   </template>
   <script src="vendor/pristine/pristine.min.js"></script>
+  <script src="vendor/nouislider/nouislider.js"></script>
   <script src="js/main.js" type="module" ></script>
 </body>
 </html>
