@@ -14,8 +14,8 @@ const errorCodes = {
   Count: 1,
   Unique: 2,
   Format: 3,
-  longLength: 4,
-  commentLongLength: 140
+  LongLength: 4,
+  CommentLongLength: 5
 };
 
 let currentErrorCode = errorCodes.Valid;
@@ -25,8 +25,8 @@ const errorCodeToErrorMessageMap = {
   [errorCodes.Count] : 'Максимальное количество хэшТэгов равно 5.',
   [errorCodes.Unique] : 'Все хэшТэги должны быть разными.',
   [errorCodes.Format] : 'Имеется не правильно записанный хэштэг.<br> (Формат хэштэгов: #street #Дача).',
-  [errorCodes.longLength] : 'Слишком длинный хэштэг.<br>Длина хэштэга 20 символов (включая решетку). ',
-  [errorCodes.commentLongLength]: `Комментарий не может содержать более ${MAX_COUNT_COMMENT_SYMBOLS} символов.`
+  [errorCodes.LongLength] : 'Слишком длинный хэштэг.<br>Длина хэштэга 20 символов (включая решетку). ',
+  [errorCodes.CommentLongLength]: `Комментарий не может содержать более ${MAX_COUNT_COMMENT_SYMBOLS} символов.`
 };
 
 function checkHashTag(elements, maxCount, re) {
