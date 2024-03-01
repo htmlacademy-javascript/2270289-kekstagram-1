@@ -21,7 +21,7 @@ noUiSlider.create(sliderElement,{
   connect: 'lower',
 });
 
-function returnFilterDependesFromFilter (filter, value) {
+function getFilterStyle (filter, value) {
   if (filter.length !== 0) {
     const nameFilter = filter.slice(0,filter.indexOf('('));
     if (nameFilter === 'blur') {
@@ -36,13 +36,15 @@ function returnFilterDependesFromFilter (filter, value) {
 
 sliderElement.noUiSlider.on('update', () => {
   sliderValue.value = sliderElement.noUiSlider.get();
+  updateEffectOnImage();
 });
 
-function onClickSliderElement() {
+function updateEffectOnImage() {
   const imagePreviewComputedStyle = getComputedStyle(imagePreview);
-  const newFilter = returnFilterDependesFromFilter(imagePreviewComputedStyle.filter,sliderValue.value);
-  imagePreview.attributeStyleMap.set('filter',newFilter);
+  const newFilter = getFilterStyle(imagePreviewComputedStyle.filter,sliderValue.value);
+  imagePreview.style.filter = newFilter;
 }
+
 const effectToIdMap = {
   none : 'effect-none',
   chrome: 'effect-chrome',
@@ -72,7 +74,7 @@ const inputIdToClassMap = {
 
 function onClickListEffects (evt) {
   imagePreview.className = '';
-  imagePreview.attributeStyleMap.delete('filter');
+  imagePreview.style.removeProperty('filter');
   imagePreview.classList.add(inputIdToClassMap[evt.target.id]);
   fieldSetForUiSlider.classList.remove('hidden');
 
@@ -164,7 +166,7 @@ function onClickButtonScaleControlBigger () {
 
 function onChangeScaleControlValue () {
   const scale = parseInt(buttonScaleControlValue.value, 10) / 100;
-  imagePreview.attributeStyleMap.set('transform', `scale(${scale})`);
+  imagePreview.style.transform = `scale(${scale})`;
 }
 
 function addEventOnElementsWrapper () {
@@ -172,7 +174,7 @@ function addEventOnElementsWrapper () {
   buttonScaleControlBigger.addEventListener('click',onClickButtonScaleControlBigger);
   buttonScaleControlValue.addEventListener('change',onChangeScaleControlValue);
   listEffects.addEventListener('click', onClickListEffects);
-  sliderElement.addEventListener('click', onClickSliderElement);
+  fieldSetForUiSlider.classList.add('hidden');
 }
 
 function removeEventOnElementsWrapper () {
@@ -180,7 +182,9 @@ function removeEventOnElementsWrapper () {
   buttonScaleControlBigger.removeEventListener('click',onClickButtonScaleControlBigger);
   buttonScaleControlValue.removeEventListener('change',onChangeScaleControlValue);
   listEffects.removeEventListener('click', onClickListEffects);
-  sliderElement.removeEventListener('click', onClickSliderElement);
+  imagePreview.style.removeProperty('filter');
+  imagePreview.style.removeProperty('transform');
+  imagePreview.className = '';
 }
 
 export {addEventOnElementsWrapper, removeEventOnElementsWrapper};

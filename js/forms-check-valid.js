@@ -40,7 +40,7 @@ function checkHashTag(elements, maxCount, re) {
       const hashTag = elements[i];
       const isValidItem = re.test(hashTag);
       if (!isValidItem) {
-        return hashTag.length > 20 ? errorCodes.longLength : errorCodes.Format; // Добавили обработку большой длины хэштэега
+        return hashTag.length > 20 ? errorCodes.LongLength : errorCodes.Format; // Добавили обработку большой длины хэштэега
       }
       const uniqElements = new Set(elements); // Использование множества для определения уникальности
       if (uniqElements.size !== elements.length) {

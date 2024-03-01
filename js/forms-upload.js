@@ -18,9 +18,9 @@ function onChangeInputFile () {
   document.addEventListener('keydown',onDocumentFormKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
   imgUploadPreview.src = URL.createObjectURL(inputUploadFile.files[0]);
 
-  addEventOnElementsWrapper();
-
   formUpload.addEventListener('submit',validateFormUploadFoto);
+
+  addEventOnElementsWrapper();
 }
 
 inputUploadFile.addEventListener('change', onChangeInputFile);
@@ -41,7 +41,7 @@ function closeFormUploadPhoto () {
   buttonUploadCancel.removeEventListener('click',closeFormUploadPhoto);
   inputUploadFile.value = null;
 
-  removeEventOnElementsWrapper();
-
   formUpload.removeEventListener('submit',validateFormUploadFoto);
+
+  removeEventOnElementsWrapper();
 }
