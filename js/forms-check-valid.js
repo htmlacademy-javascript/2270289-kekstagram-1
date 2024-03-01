@@ -14,8 +14,7 @@ const errorCodes = {
   Count: 1,
   Unique: 2,
   Format: 3,
-  LongLength: 4,
-  CommentLongLength: 5
+  LongLength: 4
 };
 
 let currentErrorCode = errorCodes.Valid;
@@ -26,8 +25,14 @@ const errorCodeToErrorMessageMap = {
   [errorCodes.Unique] : 'Все хэшТэги должны быть разными.',
   [errorCodes.Format] : 'Имеется не правильно записанный хэштэг.<br> (Формат хэштэгов: #street #Дача).',
   [errorCodes.LongLength] : 'Слишком длинный хэштэг.<br>Длина хэштэга 20 символов (включая решетку). ',
-  [errorCodes.CommentLongLength]: `Комментарий не может содержать более ${MAX_COUNT_COMMENT_SYMBOLS} символов.`
 };
+
+
+const errorCodeToErrorMessageCommentMap = {
+  [errorCodes.Valid] : 'Valid',
+  [errorCodes.LongLength] : `Комментарий не может содержать более ${MAX_COUNT_COMMENT_SYMBOLS} символов.`
+};
+
 
 function checkHashTag(elements, maxCount, re) {
   if (elements.length <= maxCount) {
@@ -50,6 +55,10 @@ function checkHashTag(elements, maxCount, re) {
 
 function getErrorMessage () {
   return errorCodeToErrorMessageMap[currentErrorCode];
+}
+
+function getErrorMessageComment () {
+  return errorCodeToErrorMessageCommentMap[currentErrorCode];
 }
 
 const pristine = new Pristine(formUpload,{
@@ -75,7 +84,7 @@ const getErrorCodeHashTag = (value) => {
 
 const getErrorCodeComment = (value) => {
   if (value.length > MAX_COUNT_COMMENT_SYMBOLS) {
-    return errorCodes.CommentLongLength;
+    return errorCodes.LongLength;
   }
   return errorCodes.Valid;
 };
@@ -97,7 +106,7 @@ pristine.addValidator(
     currentErrorCode = getErrorCodeComment(value);
     return currentErrorCode === errorCodes.Valid;
   },
-  getErrorMessage
+  getErrorMessageComment
 );
 
 export {validateFormUploadFoto};
