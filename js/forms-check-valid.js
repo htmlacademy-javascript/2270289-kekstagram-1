@@ -75,7 +75,7 @@ const getErrorCodeHashTag = (value) => {
 
 const getErrorCodeComment = (value) => {
   if (value.length > MAX_COUNT_COMMENT_SYMBOLS) {
-    return errorCodes.commentLongLength;
+    return errorCodes.CommentLongLength;
   }
   return errorCodes.Valid;
 };
