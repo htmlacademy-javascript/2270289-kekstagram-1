@@ -1,4 +1,3 @@
-//import {getRandomInteger,getRandomArrayElement,getRandomID} from './utils.js';
 
 const createUserPublication = (idPhoto,urlPhoto,descriptionPhoto,likesPhoto,commentsPhoto) => ({
   id: idPhoto,
