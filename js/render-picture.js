@@ -1,9 +1,9 @@
-import {getPublicationsEnrollment} from './data.js';
+//import {getPublicationsEnrollment} from './data.js';
 import {openBigPicture} from './render-big-picture.js';
 
-const pictureList = getPublicationsEnrollment();
+//const pictureList = getPublicationsEnrollment();
 
-function renderingPictureUsers() {
+function renderingPictureUsers(pictureList) {
 
   const picturesUserContainer = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content;

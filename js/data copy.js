@@ -22,20 +22,44 @@ const countAvatar = 6;
 const generatorCommentID = getRandomID(1,10000);
 const generatorPhotoID = getRandomID(1,25);
 
+const createComment = () => {
+  const randomID = generatorCommentID();
+  return {
+    id: randomID,
+    avatar: `${PATH_TO_AVATAR}${getRandomInteger(1,countAvatar)}${TYPE_FILE_AVATAR}`,
+    message: getRandomArrayElement(commentsGlossary),
+    name: getRandomArrayElement(namesGlossary),
+  };
+};
+
+const createUserPublication_Old = () => {
+  const idPhotoPublication = generatorPhotoID();
+  return {
+    id: idPhotoPublication,
+    url: `${PATH_TO_PHOTO}${idPhotoPublication}${TYPE_FILE_PHOTO}`,
+    description: descriptionPhotoGlossary[getRandomInteger (0,descriptionPhotoGlossary.length - 1)],
+    likes: getRandomInteger (15,200),
+    comments: Array.from({length:getRandomInteger (1,15)},createComment)
+  };
+};
+
 const createUserPublication = (idPhoto,urlPhoto,descriptionPhoto,likesPhoto,commentsPhoto) => ({
   id: idPhoto,
   url: urlPhoto,
   description: descriptionPhoto,
   likes: likesPhoto,
   comments: commentsPhoto
-});
-
-function getPublicationsEnrollment (miniatures) {
-  const enrollment = [];
-  miniatures.forEach(({id,url,description,likes,comments}) => {
-    enrollment.push(createUserPublication(id,url,description,likes,comments));
   });
-  return enrollment;
+
+function getPublicationsEnrollment_old () {
+  return Array.from({length: countUserPublication},createUserPublication);
 }
 
-export {getPublicationsEnrollment};
+function getPublicationsEnrollment_2 (miniatures) {
+  return Array.from({length: miniatures.length},createUserPublication({id, url, description, likes, comments}));
+
+  return Array.from({length: countUserPublication},createUserPublication);
+}
+//const publicationsEnrollment =
+
+export {getPublicationsEnrollment_old};
