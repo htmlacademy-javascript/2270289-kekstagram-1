@@ -19,7 +19,7 @@ const errorCodes = {
 
 let currentErrorCode = errorCodes.Valid;
 
-const errorCodeToErrorMessageMap = {
+const errorCodeToHashTagErrorMessageMap = {
   [errorCodes.Valid] : 'Valid',
   [errorCodes.Count] : 'Максимальное количество хэшТэгов равно 5.',
   [errorCodes.Unique] : 'Все хэшТэги должны быть разными.',
@@ -54,7 +54,7 @@ function checkHashTag(elements, maxCount, re) {
 }
 
 function getErrorMessage () {
-  return errorCodeToErrorMessageMap[currentErrorCode];
+  return errorCodeToHashTagErrorMessageMap[currentErrorCode];
 }
 
 function getErrorMessageComment () {
@@ -71,10 +71,9 @@ const pristine = new Pristine(formUpload,{
 });
 
 
-function validateFormUploadFoto (evt) {
+function validateFormUploadFoto () {
   currentErrorCode = errorCodes.Valid;
-  evt.preventDefault();
-  pristine.validate();
+  return pristine.validate();
 }
 
 const getErrorCodeHashTag = (value) => {

@@ -1,5 +1,6 @@
 import {isEscapeKey} from './utils.js';
 import {validateFormUploadFoto} from './forms-check-valid.js';
+//import {setUserFormSubmit} from './forms-check-valid.js';
 import {addEventOnElementsWrapper, removeEventOnElementsWrapper} from './image-modify.js';
 
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -10,6 +11,8 @@ const imgUploadPreview = divImgUploadPreview.querySelector('img');
 
 const formUpload = document.querySelector('#upload-select-image');
 
+const inputHashTags = document.querySelector('#hashtags');
+const inputCommentField = document.querySelector('#comment-field');
 
 function onChangeInputFile () {
   imgUploadOverlay.classList.remove('hidden');
@@ -18,12 +21,27 @@ function onChangeInputFile () {
   document.addEventListener('keydown',onDocumentFormKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
   imgUploadPreview.src = URL.createObjectURL(inputUploadFile.files[0]);
 
-  formUpload.addEventListener('submit',validateFormUploadFoto);
+  formUpload.addEventListener('submit',setUserFormSubmit);
 
   addEventOnElementsWrapper();
 }
 
 inputUploadFile.addEventListener('change', onChangeInputFile);
+
+function setUserFormSubmit (evt) {
+  evt.preventDefault();
+  const isValid = validateFormUploadFoto();
+  if (isValid) {
+    const formData = new FormData(evt.target);
+    fetch (
+      'https://28.javascript.htmlacademy.pro/kekstagram',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    ).then(closeFormUploadPhoto);
+  }
+}
 
 function onDocumentFormKeyDown (evt) {
   if (isEscapeKey(evt)) {
@@ -40,8 +58,10 @@ function closeFormUploadPhoto () {
   document.body.classList.remove('modal-open');
   buttonUploadCancel.removeEventListener('click',closeFormUploadPhoto);
   inputUploadFile.value = null;
+  inputHashTags.value = null;
+  inputCommentField.value = null;
 
-  formUpload.removeEventListener('submit',validateFormUploadFoto);
+  formUpload.removeEventListener('submit',setUserFormSubmit);
 
   removeEventOnElementsWrapper();
 }
