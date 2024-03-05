@@ -1,7 +1,7 @@
-import {isEscapeKey} from './utils.js';
+import {isEscapeKey, showAlert} from './utils.js';
 import {validateFormUploadFoto} from './forms-check-valid.js';
-//import {setUserFormSubmit} from './forms-check-valid.js';
 import {addEventOnElementsWrapper, removeEventOnElementsWrapper} from './image-modify.js';
+import {sendData} from './api.js';
 
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const inputUploadFile = document.querySelector('#upload-file');
@@ -13,6 +13,23 @@ const formUpload = document.querySelector('#upload-select-image');
 
 const inputHashTags = document.querySelector('#hashtags');
 const inputCommentField = document.querySelector('#comment-field');
+
+const submitButton = document.querySelector('#upload-submit');
+
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
 
 function onChangeInputFile () {
   imgUploadOverlay.classList.remove('hidden');
@@ -32,6 +49,14 @@ function setUserFormSubmit (evt) {
   evt.preventDefault();
   const isValid = validateFormUploadFoto();
   if (isValid) {
+    blockSubmitButton();
+    sendData(new FormData(evt.target))
+      .then(closeFormUploadPhoto)
+      .catch((err) => {
+        showAlert(err.message);
+      })
+      .finally(unblockSubmitButton);
+    /*
     const formData = new FormData(evt.target);
     fetch (
       'https://28.javascript.htmlacademy.pro/kekstagram',
@@ -39,7 +64,18 @@ function setUserFormSubmit (evt) {
         method: 'POST',
         body: formData,
       },
-    ).then(closeFormUploadPhoto);
+    )
+      .then((response) => {
+        if (response.ok) {
+          closeFormUploadPhoto();
+        } else {
+          showAlert('Не удалось отправить форму');
+        }
+      })
+      .catch(() => {
+        showAlert('Не удалось отправить форму');
+      });
+      */
   }
 }
 

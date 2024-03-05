@@ -27,12 +27,10 @@ const errorCodeToHashTagErrorMessageMap = {
   [errorCodes.LongLength] : 'Слишком длинный хэштэг.<br>Длина хэштэга 20 символов (включая решетку). ',
 };
 
-
 const errorCodeToErrorMessageCommentMap = {
   [errorCodes.Valid] : 'Valid',
   [errorCodes.LongLength] : `Комментарий не может содержать более ${MAX_COUNT_COMMENT_SYMBOLS} символов.`
 };
-
 
 function checkHashTag(elements, maxCount, re) {
   if (elements.length <= maxCount) {
@@ -69,7 +67,6 @@ const pristine = new Pristine(formUpload,{
   errorTextTag: 'p', // Тег, который будет обрамлять текст ошибки
   errorTextClass: 'form__error' // Класс для элемента с текстом ошибки
 });
-
 
 function validateFormUploadFoto () {
   currentErrorCode = errorCodes.Valid;
