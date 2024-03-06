@@ -69,12 +69,14 @@ function setUserFormSubmit (evt) {
   if (isValid) {
     blockSubmitButton();
     sendData(new FormData(evt.target))
-      .then(closeFormUploadPhoto)
+      //.then(closeFormUploadPhoto)
+      .then(openMessageAboutSuccessUpload)
       .catch((err) => {
-        //showAlert(err.message);
+        showAlert(err.message);
+
         openMessageAboutErrorUpload();
       })
-      .finally(activateActionsAfterSuccessUpload);
+      .finally(unblockSubmitButton);
   }
 }
 

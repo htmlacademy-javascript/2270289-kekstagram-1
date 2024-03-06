@@ -33,6 +33,7 @@ function onDocumentClickOnMessageError (evt) {
 }
 
 function openMessageAboutErrorUpload () {
+  console.log('оБшибка загрузки....');
   const messageError = messageErrorUploadTemplate.cloneNode(true);
   const containerMessageError = messageError.querySelector('section');
   const buttonError = messageError.querySelector('.error__button');
