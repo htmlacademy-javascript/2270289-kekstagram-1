@@ -21,21 +21,60 @@ const inputScaleControlValue = document.querySelector('.scale__control--value');
 
 const messageSuccesUploadTemplate = document.querySelector('#success').content;
 
+function closeMessageSuccessUpload (evt) {
+  const currentElement = evt.target;
+  const parentElement = currentElement.parentElement;
+  const grandParentElement = parentElement.parentElement;
+  grandParentElement.remove();
+  document.removeEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
+  document.removeEventListener('click',onDocumentClickOnMessageSuccess);
+  //
+}
+
+function onDocumentKeyDownOnMessageSuccess (evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    const sectionMessageSuccess = document.body.querySelector('#section-message-success');
+    sectionMessageSuccess.remove();
+    document.removeEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
+    document.removeEventListener('click',onDocumentClickOnMessageSuccess);
+  }
+}
+
+function onDocumentClickOnMessageSuccess (evt) {
+  //evt.preventDefault();
+  console.log('evt.target = ' + evt.target);
+  console.log('evt.target.id = ' + evt.target.id);
+  console.log('evt.clientX = ' + evt.clientX);
+  console.log('evt.clientX = ' + evt.clientY);
+
+  const sectionMessageSuccess = document.body.querySelector('#section-message-success');
+  const innerBlock = sectionMessageSuccess.querySelector('.success__inner');
+
+  console.log('sectionMessageSuccess.id = ' + sectionMessageSuccess.id);
+  console.log('innerBlock.id = ' + innerBlock.id);
+
+  if (evt.target.id !== innerBlock.id) {
+    console.log('сработало это событие');
+    sectionMessageSuccess.remove();
+    document.removeEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
+    document.removeEventListener('click',onDocumentClickOnMessageSuccess);
+  }
+}
+
 function openMessageAboutSuccessUpload () {
   const messageSuccess = messageSuccesUploadTemplate.cloneNode(true);
   const containerMessageSuccess = messageSuccess.querySelector('section');
-  //const buttonSuccess = messageSuccess.querySelector('.success__button');
-
+  const buttonSuccess = messageSuccess.querySelector('.success__button');
+  const innerBlockMessageSuccess = containerMessageSuccess.querySelector('.success__inner');
+  buttonSuccess.addEventListener('click', closeMessageSuccessUpload);
   containerMessageSuccess.id = 'section-message-success';
+  innerBlockMessageSuccess.id = 'inner-block-message-success';
+
+  document.addEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
+  document.addEventListener('click',onDocumentClickOnMessageSuccess);
 
   document.body.append(messageSuccess);
-
-  const buttonInsertSuccess = document.body.querySelector('#section-message-success');
-
-  buttonInsertSuccess.addEventListener('click', () => {
-    buttonInsertSuccess.remove();
-  });
-
 
 }
 
