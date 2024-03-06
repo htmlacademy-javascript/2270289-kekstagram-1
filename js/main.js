@@ -1,9 +1,11 @@
 
 import {renderingPictureUsers} from './render-picture.js';
 import {getPublicationsEnrollment} from './data.js';
-import './forms-upload.js';
+
 import {getData} from './api.js';
 import {showAlert} from './utils.js';
+
+import {onChangeInputFile} from './forms-upload.js';
 
 getData()
   .then((miniatures) => {
@@ -13,3 +15,7 @@ getData()
   .catch((err) => {
     showAlert(err.message);
   });
+
+const inputUploadFile = document.querySelector('#upload-file');
+
+inputUploadFile.addEventListener('change', onChangeInputFile);

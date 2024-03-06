@@ -4,7 +4,11 @@ import {addEventOnElementsWrapper, removeEventOnElementsWrapper} from './image-m
 import {sendData} from './api.js';
 
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
+
+
 const inputUploadFile = document.querySelector('#upload-file');
+
+
 const buttonUploadCancel = document.querySelector('#upload-cancel');
 const divImgUploadPreview = document.querySelector('.img-upload__preview');
 const imgUploadPreview = divImgUploadPreview.querySelector('img');
@@ -28,7 +32,6 @@ function closeMessageSuccessUpload (evt) {
   grandParentElement.remove();
   document.removeEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
   document.removeEventListener('click',onDocumentClickOnMessageSuccess);
-  //
 }
 
 function onDocumentKeyDownOnMessageSuccess (evt) {
@@ -89,6 +92,7 @@ function activateActionsAfteSuccessUpload () {
   unblockSubmitButton();
 }
 
+// ===================================================================================
 function onChangeInputFile () {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -100,8 +104,9 @@ function onChangeInputFile () {
 
   addEventOnElementsWrapper();
 }
+// ===================================================================================
+//inputUploadFile.addEventListener('change', onChangeInputFile);
 
-inputUploadFile.addEventListener('change', onChangeInputFile);
 
 function setUserFormSubmit (evt) {
   evt.preventDefault();
@@ -146,3 +151,5 @@ function closeFormUploadPhoto () {
 
   removeEventOnElementsWrapper();
 }
+
+export {onChangeInputFile};
