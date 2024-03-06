@@ -5,12 +5,9 @@ import {sendData} from './api.js';
 import {openMessageAboutSuccessUpload} from './message-success.js';
 import {openMessageAboutErrorUpload} from './message-error.js';
 
-
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 
-
 const inputUploadFile = document.querySelector('#upload-file');
-
 
 const buttonUploadCancel = document.querySelector('#upload-cancel');
 const divImgUploadPreview = document.querySelector('.img-upload__preview');
@@ -42,12 +39,7 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-function activateActionsAfterSuccessUpload () {
-  openMessageAboutSuccessUpload();
-  unblockSubmitButton();
-}
 
-// ===================================================================================
 function onChangeInputFile () {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -59,8 +51,6 @@ function onChangeInputFile () {
 
   addEventOnElementsWrapper();
 }
-// ===================================================================================
-//inputUploadFile.addEventListener('change', onChangeInputFile);
 
 
 function setUserFormSubmit (evt) {
