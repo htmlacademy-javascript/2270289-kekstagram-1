@@ -42,20 +42,11 @@ function onDocumentKeyDownOnMessageSuccess (evt) {
 }
 
 function onDocumentClickOnMessageSuccess (evt) {
-  //evt.preventDefault();
-  console.log('evt.target = ' + evt.target);
-  console.log('evt.target.id = ' + evt.target.id);
-  console.log('evt.clientX = ' + evt.clientX);
-  console.log('evt.clientX = ' + evt.clientY);
 
   const sectionMessageSuccess = document.body.querySelector('#section-message-success');
   const innerBlock = sectionMessageSuccess.querySelector('.success__inner');
 
-  console.log('sectionMessageSuccess.id = ' + sectionMessageSuccess.id);
-  console.log('innerBlock.id = ' + innerBlock.id);
-
   if (evt.target.id !== innerBlock.id) {
-    console.log('сработало это событие');
     sectionMessageSuccess.remove();
     document.removeEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
     document.removeEventListener('click',onDocumentClickOnMessageSuccess);
