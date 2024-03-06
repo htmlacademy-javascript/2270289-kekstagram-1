@@ -15,6 +15,29 @@ const inputHashTags = document.querySelector('#hashtags');
 const inputCommentField = document.querySelector('#comment-field');
 
 const submitButton = document.querySelector('#upload-submit');
+const radioButtonOriginalEffect = document.querySelector('#effect-none');
+const imagePreview = divImgUploadPreview.querySelector('img');
+const inputScaleControlValue = document.querySelector('.scale__control--value');
+
+const messageSuccesUploadTemplate = document.querySelector('#success').content;
+
+function openMessageAboutSuccessUpload () {
+  const messageSuccess = messageSuccesUploadTemplate.cloneNode(true);
+  const containerMessageSuccess = messageSuccess.querySelector('section');
+  //const buttonSuccess = messageSuccess.querySelector('.success__button');
+
+  containerMessageSuccess.id = 'section-message-success';
+
+  document.body.append(messageSuccess);
+
+  const buttonInsertSuccess = document.body.querySelector('#section-message-success');
+
+  buttonInsertSuccess.addEventListener('click', () => {
+    buttonInsertSuccess.remove();
+  });
+
+
+}
 
 const SubmitButtonText = {
   IDLE: 'Сохранить',
@@ -30,6 +53,11 @@ const unblockSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = SubmitButtonText.IDLE;
 };
+
+function activateActionsAfteSuccessUpload () {
+  openMessageAboutSuccessUpload();
+  unblockSubmitButton();
+}
 
 function onChangeInputFile () {
   imgUploadOverlay.classList.remove('hidden');
@@ -55,27 +83,7 @@ function setUserFormSubmit (evt) {
       .catch((err) => {
         showAlert(err.message);
       })
-      .finally(unblockSubmitButton);
-    /*
-    const formData = new FormData(evt.target);
-    fetch (
-      'https://28.javascript.htmlacademy.pro/kekstagram',
-      {
-        method: 'POST',
-        body: formData,
-      },
-    )
-      .then((response) => {
-        if (response.ok) {
-          closeFormUploadPhoto();
-        } else {
-          showAlert('Не удалось отправить форму');
-        }
-      })
-      .catch(() => {
-        showAlert('Не удалось отправить форму');
-      });
-      */
+      .finally(activateActionsAfteSuccessUpload);
   }
 }
 
@@ -89,15 +97,22 @@ function onDocumentFormKeyDown (evt) {
   }
 }
 
+function clearToDefaultValue() {
+  inputUploadFile.value = null;
+  inputHashTags.value = null;
+  inputCommentField.value = null;
+  radioButtonOriginalEffect.checked = true;
+  imagePreview.style.transform = 'scale(100)';
+  inputScaleControlValue.value = '100';
+}
+
 function closeFormUploadPhoto () {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   buttonUploadCancel.removeEventListener('click',closeFormUploadPhoto);
-  inputUploadFile.value = null;
-  inputHashTags.value = null;
-  inputCommentField.value = null;
-
   formUpload.removeEventListener('submit',setUserFormSubmit);
+
+  clearToDefaultValue();
 
   removeEventOnElementsWrapper();
 }

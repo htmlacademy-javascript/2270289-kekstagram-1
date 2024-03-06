@@ -1,4 +1,4 @@
-const buttonScaleControlValue = document.querySelector('.scale__control--value');
+const inputScaleControlValue = document.querySelector('.scale__control--value');
 const buttonScaleControlSmaller = document.querySelector('.scale__control--smaller');
 const buttonScaleControlBigger = document.querySelector('.scale__control--bigger');
 
@@ -149,30 +149,30 @@ function onClickListEffects (evt) {
 }
 
 function onClickButtonScaleControlSmaller () {
-  if (buttonScaleControlValue.value > 25 && buttonScaleControlValue.value <= 100) {
-    const rangeValue = parseInt(buttonScaleControlValue.value, 10);
-    buttonScaleControlValue.value = rangeValue - 25;
+  if (inputScaleControlValue.value > 25 && inputScaleControlValue.value <= 100) {
+    const rangeValue = parseInt(inputScaleControlValue.value, 10);
+    inputScaleControlValue.value = rangeValue - 25;
     onChangeScaleControlValue();
   }
 }
 
 function onClickButtonScaleControlBigger () {
-  if (buttonScaleControlValue.value < 100 && buttonScaleControlValue.value >= 25) {
-    const rangeValue = parseInt(buttonScaleControlValue.value, 10);
-    buttonScaleControlValue.value = rangeValue + 25;
+  if (inputScaleControlValue.value < 100 && inputScaleControlValue.value >= 25) {
+    const rangeValue = parseInt(inputScaleControlValue.value, 10);
+    inputScaleControlValue.value = rangeValue + 25;
     onChangeScaleControlValue();
   }
 }
 
 function onChangeScaleControlValue () {
-  const scale = parseInt(buttonScaleControlValue.value, 10) / 100;
+  const scale = parseInt(inputScaleControlValue.value, 10) / 100;
   imagePreview.style.transform = `scale(${scale})`;
 }
 
 function addEventOnElementsWrapper () {
   buttonScaleControlSmaller.addEventListener('click',onClickButtonScaleControlSmaller);
   buttonScaleControlBigger.addEventListener('click',onClickButtonScaleControlBigger);
-  buttonScaleControlValue.addEventListener('change',onChangeScaleControlValue);
+  inputScaleControlValue.addEventListener('change',onChangeScaleControlValue);
   listEffects.addEventListener('click', onClickListEffects);
   fieldSetForUiSlider.classList.add('hidden');
 }
@@ -180,7 +180,7 @@ function addEventOnElementsWrapper () {
 function removeEventOnElementsWrapper () {
   buttonScaleControlSmaller.removeEventListener('click',onClickButtonScaleControlSmaller);
   buttonScaleControlBigger.removeEventListener('click',onClickButtonScaleControlBigger);
-  buttonScaleControlValue.removeEventListener('change',onChangeScaleControlValue);
+  inputScaleControlValue.removeEventListener('change',onChangeScaleControlValue);
   listEffects.removeEventListener('click', onClickListEffects);
   imagePreview.style.removeProperty('filter');
   imagePreview.style.removeProperty('transform');

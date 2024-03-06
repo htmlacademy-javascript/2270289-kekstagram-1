@@ -1,7 +1,7 @@
 const BASE_URL = 'https://28.javascript.htmlacademy.pro/kekstagram';
 const Route = {
   GET_DATA: '/data',
-  SEND_DATA: '/dfsd',
+  SEND_DATA: '/',
 };
 
 const ErrorText = {
@@ -12,8 +12,7 @@ const ErrorText = {
 const URL_GET_DATA = `${BASE_URL}${Route.GET_DATA}`;
 const URL_SEND_DATA = `${BASE_URL}${Route.SEND_DATA}`;
 
-const getData = () => fetch(
-  URL_GET_DATA)
+const getData = () => fetch(URL_GET_DATA)
   .then((response) => {
     if (!response.ok) {
       throw new Error();
@@ -24,8 +23,7 @@ const getData = () => fetch(
     throw new Error(ErrorText.GET_DATA);
   });
 
-const sendData = (body) => fetch(
-  URL_SEND_DATA,
+const sendData = (body) => fetch(URL_SEND_DATA,
   {
     method: 'POST',
     body,
