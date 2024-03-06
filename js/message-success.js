@@ -33,7 +33,7 @@ function onDocumentClickOnMessageSuccess (evt) {
 }
 
 function openMessageAboutSuccessUpload () {
-  console.log('УсЁ крутО загрузилось!....');
+
   const messageSuccess = messageSuccessUploadTemplate.cloneNode(true);
   const containerMessageSuccess = messageSuccess.querySelector('section');
   const buttonSuccess = messageSuccess.querySelector('.success__button');

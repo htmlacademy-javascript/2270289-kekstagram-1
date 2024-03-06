@@ -1,5 +1,14 @@
 import {isEscapeKey} from './utils.js';
+import {onDocumentFormKeyDown} from './forms-upload.js';
+
 const messageErrorUploadTemplate = document.querySelector('#error').content;
+
+function restoringState (element) {
+  element.remove();
+  document.removeEventListener('keydown',onDocumentKeyDownOnMessageError);
+  document.removeEventListener('click',onDocumentClickOnMessageError);
+  document.addEventListener('keydown',onDocumentFormKeyDown);
+}
 
 function closeMessageErrorUpload (evt) {
   const currentElement = evt.target;
@@ -8,15 +17,14 @@ function closeMessageErrorUpload (evt) {
   grandParentElement.remove();
   document.removeEventListener('keydown',onDocumentKeyDownOnMessageError);
   document.removeEventListener('click',onDocumentClickOnMessageError);
+  document.addEventListener('keydown',onDocumentFormKeyDown);
 }
 
 function onDocumentKeyDownOnMessageError (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     const sectionMessageError = document.body.querySelector('#section-message-error');
-    sectionMessageError.remove();
-    document.removeEventListener('keydown',onDocumentKeyDownOnMessageError);
-    document.removeEventListener('click',onDocumentClickOnMessageError);
+    restoringState(sectionMessageError);
   }
 }
 
@@ -26,14 +34,13 @@ function onDocumentClickOnMessageError (evt) {
   const innerBlock = sectionMessageError.querySelector('.error__inner');
 
   if (evt.target.id !== innerBlock.id) {
-    sectionMessageError.remove();
-    document.removeEventListener('keydown',onDocumentKeyDownOnMessageError);
-    document.removeEventListener('click',onDocumentClickOnMessageError);
+    restoringState(sectionMessageError);
   }
 }
 
 function openMessageAboutErrorUpload () {
-  console.log('оБшибка загрузки....');
+
+  document.removeEventListener('keydown',onDocumentFormKeyDown);
   const messageError = messageErrorUploadTemplate.cloneNode(true);
   const containerMessageError = messageError.querySelector('section');
   const buttonError = messageError.querySelector('.error__button');

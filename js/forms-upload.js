@@ -104,10 +104,11 @@ function closeFormUploadPhoto () {
   document.body.classList.remove('modal-open');
   buttonUploadCancel.removeEventListener('click',closeFormUploadPhoto);
   formUpload.removeEventListener('submit',setUserFormSubmit);
+  document.removeEventListener('keydown',onDocumentFormKeyDown);
 
   clearToDefaultValue();
 
   removeEventOnElementsWrapper();
 }
 
-export {onChangeInputFile};
+export {onChangeInputFile,onDocumentFormKeyDown};
