@@ -3,6 +3,8 @@ import {validateFormUploadFoto} from './forms-check-valid.js';
 import {addEventOnElementsWrapper, removeEventOnElementsWrapper} from './image-modify.js';
 import {sendData} from './api.js';
 import {openMessageAboutSuccessUpload} from './message-success.js';
+import {openMessageAboutErrorUpload} from './message-success.js';
+
 
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 
@@ -69,7 +71,8 @@ function setUserFormSubmit (evt) {
     sendData(new FormData(evt.target))
       .then(closeFormUploadPhoto)
       .catch((err) => {
-        showAlert(err.message);
+        //showAlert(err.message);
+        openMessageAboutErrorUpload();
       })
       .finally(activateActionsAfterSuccessUpload);
   }

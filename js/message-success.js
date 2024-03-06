@@ -1,5 +1,5 @@
 import {isEscapeKey} from './utils.js';
-const messageSuccesUploadTemplate = document.querySelector('#success').content;
+const messageSuccessUploadTemplate = document.querySelector('#success').content;
 
 function closeMessageSuccessUpload (evt) {
   const currentElement = evt.target;
@@ -33,7 +33,7 @@ function onDocumentClickOnMessageSuccess (evt) {
 }
 
 function openMessageAboutSuccessUpload () {
-  const messageSuccess = messageSuccesUploadTemplate.cloneNode(true);
+  const messageSuccess = messageSuccessUploadTemplate.cloneNode(true);
   const containerMessageSuccess = messageSuccess.querySelector('section');
   const buttonSuccess = messageSuccess.querySelector('.success__button');
   const innerBlockMessageSuccess = containerMessageSuccess.querySelector('.success__inner');
