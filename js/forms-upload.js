@@ -2,6 +2,7 @@ import {isEscapeKey, showAlert} from './utils.js';
 import {validateFormUploadFoto} from './forms-check-valid.js';
 import {addEventOnElementsWrapper, removeEventOnElementsWrapper} from './image-modify.js';
 import {sendData} from './api.js';
+import {openMessageAboutSuccessUpload} from './message-success.js';
 
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 
@@ -23,54 +24,6 @@ const radioButtonOriginalEffect = document.querySelector('#effect-none');
 const imagePreview = divImgUploadPreview.querySelector('img');
 const inputScaleControlValue = document.querySelector('.scale__control--value');
 
-const messageSuccesUploadTemplate = document.querySelector('#success').content;
-
-function closeMessageSuccessUpload (evt) {
-  const currentElement = evt.target;
-  const parentElement = currentElement.parentElement;
-  const grandParentElement = parentElement.parentElement;
-  grandParentElement.remove();
-  document.removeEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
-  document.removeEventListener('click',onDocumentClickOnMessageSuccess);
-}
-
-function onDocumentKeyDownOnMessageSuccess (evt) {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    const sectionMessageSuccess = document.body.querySelector('#section-message-success');
-    sectionMessageSuccess.remove();
-    document.removeEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
-    document.removeEventListener('click',onDocumentClickOnMessageSuccess);
-  }
-}
-
-function onDocumentClickOnMessageSuccess (evt) {
-
-  const sectionMessageSuccess = document.body.querySelector('#section-message-success');
-  const innerBlock = sectionMessageSuccess.querySelector('.success__inner');
-
-  if (evt.target.id !== innerBlock.id) {
-    sectionMessageSuccess.remove();
-    document.removeEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
-    document.removeEventListener('click',onDocumentClickOnMessageSuccess);
-  }
-}
-
-function openMessageAboutSuccessUpload () {
-  const messageSuccess = messageSuccesUploadTemplate.cloneNode(true);
-  const containerMessageSuccess = messageSuccess.querySelector('section');
-  const buttonSuccess = messageSuccess.querySelector('.success__button');
-  const innerBlockMessageSuccess = containerMessageSuccess.querySelector('.success__inner');
-  buttonSuccess.addEventListener('click', closeMessageSuccessUpload);
-  containerMessageSuccess.id = 'section-message-success';
-  innerBlockMessageSuccess.id = 'inner-block-message-success';
-
-  document.addEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
-  document.addEventListener('click',onDocumentClickOnMessageSuccess);
-
-  document.body.append(messageSuccess);
-
-}
 
 const SubmitButtonText = {
   IDLE: 'Сохранить',
@@ -87,7 +40,7 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-function activateActionsAfteSuccessUpload () {
+function activateActionsAfterSuccessUpload () {
   openMessageAboutSuccessUpload();
   unblockSubmitButton();
 }
@@ -118,7 +71,7 @@ function setUserFormSubmit (evt) {
       .catch((err) => {
         showAlert(err.message);
       })
-      .finally(activateActionsAfteSuccessUpload);
+      .finally(activateActionsAfterSuccessUpload);
   }
 }
 
