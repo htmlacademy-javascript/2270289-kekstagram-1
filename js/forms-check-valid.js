@@ -37,7 +37,7 @@ function checkHashTag(elements, maxCount, re) {
     for (let i = 0; i < elements.length; i++) {
       const hashTag = elements[i];
       const isValidItem = re.test(hashTag);
-      if (!isValidItem) {
+      if (!isValidItem && hashTag.length > 0) { // Добавили возможность, что ХэшТэг, может быть пустым
         return hashTag.length > 20 ? errorCodes.LongLength : errorCodes.Format; // Добавили обработку большой длины хэштэега
       }
       const uniqElements = new Set(elements); // Использование множества для определения уникальности
