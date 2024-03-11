@@ -14,10 +14,8 @@ function closeMessageErrorUpload (evt) {
   const currentElement = evt.target;
   const parentElement = currentElement.parentElement;
   const grandParentElement = parentElement.parentElement;
-  grandParentElement.remove();
-  document.removeEventListener('keydown',onDocumentKeyDownOnMessageError);
-  document.removeEventListener('click',onDocumentClickOnMessageError);
-  document.addEventListener('keydown',onDocumentFormKeyDown);
+
+  restoringState (grandParentElement);
 }
 
 function onDocumentKeyDownOnMessageError (evt) {

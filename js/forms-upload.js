@@ -1,4 +1,4 @@
-import {isEscapeKey, showAlert} from './utils.js';
+import {isEscapeKey} from './utils.js';
 import {validateFormUploadFoto} from './forms-check-valid.js';
 import {addEventOnElementsWrapper, removeEventOnElementsWrapper} from './image-modify.js';
 import {sendData} from './api.js';
@@ -47,13 +47,12 @@ function onChangeInputFile () {
   document.addEventListener('keydown',onDocumentFormKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
   imgUploadPreview.src = URL.createObjectURL(inputUploadFile.files[0]);
 
-  formUpload.addEventListener('submit',setUserFormSubmit);
+  formUpload.addEventListener('submit',onUserFormSubmit);
 
   addEventOnElementsWrapper();
 }
 
-
-function setUserFormSubmit (evt) {
+function onUserFormSubmit (evt) {
   evt.preventDefault();
   const isValid = validateFormUploadFoto();
   if (isValid) {
@@ -61,9 +60,7 @@ function setUserFormSubmit (evt) {
     sendData(new FormData(evt.target))
       //.then(closeFormUploadPhoto)
       .then(openMessageAboutSuccessUpload)
-      .catch((err) => {
-        showAlert(err.message);
-
+      .catch(() => {
         openMessageAboutErrorUpload();
       })
       .finally(unblockSubmitButton);
@@ -93,7 +90,7 @@ function closeFormUploadPhoto () {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   buttonUploadCancel.removeEventListener('click',closeFormUploadPhoto);
-  formUpload.removeEventListener('submit',setUserFormSubmit);
+  formUpload.removeEventListener('submit',onUserFormSubmit);
   document.removeEventListener('keydown',onDocumentFormKeyDown);
 
   clearToDefaultValue();

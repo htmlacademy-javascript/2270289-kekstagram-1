@@ -7,6 +7,9 @@ import {showAlert} from './utils.js';
 
 import {onChangeInputFile} from './forms-upload.js';
 
+const inputUploadFile = document.querySelector('#upload-file');
+inputUploadFile.addEventListener('change', onChangeInputFile);
+
 getData()
   .then((miniatures) => {
     const pictureList = getPublicationsEnrollment(miniatures);
@@ -15,7 +18,3 @@ getData()
   .catch((err) => {
     showAlert(err.message);
   });
-
-const inputUploadFile = document.querySelector('#upload-file');
-
-inputUploadFile.addEventListener('change', onChangeInputFile);
