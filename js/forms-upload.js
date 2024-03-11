@@ -39,7 +39,6 @@ function unblockSubmitButton () {
   submitButton.textContent = SubmitButtonText.IDLE;
 }
 
-
 function onChangeInputFile () {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -98,4 +97,4 @@ function closeFormUploadPhoto () {
   removeEventOnElementsWrapper();
 }
 
-export {onChangeInputFile,onDocumentFormKeyDown};
+export {onChangeInputFile,onDocumentFormKeyDown, closeFormUploadPhoto};
