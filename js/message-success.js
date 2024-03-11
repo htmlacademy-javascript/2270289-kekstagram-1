@@ -7,7 +7,6 @@ function restoringStateAfterSuccessUpload (element) {
   element.remove();
   document.removeEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
   document.removeEventListener('click',onDocumentClickOnMessageSuccess);
-  closeFormUploadPhoto();
 }
 
 function closeMessageSuccessUpload (evt) {
@@ -49,6 +48,8 @@ function openMessageAboutSuccessUpload () {
 
   document.addEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
   document.addEventListener('click',onDocumentClickOnMessageSuccess);
+
+  closeFormUploadPhoto();
 
   document.body.append(messageSuccess);
 
