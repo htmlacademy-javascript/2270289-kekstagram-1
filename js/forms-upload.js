@@ -29,15 +29,15 @@ const SubmitButtonText = {
   SENDING: 'Сохраняю...'
 };
 
-const blockSubmitButton = () => {
+function blockSubmitButton() {
   submitButton.disabled = true;
   submitButton.textContent = SubmitButtonText.SENDING;
-};
+}
 
-const unblockSubmitButton = () => {
+function unblockSubmitButton () {
   submitButton.disabled = false;
   submitButton.textContent = SubmitButtonText.IDLE;
-};
+}
 
 
 function onChangeInputFile () {

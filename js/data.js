@@ -1,11 +1,13 @@
 
-const createUserPublication = (idPhoto,urlPhoto,descriptionPhoto,likesPhoto,commentsPhoto) => ({
-  id: idPhoto,
-  url: urlPhoto,
-  description: descriptionPhoto,
-  likes: likesPhoto,
-  comments: commentsPhoto
-});
+function createUserPublication (idPhoto,urlPhoto,descriptionPhoto,likesPhoto,commentsPhoto) {
+  return {
+    id: idPhoto,
+    url: urlPhoto,
+    description: descriptionPhoto,
+    likes: likesPhoto,
+    comments: commentsPhoto
+  };
+}
 
 function getPublicationsEnrollment (miniatures) {
   const enrollment = [];

@@ -73,17 +73,17 @@ function validateFormUploadFoto () {
   return pristine.validate();
 }
 
-const getErrorCodeHashTag = (value) => {
+function getErrorCodeHashTag (value) {
   const hashtags = value.trim().replaceAll(/ +/g, ' ').split(HASHTAG_DIVIDER); // Добавили удаление концевых пробелов, а также удаление лишних прбелов внутри строки
   return checkHashTag(hashtags, MAX_COUNT_HASHTAG, regularHashTag);
-};
+}
 
-const getErrorCodeComment = (value) => {
+function getErrorCodeComment (value) {
   if (value.length > MAX_COUNT_COMMENT_SYMBOLS) {
     return errorCodes.LongLength;
   }
   return errorCodes.Valid;
-};
+}
 
 // добавляем валидатор на поле ХэшТег
 pristine.addValidator(

@@ -18,13 +18,13 @@ function renderingPictureUsers(pictureList) {
   }
   );
 
-  const onClickPicture = function (evt) {
+  function onClickPicture(evt) {
     if (evt.target.matches('.picture__img')) {
       const idUser = evt.target.getAttribute('data-id-picturelist');
       const indexList = pictureList.findIndex((picture) => +picture.id === +idUser);
       openBigPicture(pictureList[indexList]);
     }
-  };
+  }
 
   picturesUserContainer.appendChild(pictureUserFragment);
   picturesUserContainer.addEventListener('click',onClickPicture); // добавим обработку по клику на секцию фотографий
