@@ -1,9 +1,11 @@
 import {isEscapeKey} from './utils.js';
 import {onDocumentFormKeyDown} from './forms-upload.js';
 
+const ALERT_SHOW_TIME = 6000;
+
 const messageErrorUploadTemplate = document.querySelector('#error').content;
 
-function restoringState (element) {
+function restoringStateAfterErrorUpload (element) {
   element.remove();
   document.removeEventListener('keydown',onDocumentKeyDownOnMessageError);
   document.removeEventListener('click',onDocumentClickOnMessageError);
@@ -15,14 +17,14 @@ function closeMessageErrorUpload (evt) {
   const parentElement = currentElement.parentElement;
   const grandParentElement = parentElement.parentElement;
 
-  restoringState (grandParentElement);
+  restoringStateAfterErrorUpload(grandParentElement);
 }
 
 function onDocumentKeyDownOnMessageError (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     const sectionMessageError = document.body.querySelector('#section-message-error');
-    restoringState(sectionMessageError);
+    restoringStateAfterErrorUpload(sectionMessageError);
   }
 }
 
@@ -32,7 +34,7 @@ function onDocumentClickOnMessageError (evt) {
   const innerBlock = sectionMessageError.querySelector('.error__inner');
 
   if (evt.target.id !== innerBlock.id) {
-    restoringState(sectionMessageError);
+    restoringStateAfterErrorUpload(sectionMessageError);
   }
 }
 
@@ -54,4 +56,18 @@ function openMessageAboutErrorUpload () {
 
 }
 
-export {openMessageAboutErrorUpload};
+function showAlertAboutErrorLoadData () {
+  const alertContainerTemplate = document.querySelector('#error-load-data').content;
+  const alertContainer = alertContainerTemplate.cloneNode(true);
+
+  document.body.append(alertContainer);
+
+  const sectionAlertErrorLoadData = document.querySelector('#section-error-load-data');
+
+  setTimeout(() => {
+    sectionAlertErrorLoadData.remove();
+  }, ALERT_SHOW_TIME);
+
+}
+
+export {openMessageAboutErrorUpload, showAlertAboutErrorLoadData };

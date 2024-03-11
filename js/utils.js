@@ -1,4 +1,3 @@
-const ALERT_SHOW_TIME = 5000;
 
 function getRandomInteger (a, b) {
   const lower = Math.ceil(Math.min(a,b));
@@ -7,7 +6,9 @@ function getRandomInteger (a, b) {
   return Math.floor(result);
 }
 
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+function getRandomArrayElement (elements) {
+  return elements[getRandomInteger(0, elements.length - 1)];
+}
 
 function getRandomID(min,max) {
   const previousValues = [];
@@ -46,25 +47,4 @@ function pluralize(count, words) {
   return `${words[ (count % 100 > 4 && count % 100 < 20) ? 2 : cases[ Math.min(count % 10, 5)] ]}`;
 }
 
-function showAlert (message) {
-  const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = '100';
-  alertContainer.style.position = 'absolute';
-  alertContainer.style.left = '0';
-  alertContainer.style.top = '0';
-  alertContainer.style.right = '0';
-  alertContainer.style.padding = '10px 3px';
-  alertContainer.style.fontSize = '30px';
-  alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = 'red';
-
-  alertContainer.textContent = message;
-
-  document.body.append(alertContainer);
-
-  setTimeout(() => {
-    alertContainer.remove();
-  }, ALERT_SHOW_TIME);
-}
-
-export {getRandomInteger, getRandomArrayElement, getRandomID, isEscapeKey, isEnterKey, pluralize, showAlert};
+export {getRandomInteger, getRandomArrayElement, getRandomID, isEscapeKey, isEnterKey, pluralize};

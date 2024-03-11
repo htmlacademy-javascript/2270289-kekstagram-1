@@ -3,7 +3,7 @@ import {renderingPictureUsers} from './render-picture.js';
 import {getPublicationsEnrollment} from './data.js';
 
 import {getData} from './api.js';
-import {showAlert} from './utils.js';
+import {showAlertAboutErrorLoadData} from './message-error.js';
 
 import {onChangeInputFile} from './forms-upload.js';
 
@@ -15,6 +15,6 @@ getData()
     const pictureList = getPublicationsEnrollment(miniatures);
     renderingPictureUsers(pictureList);
   })
-  .catch((err) => {
-    showAlert(err.message);
+  .catch(() => {
+    showAlertAboutErrorLoadData();
   });
