@@ -21,7 +21,7 @@ noUiSlider.create(sliderElement,{
   connect: 'lower',
 });
 
-function getFilterStyle (filter, value) {
+const getFilterStyle = (filter, value) => {
   if (filter.length !== 0) {
     const nameFilter = filter.slice(0,filter.indexOf('('));
     if (nameFilter === 'blur') {
@@ -32,18 +32,18 @@ function getFilterStyle (filter, value) {
       return `${nameFilter}(${value})`;
     }
   }
-}
+};
+
+const updateEffectOnImage = () => {
+  const imagePreviewComputedStyle = getComputedStyle(imagePreview);
+  const newFilter = getFilterStyle(imagePreviewComputedStyle.filter,sliderValue.value);
+  imagePreview.style.filter = newFilter;
+};
 
 sliderElement.noUiSlider.on('update', () => {
   sliderValue.value = sliderElement.noUiSlider.get();
   updateEffectOnImage();
 });
-
-function updateEffectOnImage() {
-  const imagePreviewComputedStyle = getComputedStyle(imagePreview);
-  const newFilter = getFilterStyle(imagePreviewComputedStyle.filter,sliderValue.value);
-  imagePreview.style.filter = newFilter;
-}
 
 const effectToIdMap = {
   none : 'effect-none',
@@ -72,7 +72,7 @@ const inputIdToClassMap = {
   [effectToIdMap.heat] : `effects__preview--${inputIdToEffectMap[effectToIdMap.heat]}`
 };
 
-function onClickListEffects (evt) {
+const onClickListEffects = (evt) => {
   imagePreview.className = '';
   imagePreview.style.removeProperty('filter');
   imagePreview.classList.add(inputIdToClassMap[evt.target.id]);
@@ -146,38 +146,38 @@ function onClickListEffects (evt) {
     }
       break;
   }
-}
+};
 
-function onClickButtonScaleControlSmaller () {
+const onChangeScaleControlValue = () => {
+  const scale = parseInt(inputScaleControlValue.value, 10) / 100;
+  imagePreview.style.transform = `scale(${scale})`;
+};
+
+const onClickButtonScaleControlSmaller = () => {
   if (inputScaleControlValue.value > 25 && inputScaleControlValue.value <= 100) {
     const rangeValue = parseInt(inputScaleControlValue.value, 10);
     inputScaleControlValue.value = rangeValue - 25;
     onChangeScaleControlValue();
   }
-}
+};
 
-function onClickButtonScaleControlBigger () {
+const onClickButtonScaleControlBigger = () => {
   if (inputScaleControlValue.value < 100 && inputScaleControlValue.value >= 25) {
     const rangeValue = parseInt(inputScaleControlValue.value, 10);
     inputScaleControlValue.value = rangeValue + 25;
     onChangeScaleControlValue();
   }
-}
+};
 
-function onChangeScaleControlValue () {
-  const scale = parseInt(inputScaleControlValue.value, 10) / 100;
-  imagePreview.style.transform = `scale(${scale})`;
-}
-
-function addEventOnElementsWrapper () {
+const addEventOnElementsWrapper = () => {
   buttonScaleControlSmaller.addEventListener('click',onClickButtonScaleControlSmaller);
   buttonScaleControlBigger.addEventListener('click',onClickButtonScaleControlBigger);
   inputScaleControlValue.addEventListener('change',onChangeScaleControlValue);
   listEffects.addEventListener('click', onClickListEffects);
   fieldSetForUiSlider.classList.add('hidden');
-}
+};
 
-function removeEventOnElementsWrapper () {
+const removeEventOnElementsWrapper = () => {
   buttonScaleControlSmaller.removeEventListener('click',onClickButtonScaleControlSmaller);
   buttonScaleControlBigger.removeEventListener('click',onClickButtonScaleControlBigger);
   inputScaleControlValue.removeEventListener('change',onChangeScaleControlValue);
@@ -185,6 +185,6 @@ function removeEventOnElementsWrapper () {
   imagePreview.style.removeProperty('filter');
   imagePreview.style.removeProperty('transform');
   imagePreview.className = '';
-}
+};
 
 export {addEventOnElementsWrapper, removeEventOnElementsWrapper};

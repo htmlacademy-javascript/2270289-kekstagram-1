@@ -1,5 +1,5 @@
 
-function checkPalindrome (palindrome) {
+const checkPalindrome = (palindrome) => {
   let stringContrary = '';
   const palindromeLow = palindrome.toLowerCase();
 
@@ -9,9 +9,9 @@ function checkPalindrome (palindrome) {
     stringContrary += palindrome[i];
   }
   return (stringContrary === palindrome);
-}
+};
 
-function extractNumberFromString(stringWithNumber){
+const extractNumberFromString = (stringWithNumber) => {
   let numberFromString = '';
   for (let i = 0; i < stringWithNumber.length; i++){
     if (parseInt(stringWithNumber[i],10) >= 0) {
@@ -19,9 +19,9 @@ function extractNumberFromString(stringWithNumber){
     }
   }
   return numberFromString;
-}
+};
 
-function addStringToAdressFile (beginString, minLength, addString){
+const addStringToAdressFile = (beginString, minLength, addString) => {
   let calcString = '';
   let resultString = '';
   const numberAdditional = Math.trunc((minLength - beginString.length) / addString.length);
@@ -46,8 +46,8 @@ function addStringToAdressFile (beginString, minLength, addString){
     resultString = beginString;
   }
   return resultString;
-}
+};
 
-function validateForLowEqualLength (stringCheck,lengthString){
-  return stringCheck.length <= lengthString;
-}
+const validateForLowEqualLength = (stringCheck,lengthString) => stringCheck.length <= lengthString;
+
+export {checkPalindrome,extractNumberFromString,addStringToAdressFile,validateForLowEqualLength};

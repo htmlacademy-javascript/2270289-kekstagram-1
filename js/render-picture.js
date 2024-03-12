@@ -1,6 +1,6 @@
 import {openBigPicture} from './render-big-picture.js';
 
-function renderingPictureUsers(pictureList) {
+const renderingPictureUsers = (pictureList) => {
 
   const picturesUserContainer = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content;
@@ -18,17 +18,17 @@ function renderingPictureUsers(pictureList) {
   }
   );
 
-  function onClickPicture(evt) {
+  const onClickPicture = (evt) => {
     if (evt.target.matches('.picture__img')) {
       const idUser = evt.target.getAttribute('data-id-picturelist');
       const indexList = pictureList.findIndex((picture) => +picture.id === +idUser);
       openBigPicture(pictureList[indexList]);
     }
-  }
+  };
 
   picturesUserContainer.appendChild(pictureUserFragment);
   picturesUserContainer.addEventListener('click',onClickPicture); // добавим обработку по клику на секцию фотографий
 
-}
+};
 
 export {renderingPictureUsers};
