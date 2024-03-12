@@ -1,6 +1,5 @@
 
 const formUpload = document.querySelector('#upload-select-image');
-
 const inputHashTag = formUpload.querySelector('#hashtags');
 const textareaComment = formUpload.querySelector('#comment-field');
 
@@ -100,4 +99,6 @@ pristine.addValidator(
   getErrorMessageComment
 );
 
-export {validateFormUploadFoto};
+const clearChangesFromPristine = () => pristine.reset();
+
+export {validateFormUploadFoto,clearChangesFromPristine};

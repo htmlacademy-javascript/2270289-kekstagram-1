@@ -1,5 +1,5 @@
 import {isEscapeKey} from './utils.js';
-import {validateFormUploadFoto} from './forms-check-valid.js';
+import {validateFormUploadFoto,clearChangesFromPristine} from './forms-check-valid.js';
 import {addEventOnElementsWrapper, removeEventOnElementsWrapper} from './image-modify.js';
 import {sendData} from './api.js';
 import {openMessageAboutSuccessUpload} from './message-success.js';
@@ -39,18 +39,6 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-const onChangeInputFile = () => {
-  imgUploadOverlay.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  buttonUploadCancel.addEventListener('click',closeFormUploadPhoto);
-  document.addEventListener('keydown',onDocumentFormKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
-  imgUploadPreview.src = URL.createObjectURL(inputUploadFile.files[0]);
-
-  formUpload.addEventListener('submit',onUserFormSubmit);
-
-  addEventOnElementsWrapper();
-};
-
 const onUserFormSubmit = (evt) => {
   evt.preventDefault();
   const isValid = validateFormUploadFoto();
@@ -76,6 +64,18 @@ const onDocumentFormKeyDown = (evt) => {
   }
 };
 
+const onChangeInputFile = () => {
+  imgUploadOverlay.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  buttonUploadCancel.addEventListener('click',closeFormUploadPhoto);
+  document.addEventListener('keydown',onDocumentFormKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
+  imgUploadPreview.src = URL.createObjectURL(inputUploadFile.files[0]);
+
+  formUpload.addEventListener('submit',onUserFormSubmit);
+
+  addEventOnElementsWrapper();
+};
+
 const clearToDefaultValue = () => {
   inputUploadFile.value = null;
   inputHashTags.value = null;
@@ -83,6 +83,7 @@ const clearToDefaultValue = () => {
   radioButtonOriginalEffect.checked = true;
   imagePreview.style.transform = 'scale(100)';
   inputScaleControlValue.value = '100';
+  clearChangesFromPristine();
 };
 
 // Функциональное объявление, для поднятия.
