@@ -24,9 +24,9 @@ const COUNT_VIEW_COMMENTS = 5;
 let commentsUpBoundary = COUNT_VIEW_COMMENTS;
 let commentsDownBoundary = 0;
 
-const openBigPicture = function (picture) {
+function openBigPicture (picture) {
 
-  const closeBigPicture = function () {
+  function closeBigPicture () {
     bigPictureSection.classList.add('hidden');
     document.body.classList.remove('modal-open');
     bigPictureSocialCommentCount.classList.remove('hidden');
@@ -36,7 +36,7 @@ const openBigPicture = function (picture) {
     bigPictureSocialCommentsLoader.classList.remove('hidden');
     commentsUpBoundary = COUNT_VIEW_COMMENTS;
     commentsDownBoundary = 0;
-  };
+  }
 
   function onDocumentKeyDown (evt) {
     if (isEscapeKey(evt)) {
@@ -83,6 +83,6 @@ const openBigPicture = function (picture) {
   if (picture.comments.length <= 5) {
     bigPictureSocialCommentsLoader.classList.add('hidden');
   }
-};
+}
 
 export {openBigPicture};

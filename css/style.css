@@ -1408,3 +1408,15 @@ main {
 .hidden {
   display: none;
 }
+
+.error__load__data {
+  z-index: 100;
+  position: absolute;
+  left : 25px;
+  top : 60px;
+  right : 25px;
+  padding : 10px 3px;
+  font-size : 30px;
+  text-align : center;
+  background-color: red ;
+}

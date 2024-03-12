@@ -1,11 +1,14 @@
-const getRandomInteger = (a, b) => {
+
+function getRandomInteger (a, b) {
   const lower = Math.ceil(Math.min(a,b));
   const upper = Math.floor(Math.max(a,b));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
-};
+}
 
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+function getRandomArrayElement (elements) {
+  return elements[getRandomInteger(0, elements.length - 1)];
+}
 
 function getRandomID(min,max) {
   const previousValues = [];
@@ -25,8 +28,13 @@ function getRandomID(min,max) {
   };
 }
 
-const isEscapeKey = (evt) => evt.key === 'Escape'; // вернет true если в объекте события evt, свойство key равно Escape (Нажата ESC)
-const isEnterKey = (evt) => evt.key === 'Enter'; // (Нажата Enter)
+function isEscapeKey (evt) {
+  return evt.key === 'Escape'; // вернет true если в объекте события evt, свойство key равно Escape (Нажата ESC)
+}
+
+function isEnterKey (evt) {
+  return evt.key === 'Enter'; // (Нажата Enter)
+}
 
 /**
  * Plural forms for russian words

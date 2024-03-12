@@ -1,15 +1,43 @@
 import {isEscapeKey} from './utils.js';
 import {validateFormUploadFoto} from './forms-check-valid.js';
 import {addEventOnElementsWrapper, removeEventOnElementsWrapper} from './image-modify.js';
+import {sendData} from './api.js';
+import {openMessageAboutSuccessUpload} from './message-success.js';
+import {openMessageAboutErrorUpload} from './message-error.js';
 
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
+
 const inputUploadFile = document.querySelector('#upload-file');
+
 const buttonUploadCancel = document.querySelector('#upload-cancel');
 const divImgUploadPreview = document.querySelector('.img-upload__preview');
 const imgUploadPreview = divImgUploadPreview.querySelector('img');
 
 const formUpload = document.querySelector('#upload-select-image');
 
+const inputHashTags = document.querySelector('#hashtags');
+const inputCommentField = document.querySelector('#comment-field');
+
+const submitButton = document.querySelector('#upload-submit');
+const radioButtonOriginalEffect = document.querySelector('#effect-none');
+const imagePreview = divImgUploadPreview.querySelector('img');
+const inputScaleControlValue = document.querySelector('.scale__control--value');
+
+
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
+
+function blockSubmitButton() {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+}
+
+function unblockSubmitButton () {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+}
 
 function onChangeInputFile () {
   imgUploadOverlay.classList.remove('hidden');
@@ -18,12 +46,25 @@ function onChangeInputFile () {
   document.addEventListener('keydown',onDocumentFormKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
   imgUploadPreview.src = URL.createObjectURL(inputUploadFile.files[0]);
 
-  formUpload.addEventListener('submit',validateFormUploadFoto);
+  formUpload.addEventListener('submit',onUserFormSubmit);
 
   addEventOnElementsWrapper();
 }
 
-inputUploadFile.addEventListener('change', onChangeInputFile);
+function onUserFormSubmit (evt) {
+  evt.preventDefault();
+  const isValid = validateFormUploadFoto();
+  if (isValid) {
+    blockSubmitButton();
+    sendData(new FormData(evt.target))
+      //.then(closeFormUploadPhoto)
+      .then(openMessageAboutSuccessUpload)
+      .catch(() => {
+        openMessageAboutErrorUpload();
+      })
+      .finally(unblockSubmitButton);
+  }
+}
 
 function onDocumentFormKeyDown (evt) {
   if (isEscapeKey(evt)) {
@@ -35,13 +76,25 @@ function onDocumentFormKeyDown (evt) {
   }
 }
 
+function clearToDefaultValue() {
+  inputUploadFile.value = null;
+  inputHashTags.value = null;
+  inputCommentField.value = null;
+  radioButtonOriginalEffect.checked = true;
+  imagePreview.style.transform = 'scale(100)';
+  inputScaleControlValue.value = '100';
+}
+
 function closeFormUploadPhoto () {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   buttonUploadCancel.removeEventListener('click',closeFormUploadPhoto);
-  inputUploadFile.value = null;
+  formUpload.removeEventListener('submit',onUserFormSubmit);
+  document.removeEventListener('keydown',onDocumentFormKeyDown);
 
-  formUpload.removeEventListener('submit',validateFormUploadFoto);
+  clearToDefaultValue();
 
   removeEventOnElementsWrapper();
 }
+
+export {onChangeInputFile,onDocumentFormKeyDown, closeFormUploadPhoto};

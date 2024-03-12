@@ -19,7 +19,7 @@ const errorCodes = {
 
 let currentErrorCode = errorCodes.Valid;
 
-const errorCodeToErrorMessageMap = {
+const errorCodeToHashTagErrorMessageMap = {
   [errorCodes.Valid] : 'Valid',
   [errorCodes.Count] : 'Максимальное количество хэшТэгов равно 5.',
   [errorCodes.Unique] : 'Все хэшТэги должны быть разными.',
@@ -27,19 +27,17 @@ const errorCodeToErrorMessageMap = {
   [errorCodes.LongLength] : 'Слишком длинный хэштэг.<br>Длина хэштэга 20 символов (включая решетку). ',
 };
 
-
 const errorCodeToErrorMessageCommentMap = {
   [errorCodes.Valid] : 'Valid',
   [errorCodes.LongLength] : `Комментарий не может содержать более ${MAX_COUNT_COMMENT_SYMBOLS} символов.`
 };
-
 
 function checkHashTag(elements, maxCount, re) {
   if (elements.length <= maxCount) {
     for (let i = 0; i < elements.length; i++) {
       const hashTag = elements[i];
       const isValidItem = re.test(hashTag);
-      if (!isValidItem) {
+      if (!isValidItem && hashTag.length > 0) { // Добавили возможность, что ХэшТэг, может быть пустым
         return hashTag.length > 20 ? errorCodes.LongLength : errorCodes.Format; // Добавили обработку большой длины хэштэега
       }
       const uniqElements = new Set(elements); // Использование множества для определения уникальности
@@ -54,7 +52,7 @@ function checkHashTag(elements, maxCount, re) {
 }
 
 function getErrorMessage () {
-  return errorCodeToErrorMessageMap[currentErrorCode];
+  return errorCodeToHashTagErrorMessageMap[currentErrorCode];
 }
 
 function getErrorMessageComment () {
@@ -70,24 +68,22 @@ const pristine = new Pristine(formUpload,{
   errorTextClass: 'form__error' // Класс для элемента с текстом ошибки
 });
 
-
-function validateFormUploadFoto (evt) {
+function validateFormUploadFoto () {
   currentErrorCode = errorCodes.Valid;
-  evt.preventDefault();
-  pristine.validate();
+  return pristine.validate();
 }
 
-const getErrorCodeHashTag = (value) => {
+function getErrorCodeHashTag (value) {
   const hashtags = value.trim().replaceAll(/ +/g, ' ').split(HASHTAG_DIVIDER); // Добавили удаление концевых пробелов, а также удаление лишних прбелов внутри строки
   return checkHashTag(hashtags, MAX_COUNT_HASHTAG, regularHashTag);
-};
+}
 
-const getErrorCodeComment = (value) => {
+function getErrorCodeComment (value) {
   if (value.length > MAX_COUNT_COMMENT_SYMBOLS) {
     return errorCodes.LongLength;
   }
   return errorCodes.Valid;
-};
+}
 
 // добавляем валидатор на поле ХэшТег
 pristine.addValidator(
