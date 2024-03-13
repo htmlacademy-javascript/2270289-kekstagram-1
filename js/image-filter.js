@@ -37,9 +37,18 @@ const getRandomPicturesFromList = (list) => {
   return resultArray;
 };
 
-const getPicturesListByRating = () => {
-  const idList = [];
-};
+const getPicturesListByRating = (list) => list.slice().sort((a,b) => {
+
+  if (a.likes > b.likes) {
+    return -1;
+  }
+  if (a.likes < b.likes) {
+    return 1;
+  }
+  return 0;
+});
+
+
 
 const radioButtonDefault = imageFilter.querySelector(`#${RadioButtonsIdMap.DEFAULT}`);
 const radioButtonRandom = imageFilter.querySelector(`#${RadioButtonsIdMap.RANDOM}`);
@@ -68,6 +77,9 @@ const onClickImageFilterForm = (evt) => {
       break;
     case RadioButtonsIdMap.DISCUSSED : {
       radioButtonDiscussed.classList.add('img-filters__button--active');
+      //console.log(pictureList);
+      //console.log(getPicturesListByRating(pictureList));
+      renderingPictureUsers(getPicturesListByRating(pictureList));
     }
       break;
   }
