@@ -19,7 +19,7 @@ const getPictureList = (miniatures) => {
   pictureList = getPublicationsEnrollment(miniatures);
 };
 
-const getRandomPictureFromList = (list) => {
+const getRandomPicturesFromList = (list) => {
   const idList = [];
   const idSet = new Set();
   list.forEach((picture) => idList.push(picture.id));
@@ -37,22 +37,24 @@ const getRandomPictureFromList = (list) => {
   return resultArray;
 };
 
+const getPicturesListByRating = () => {
+  const idList = [];
+};
+
 const radioButtonDefault = imageFilter.querySelector(`#${RadioButtonsIdMap.DEFAULT}`);
 const radioButtonRandom = imageFilter.querySelector(`#${RadioButtonsIdMap.RANDOM}`);
 const radioButtonDiscussed = imageFilter.querySelector(`#${RadioButtonsIdMap.DISCUSSED}`);
 
 const radioButtonsRemoveClass = () => imageFilterRadioButtons.forEach((radioButton) => radioButton.classList.remove('img-filters__button--active'));
 
-const removeTagWithClass = (removeClass,classContainer) => {
-  const tagsParent = document.querySelector(classContainer);
+const removeTagWithClass = (removeClass) => {
   const tags = document.querySelectorAll(removeClass);
-  tags.forEach((tag) => tagsParent.removeChild(tag));
-  //el.parentNode.removeChild(el);
+  tags.forEach((tag) => tag.parentNode.removeChild(tag));
 };
 
 const onClickImageFilterForm = (evt) => {
   radioButtonsRemoveClass();
-  removeTagWithClass('.picture','.pictures');
+  removeTagWithClass('.picture');
   switch (evt.target.id) {
     case RadioButtonsIdMap.DEFAULT : {
       radioButtonDefault.classList.add('img-filters__button--active');
@@ -61,7 +63,7 @@ const onClickImageFilterForm = (evt) => {
       break;
     case RadioButtonsIdMap.RANDOM : {
       radioButtonRandom.classList.add('img-filters__button--active');
-      renderingPictureUsers(getRandomPictureFromList(pictureList));
+      renderingPictureUsers(getRandomPicturesFromList(pictureList));
     }
       break;
     case RadioButtonsIdMap.DISCUSSED : {
