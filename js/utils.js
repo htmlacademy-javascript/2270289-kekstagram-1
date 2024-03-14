@@ -37,4 +37,13 @@ const pluralize = (count, words) => {
   return `${words[ (count % 100 > 4 && count % 100 < 20) ? 2 : cases[ Math.min(count % 10, 5)] ]}`;
 };
 
-export {getRandomInteger, getRandomArrayElement, getRandomID, isEscapeKey, isEnterKey, pluralize};
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  console.log(callback);
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {getRandomInteger, getRandomArrayElement, getRandomID, isEscapeKey, isEnterKey, pluralize, debounce};

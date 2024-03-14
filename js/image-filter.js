@@ -1,10 +1,12 @@
 import {renderingPictureUsers} from './render-picture.js';
 import {getPublicationsEnrollment} from './data.js';
-import {getRandomInteger} from './utils.js';
+import {getRandomInteger,debounce} from './utils.js';
 
 const imageFilter = document.querySelector('.img-filters');
 const imageFilterForm = imageFilter.querySelector('form');
 const imageFilterRadioButtons = imageFilter.querySelectorAll('.img-filters__button');
+
+const RERENDER_DELAY = 500;
 
 const RadioButtonsIdMap = {
   DEFAULT : 'filter-default',
@@ -48,8 +50,6 @@ const getPicturesListByRating = (list) => list.slice().sort((a,b) => {
   return 0;
 });
 
-
-
 const radioButtonDefault = imageFilter.querySelector(`#${RadioButtonsIdMap.DEFAULT}`);
 const radioButtonRandom = imageFilter.querySelector(`#${RadioButtonsIdMap.RANDOM}`);
 const radioButtonDiscussed = imageFilter.querySelector(`#${RadioButtonsIdMap.DISCUSSED}`);
@@ -67,19 +67,17 @@ const onClickImageFilterForm = (evt) => {
   switch (evt.target.id) {
     case RadioButtonsIdMap.DEFAULT : {
       radioButtonDefault.classList.add('img-filters__button--active');
-      renderingPictureUsers(pictureList);
+      debounce(() => renderingPictureUsers(pictureList),RERENDER_DELAY);
     }
       break;
     case RadioButtonsIdMap.RANDOM : {
       radioButtonRandom.classList.add('img-filters__button--active');
-      renderingPictureUsers(getRandomPicturesFromList(pictureList));
+      debounce(() => renderingPictureUsers(getRandomPicturesFromList(pictureList)),RERENDER_DELAY);
     }
       break;
     case RadioButtonsIdMap.DISCUSSED : {
       radioButtonDiscussed.classList.add('img-filters__button--active');
-      //console.log(pictureList);
-      //console.log(getPicturesListByRating(pictureList));
-      renderingPictureUsers(getPicturesListByRating(pictureList));
+      debounce(() => renderingPictureUsers(getPicturesListByRating(pictureList)),RERENDER_DELAY);
     }
       break;
   }
