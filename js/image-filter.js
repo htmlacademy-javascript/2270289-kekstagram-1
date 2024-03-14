@@ -6,7 +6,7 @@ const imageFilter = document.querySelector('.img-filters');
 const imageFilterForm = imageFilter.querySelector('form');
 const imageFilterRadioButtons = imageFilter.querySelectorAll('.img-filters__button');
 
-const RERENDER_DELAY = 5500;
+const RERENDER_DELAY = 500;
 
 const RadioButtonsIdMap = {
   DEFAULT : 'filter-default',
@@ -63,26 +63,34 @@ const removeTagWithClass = (removeClass) => {
 
 const onClickImageFilterForm = (evt) => {
   radioButtonsRemoveClass();
-  removeTagWithClass('.picture');
   switch (evt.target.id) {
     case RadioButtonsIdMap.DEFAULT : {
       radioButtonDefault.classList.add('img-filters__button--active');
-      const activatePicureList = renderingPictureUsers(pictureList);
-      debounce(() => activatePicureList,RERENDER_DELAY);
+      const activatePicureList = debounce(() => {
+        removeTagWithClass('.picture');
+        renderingPictureUsers(pictureList);
+      },RERENDER_DELAY,);
+      activatePicureList();
     }
       break;
     case RadioButtonsIdMap.RANDOM : {
       radioButtonRandom.classList.add('img-filters__button--active');
       const randomList = getRandomPicturesFromList(pictureList);
-      const activateRandomList = renderingPictureUsers(randomList);
-      debounce(() => activateRandomList,RERENDER_DELAY);
+      const activateRandomList = debounce(() => {
+        removeTagWithClass('.picture');
+        renderingPictureUsers(randomList);
+      },RERENDER_DELAY,);
+      activateRandomList();
     }
       break;
     case RadioButtonsIdMap.DISCUSSED : {
       radioButtonDiscussed.classList.add('img-filters__button--active');
       const ratingList = getPicturesListByRating(pictureList);
-      const activateRatingList = renderingPictureUsers(ratingList);
-      debounce(() => activateRatingList,RERENDER_DELAY);
+      const activateRatingList = debounce(() => {
+        removeTagWithClass('.picture');
+        renderingPictureUsers(ratingList);
+      },RERENDER_DELAY,);
+      activateRatingList();
     }
       break;
   }
@@ -91,6 +99,7 @@ const onClickImageFilterForm = (evt) => {
 const showImageFilter = () => {
   renderingPictureUsers(pictureList);
   imageFilter.classList.remove('img-filters--inactive');
+  //const view = () => debounce(onClickImageFilterForm,5000);
   imageFilterForm.addEventListener('click',onClickImageFilterForm);
 };
 
