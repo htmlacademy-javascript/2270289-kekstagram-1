@@ -40,7 +40,12 @@ const pluralize = (count, words) => {
 const debounce = (callback, timeoutDelay) => {
   let timeoutId;
   console.log(callback);
+  console.log(timeoutDelay);
+  console.log(timeoutId);
   return (...rest) => {
+    console.log(rest);
+    console.log(timeoutId);
+
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
