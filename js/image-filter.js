@@ -22,9 +22,8 @@ const getPictureList = (miniatures) => {
 };
 
 const getRandomPicturesFromList = (list) => {
-  const idList = [];
   const idSet = new Set();
-  list.forEach((picture) => idList.push(picture.id));
+  const idList = list.map((item) => item.id);
 
   while (idSet.size < COUNT_RANDOM_PICTURE) {
     const length = idList.length - 1;
