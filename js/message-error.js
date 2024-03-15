@@ -2,9 +2,33 @@ import {isEscapeKey} from './utils.js';
 import {onDocumentFormKeyDown} from './forms-upload.js';
 
 const ALERT_SHOW_TIME = 6000;
-
 const messageErrorUploadTemplate = document.querySelector('#error').content;
 
+const closeMessageErrorUpload = (evt) => {
+  const currentElement = evt.target;
+  const parentElement = currentElement.parentElement;
+  const grandParentElement = parentElement.parentElement;
+
+  restoringStateAfterErrorUpload(grandParentElement);
+};
+
+const onDocumentKeyDownOnMessageError = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    const sectionMessageError = document.body.querySelector('#section-message-error');
+    restoringStateAfterErrorUpload(sectionMessageError);
+  }
+};
+
+const onDocumentClickOnMessageError = (evt) => {
+  const sectionMessageError = document.body.querySelector('#section-message-error');
+  const innerBlock = sectionMessageError.querySelector('.error__inner');
+  if (evt.target.id !== innerBlock.id) {
+    restoringStateAfterErrorUpload(sectionMessageError);
+  }
+};
+
+// Функционадьное объявление, для поднятия.
 function restoringStateAfterErrorUpload (element) {
   element.remove();
   document.removeEventListener('keydown',onDocumentKeyDownOnMessageError);
@@ -12,34 +36,7 @@ function restoringStateAfterErrorUpload (element) {
   document.addEventListener('keydown',onDocumentFormKeyDown);
 }
 
-function closeMessageErrorUpload (evt) {
-  const currentElement = evt.target;
-  const parentElement = currentElement.parentElement;
-  const grandParentElement = parentElement.parentElement;
-
-  restoringStateAfterErrorUpload(grandParentElement);
-}
-
-function onDocumentKeyDownOnMessageError (evt) {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    const sectionMessageError = document.body.querySelector('#section-message-error');
-    restoringStateAfterErrorUpload(sectionMessageError);
-  }
-}
-
-function onDocumentClickOnMessageError (evt) {
-
-  const sectionMessageError = document.body.querySelector('#section-message-error');
-  const innerBlock = sectionMessageError.querySelector('.error__inner');
-
-  if (evt.target.id !== innerBlock.id) {
-    restoringStateAfterErrorUpload(sectionMessageError);
-  }
-}
-
-function openMessageAboutErrorUpload () {
-
+const openMessageAboutErrorUpload = () => {
   document.removeEventListener('keydown',onDocumentFormKeyDown);
   const messageError = messageErrorUploadTemplate.cloneNode(true);
   const containerMessageError = messageError.querySelector('section');
@@ -53,10 +50,9 @@ function openMessageAboutErrorUpload () {
   document.addEventListener('click',onDocumentClickOnMessageError);
 
   document.body.append(messageError);
+};
 
-}
-
-function showAlertAboutErrorLoadData () {
+const showAlertAboutErrorLoadData = () => {
   const alertContainerTemplate = document.querySelector('#error-load-data').content;
   const alertContainer = alertContainerTemplate.cloneNode(true);
 
@@ -67,7 +63,6 @@ function showAlertAboutErrorLoadData () {
   setTimeout(() => {
     sectionAlertErrorLoadData.remove();
   }, ALERT_SHOW_TIME);
+};
 
-}
-
-export {openMessageAboutErrorUpload, showAlertAboutErrorLoadData };
+export {openMessageAboutErrorUpload, showAlertAboutErrorLoadData};

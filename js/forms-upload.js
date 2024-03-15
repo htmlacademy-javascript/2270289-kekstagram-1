@@ -1,5 +1,5 @@
 import {isEscapeKey} from './utils.js';
-import {validateFormUploadFoto} from './forms-check-valid.js';
+import {validateFormUploadFoto,clearChangesFromPristine} from './forms-check-valid.js';
 import {addEventOnElementsWrapper, removeEventOnElementsWrapper} from './image-modify.js';
 import {sendData} from './api.js';
 import {openMessageAboutSuccessUpload} from './message-success.js';
@@ -29,29 +29,17 @@ const SubmitButtonText = {
   SENDING: 'Сохраняю...'
 };
 
-function blockSubmitButton() {
+const blockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = SubmitButtonText.SENDING;
-}
+};
 
-function unblockSubmitButton () {
+const unblockSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = SubmitButtonText.IDLE;
-}
+};
 
-function onChangeInputFile () {
-  imgUploadOverlay.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  buttonUploadCancel.addEventListener('click',closeFormUploadPhoto);
-  document.addEventListener('keydown',onDocumentFormKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
-  imgUploadPreview.src = URL.createObjectURL(inputUploadFile.files[0]);
-
-  formUpload.addEventListener('submit',onUserFormSubmit);
-
-  addEventOnElementsWrapper();
-}
-
-function onUserFormSubmit (evt) {
+const onUserFormSubmit = (evt) => {
   evt.preventDefault();
   const isValid = validateFormUploadFoto();
   if (isValid) {
@@ -64,9 +52,9 @@ function onUserFormSubmit (evt) {
       })
       .finally(unblockSubmitButton);
   }
-}
+};
 
-function onDocumentFormKeyDown (evt) {
+const onDocumentFormKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     const idElement = String(evt.target.id);
@@ -74,17 +62,31 @@ function onDocumentFormKeyDown (evt) {
       closeFormUploadPhoto ();
     }
   }
-}
+};
 
-function clearToDefaultValue() {
+const onChangeInputFile = () => {
+  imgUploadOverlay.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  buttonUploadCancel.addEventListener('click',closeFormUploadPhoto);
+  document.addEventListener('keydown',onDocumentFormKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
+  imgUploadPreview.src = URL.createObjectURL(inputUploadFile.files[0]);
+
+  formUpload.addEventListener('submit',onUserFormSubmit);
+
+  addEventOnElementsWrapper();
+};
+
+const clearToDefaultValue = () => {
   inputUploadFile.value = null;
   inputHashTags.value = null;
   inputCommentField.value = null;
   radioButtonOriginalEffect.checked = true;
   imagePreview.style.transform = 'scale(100)';
   inputScaleControlValue.value = '100';
-}
+  clearChangesFromPristine();
+};
 
+// Функциональное объявление, для поднятия.
 function closeFormUploadPhoto () {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');

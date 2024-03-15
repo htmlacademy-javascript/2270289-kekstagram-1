@@ -1,4 +1,4 @@
-function createRangeElementsForFragment (template,tagOne,tagTwo,indexBegin,boundaryUp,element) {
+const createRangeElementsForFragment = (template,tagOne,tagTwo,indexBegin,boundaryUp,element) => {
   const commentsFragment = document.createDocumentFragment();
 
   for (let i = indexBegin; i < boundaryUp; i++) {
@@ -15,6 +15,6 @@ function createRangeElementsForFragment (template,tagOne,tagTwo,indexBegin,bound
     commentsFragment.appendChild(comment);
   }
   return commentsFragment;
-}
+};
 
 export {createRangeElementsForFragment};
