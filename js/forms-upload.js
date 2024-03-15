@@ -45,7 +45,6 @@ const onUserFormSubmit = (evt) => {
   if (isValid) {
     blockSubmitButton();
     sendData(new FormData(evt.target))
-      //.then(closeFormUploadPhoto)
       .then(openMessageAboutSuccessUpload)
       .catch(() => {
         openMessageAboutErrorUpload();
@@ -69,7 +68,7 @@ const onChangeInputFile = () => {
   document.body.classList.add('modal-open');
   buttonUploadCancel.addEventListener('click',closeFormUploadPhoto);
   document.addEventListener('keydown',onDocumentFormKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
-  imgUploadPreview.src = URL.createObjectURL(inputUploadFile.files[0]);
+  imgUploadPreview.src = URL.createObjectURL(inputUploadFile.files[0]); // Загрузка изображения
 
   formUpload.addEventListener('submit',onUserFormSubmit);
 
