@@ -8,7 +8,7 @@ const imageFilterRadioButtons = imageFilter.querySelectorAll('.img-filters__butt
 
 const RERENDER_DELAY = 500;
 
-const RadioButtonsIdMap = {
+const RadioButtonIdMap = {
   DEFAULT : 'filter-default',
   RANDOM  : 'filter-random',
   DISCUSSED : 'filter-discussed'
@@ -38,7 +38,6 @@ const getRandomPicturesFromList = (list) => {
 };
 
 const getPicturesListByRating = (list) => list.slice().sort((a,b) => {
-
   if (a.likes > b.likes) {
     return -1;
   }
@@ -48,9 +47,9 @@ const getPicturesListByRating = (list) => list.slice().sort((a,b) => {
   return 0;
 });
 
-const radioButtonDefault = imageFilter.querySelector(`#${RadioButtonsIdMap.DEFAULT}`);
-const radioButtonRandom = imageFilter.querySelector(`#${RadioButtonsIdMap.RANDOM}`);
-const radioButtonDiscussed = imageFilter.querySelector(`#${RadioButtonsIdMap.DISCUSSED}`);
+const radioButtonDefault = imageFilter.querySelector(`#${RadioButtonIdMap.DEFAULT}`);
+const radioButtonRandom = imageFilter.querySelector(`#${RadioButtonIdMap.RANDOM}`);
+const radioButtonDiscussed = imageFilter.querySelector(`#${RadioButtonIdMap.DISCUSSED}`);
 
 const radioButtonsRemoveClass = () => imageFilterRadioButtons.forEach((radioButton) => radioButton.classList.remove('img-filters__button--active'));
 
@@ -59,36 +58,36 @@ const removeTagWithClass = (removeClass) => {
   tags.forEach((tag) => tag.parentNode.removeChild(tag));
 };
 
+const debounceDefaultList = debounce(() => {
+  renderingPictureUsers(pictureList);
+},RERENDER_DELAY,);
+
+const debounceRandomList = debounce(() => {
+  renderingPictureUsers(getRandomPicturesFromList(pictureList));
+},RERENDER_DELAY,);
+
+const debounceRatingList = debounce(() => {
+  renderingPictureUsers(getPicturesListByRating(pictureList));
+},RERENDER_DELAY,);
+
+
 const onClickImageFilterForm = (evt) => {
   radioButtonsRemoveClass();
+  removeTagWithClass('.picture');
   switch (evt.target.id) {
-    case RadioButtonsIdMap.DEFAULT : {
+    case RadioButtonIdMap.DEFAULT : {
       radioButtonDefault.classList.add('img-filters__button--active');
-      const activatePicureList = debounce(() => {
-        removeTagWithClass('.picture');
-        renderingPictureUsers(pictureList);
-      },RERENDER_DELAY,);
-      activatePicureList();
+      debounceDefaultList();
     }
       break;
-    case RadioButtonsIdMap.RANDOM : {
+    case RadioButtonIdMap.RANDOM : {
       radioButtonRandom.classList.add('img-filters__button--active');
-      const randomList = getRandomPicturesFromList(pictureList);
-      const activateRandomList = debounce(() => {
-        removeTagWithClass('.picture');
-        renderingPictureUsers(randomList);
-      },RERENDER_DELAY,);
-      activateRandomList();
+      debounceRandomList();
     }
       break;
-    case RadioButtonsIdMap.DISCUSSED : {
+    case RadioButtonIdMap.DISCUSSED : {
       radioButtonDiscussed.classList.add('img-filters__button--active');
-      const ratingList = getPicturesListByRating(pictureList);
-      const activateRatingList = debounce(() => {
-        removeTagWithClass('.picture');
-        renderingPictureUsers(ratingList);
-      },RERENDER_DELAY,);
-      activateRatingList();
+      debounceRatingList();
     }
       break;
   }
@@ -97,7 +96,6 @@ const onClickImageFilterForm = (evt) => {
 const showImageFilter = () => {
   renderingPictureUsers(pictureList);
   imageFilter.classList.remove('img-filters--inactive');
-  //const view = () => debounce(onClickImageFilterForm,5000);
   imageFilterForm.addEventListener('click',onClickImageFilterForm);
 };
 
