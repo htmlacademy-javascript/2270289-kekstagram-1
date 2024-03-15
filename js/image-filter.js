@@ -58,18 +58,9 @@ const removeTagWithClass = (removeClass) => {
   tags.forEach((tag) => tag.parentNode.removeChild(tag));
 };
 
-const debounceDefaultList = debounce(() => {
-  renderingPictureUsers(pictureList);
-},RERENDER_DELAY,);
-
-const debounceRandomList = debounce(() => {
-  renderingPictureUsers(getRandomPicturesFromList(pictureList));
-},RERENDER_DELAY,);
-
-const debounceRatingList = debounce(() => {
-  renderingPictureUsers(getPicturesListByRating(pictureList));
-},RERENDER_DELAY,);
-
+const debounceDefaultList = debounce(() => renderingPictureUsers(pictureList),RERENDER_DELAY,);
+const debounceRandomList = debounce(() => renderingPictureUsers(getRandomPicturesFromList(pictureList)),RERENDER_DELAY,);
+const debounceRatingList = debounce(() => renderingPictureUsers(getPicturesListByRating(pictureList)),RERENDER_DELAY,);
 
 const onClickImageFilterForm = (evt) => {
   radioButtonsRemoveClass();
