@@ -31,11 +31,10 @@ const getRandomPicturesFromList = (list) => {
     const index = getRandomInteger(0,length);
     idSet.add(index);
   }
-  const idArray = [...idSet];
   const resultArray = [];
-  idArray.forEach((ident) => {
-    resultArray.push(list[ident]);
-  });
+  for (const id of idSet) {
+    resultArray.push(list[id]);
+  }
   return resultArray;
 };
 
