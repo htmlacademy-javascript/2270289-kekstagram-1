@@ -10,7 +10,7 @@ const SubmitButtonText = {
   SENDING: 'Сохраняю...'
 };
 
-const FILE_TYPES = ['jpg', 'jpeg', 'png']; // Массив расштрений
+const FILE_TYPES = ['jpg', 'jpeg', 'png']; // Массив расширений
 
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const inputUploadFile = document.querySelector('#upload-file');
