@@ -10,6 +10,8 @@ const SubmitButtonText = {
   SENDING: 'Сохраняю...'
 };
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const inputUploadFile = document.querySelector('#upload-file');
 const buttonUploadCancel = document.querySelector('#upload-cancel');
@@ -64,11 +66,16 @@ const onChangeInputFile = () => {
   document.body.classList.add('modal-open');
   buttonUploadCancel.addEventListener('click',closeFormUploadPhoto);
   document.addEventListener('keydown',onDocumentFormKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
-  imgUploadPreview.src = URL.createObjectURL(inputUploadFile.files[0]); // Загрузка изображения
 
-  formUpload.addEventListener('submit',onUserFormSubmit);
+  const file = inputUploadFile.files[0]; // Выбрали файл(изображение)
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it)); // проверка загруженого файла допустимое расширение
 
-  addEventOnElementsWrapper();
+  if (matches) {
+    imgUploadPreview.src = URL.createObjectURL(file); // Загружаемый файл правильный, создаем ссылку на файл
+    formUpload.addEventListener('submit',onUserFormSubmit);
+    addEventOnElementsWrapper();
+  }
 };
 
 const clearToDefaultValue = () => {
