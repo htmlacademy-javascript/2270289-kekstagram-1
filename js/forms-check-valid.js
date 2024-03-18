@@ -14,8 +14,8 @@ const ErrorCodes = {
 const ErrorCodeToHashTagErrorMessageMap = {
   [ErrorCodes.VALID] : 'Valid',
   [ErrorCodes.COUNT] : 'Максимальное количество хэшТэгов равно 5.',
-  [ErrorCodes.COUNT] : 'Все хэшТэги должны быть разными.',
-  [ErrorCodes.COUNT] : 'Имеется не правильно записанный хэштэг.<br> (Формат хэштэгов: #street #Дача).',
+  [ErrorCodes.UNIQUE] : 'Все хэшТэги должны быть разными.',
+  [ErrorCodes.FORMAT] : 'Имеется не правильно записанный хэштэг.<br> (Формат хэштэгов: #street #Дача).',
   [ErrorCodes.LONG_LENGTH] : 'Слишком длинный хэштэг.<br>Длина хэштэга 20 символов (включая решетку). ',
 };
 
