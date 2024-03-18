@@ -8,27 +8,27 @@ const MAX_COUNT_COMMENT_SYMBOLS = 140; // максимальное количе�
 const HASHTAG_DIVIDER = ' ';
 const regularHashTag = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/; // регулярное выражение для проверки валидности введенного хештега
 
-const errorCodes = {
-  Valid: 0,
-  Count: 1,
-  Unique: 2,
-  Format: 3,
-  LongLength: 4
+const ErrorCodes = {
+  VALID: 0,
+  COUNT: 1,
+  UNIQUE: 2,
+  FORMAT: 3,
+  LONG_LENGTH: 4
 };
 
-let currentErrorCode = errorCodes.Valid;
+let currentErrorCode = ErrorCodes.VALID;
 
-const errorCodeToHashTagErrorMessageMap = {
-  [errorCodes.Valid] : 'Valid',
-  [errorCodes.Count] : 'Максимальное количество хэшТэгов равно 5.',
-  [errorCodes.Unique] : 'Все хэшТэги должны быть разными.',
-  [errorCodes.Format] : 'Имеется не правильно записанный хэштэг.<br> (Формат хэштэгов: #street #Дача).',
-  [errorCodes.LongLength] : 'Слишком длинный хэштэг.<br>Длина хэштэга 20 символов (включая решетку). ',
+const ErrorCodeToHashTagErrorMessageMap = {
+  [ErrorCodes.VALID] : 'Valid',
+  [ErrorCodes.COUNT] : 'Максимальное количество хэшТэгов равно 5.',
+  [ErrorCodes.COUNT] : 'Все хэшТэги должны быть разными.',
+  [ErrorCodes.COUNT] : 'Имеется не правильно записанный хэштэг.<br> (Формат хэштэгов: #street #Дача).',
+  [ErrorCodes.LONG_LENGTH] : 'Слишком длинный хэштэг.<br>Длина хэштэга 20 символов (включая решетку). ',
 };
 
-const errorCodeToErrorMessageCommentMap = {
-  [errorCodes.Valid] : 'Valid',
-  [errorCodes.LongLength] : `Комментарий не может содержать более ${MAX_COUNT_COMMENT_SYMBOLS} символов.`
+const ErrorCodeToErrorMessageCommentMap = {
+  [ErrorCodes.VALID] : 'Valid',
+  [ErrorCodes.LONG_LENGTH] : `Комментарий не может содержать более ${MAX_COUNT_COMMENT_SYMBOLS} символов.`
 };
 
 const checkHashTag = (elements, maxCount, re) => {
@@ -37,21 +37,21 @@ const checkHashTag = (elements, maxCount, re) => {
       const hashTag = elements[i];
       const isValidItem = re.test(hashTag);
       if (!isValidItem && hashTag.length > 0) { // Добавили возможность, что ХэшТэг, может быть пустым
-        return hashTag.length > 20 ? errorCodes.LongLength : errorCodes.Format; // Добавили обработку большой длины хэштэега
+        return hashTag.length > 20 ? ErrorCodes.LONG_LENGTH : ErrorCodes.FORMAT; // Добавили обработку большой длины хэштэега
       }
       const uniqElements = new Set(elements); // Использование множества для определения уникальности
       if (uniqElements.size !== elements.length) {
-        return errorCodes.Unique;
+        return ErrorCodes.UNIQUE;
       }
     }
   } else {
-    return errorCodes.Count;
+    return ErrorCodes.COUNT;
   }
-  return errorCodes.Valid;
+  return ErrorCodes.VALID;
 };
 
-const getErrorMessage = () => errorCodeToHashTagErrorMessageMap[currentErrorCode];
-const getErrorMessageComment = () => errorCodeToErrorMessageCommentMap[currentErrorCode];
+const getErrorMessage = () => ErrorCodeToHashTagErrorMessageMap[currentErrorCode];
+const getErrorMessageComment = () => ErrorCodeToErrorMessageCommentMap[currentErrorCode];
 
 const pristine = new Pristine(formUpload,{
   classTo: 'img-upload__field-wrapper', // Элемент, на который будут добавляться классы
@@ -63,7 +63,7 @@ const pristine = new Pristine(formUpload,{
 });
 
 const validateFormUploadFoto = () => {
-  currentErrorCode = errorCodes.Valid;
+  currentErrorCode = ErrorCodes.VALID;
   return pristine.validate();
 };
 
@@ -74,9 +74,9 @@ const getErrorCodeHashTag = (value) => {
 
 const getErrorCodeComment = (value) => {
   if (value.length > MAX_COUNT_COMMENT_SYMBOLS) {
-    return errorCodes.LongLength;
+    return ErrorCodes.LONG_LENGTH;
   }
-  return errorCodes.Valid;
+  return ErrorCodes.VALID;
 };
 
 // добавляем валидатор на поле ХэшТег
@@ -84,7 +84,7 @@ pristine.addValidator(
   inputHashTag,
   (value) => {
     currentErrorCode = getErrorCodeHashTag(value);
-    return currentErrorCode === errorCodes.Valid;
+    return currentErrorCode === ErrorCodes.VALID;
   },
   getErrorMessage
 );
@@ -94,7 +94,7 @@ pristine.addValidator(
   textareaComment,
   (value) => {
     currentErrorCode = getErrorCodeComment(value);
-    return currentErrorCode === errorCodes.Valid;
+    return currentErrorCode === ErrorCodes.VALID;
   },
   getErrorMessageComment
 );
