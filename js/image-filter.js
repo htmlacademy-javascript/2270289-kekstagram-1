@@ -2,11 +2,8 @@ import {renderingPictureUsers} from './render-picture.js';
 import {getPublicationsEnrollment} from './data.js';
 import {getRandomInteger,debounce} from './utils.js';
 
-const imageFilter = document.querySelector('.img-filters');
-const imageFilterForm = imageFilter.querySelector('form');
-const imageFilterRadioButtons = imageFilter.querySelectorAll('.img-filters__button');
-
 const RERENDER_DELAY = 500;
+const COUNT_RANDOM_PICTURE = 10;
 
 const RadioButtonIdMap = {
   DEFAULT : 'filter-default',
@@ -14,8 +11,11 @@ const RadioButtonIdMap = {
   DISCUSSED : 'filter-discussed'
 };
 
+const imageFilter = document.querySelector('.img-filters');
+const imageFilterForm = imageFilter.querySelector('form');
+const imageFilterRadioButtons = imageFilter.querySelectorAll('.img-filters__button');
+
 let pictureList;
-const COUNT_RANDOM_PICTURE = 10;
 
 const getPictureList = (miniatures) => {
   pictureList = getPublicationsEnrollment(miniatures);

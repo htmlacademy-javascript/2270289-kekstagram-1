@@ -1,8 +1,3 @@
-
-const formUpload = document.querySelector('#upload-select-image');
-const inputHashTag = formUpload.querySelector('#hashtags');
-const textareaComment = formUpload.querySelector('#comment-field');
-
 const MAX_COUNT_HASHTAG = 5; // максимальное количество хэштэгов в строке
 const MAX_COUNT_COMMENT_SYMBOLS = 140; // максимальное количество символов в комментарии
 const HASHTAG_DIVIDER = ' ';
@@ -16,8 +11,6 @@ const ErrorCodes = {
   LONG_LENGTH: 4
 };
 
-let currentErrorCode = ErrorCodes.VALID;
-
 const ErrorCodeToHashTagErrorMessageMap = {
   [ErrorCodes.VALID] : 'Valid',
   [ErrorCodes.COUNT] : 'Максимальное количество хэшТэгов равно 5.',
@@ -30,6 +23,12 @@ const ErrorCodeToErrorMessageCommentMap = {
   [ErrorCodes.VALID] : 'Valid',
   [ErrorCodes.LONG_LENGTH] : `Комментарий не может содержать более ${MAX_COUNT_COMMENT_SYMBOLS} символов.`
 };
+
+let currentErrorCode = ErrorCodes.VALID;
+
+const formUpload = document.querySelector('#upload-select-image');
+const inputHashTag = formUpload.querySelector('#hashtags');
+const textareaComment = formUpload.querySelector('#comment-field');
 
 const checkHashTag = (elements, maxCount, re) => {
   if (elements.length <= maxCount) {

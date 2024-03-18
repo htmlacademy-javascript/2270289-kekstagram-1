@@ -1,10 +1,35 @@
+const EffectToIdMap = {
+  NONE : 'effect-none',
+  CHROME: 'effect-chrome',
+  SEPIA: 'effect-sepia',
+  MARVIN: 'effect-marvin',
+  PHOBOS: 'effect-phobos',
+  HEAT: 'effect-heat'
+};
+
+const InputIdToEffectMap = {
+  [EffectToIdMap.NONE] : 'none',
+  [EffectToIdMap.CHROME] : 'chrome',
+  [EffectToIdMap.SEPIA] : 'sepia',
+  [EffectToIdMap.MARVIN] : 'marvin',
+  [EffectToIdMap.PHOBOS] : 'phobos',
+  [EffectToIdMap.HEAT] : 'heat'
+};
+
+const InputIdToClassMap = {
+  [EffectToIdMap.NONE] : `effects__preview--${InputIdToEffectMap[EffectToIdMap.NONE]}`,
+  [EffectToIdMap.CHROME] : `effects__preview--${InputIdToEffectMap[EffectToIdMap.CHROME]}`,
+  [EffectToIdMap.SEPIA] : `effects__preview--${InputIdToEffectMap[EffectToIdMap.SEPIA]}`,
+  [EffectToIdMap.MARVIN] : `effects__preview--${InputIdToEffectMap[EffectToIdMap.MARVIN]}`,
+  [EffectToIdMap.PHOBOS] : `effects__preview--${InputIdToEffectMap[EffectToIdMap.PHOBOS]}`,
+  [EffectToIdMap.HEAT] : `effects__preview--${InputIdToEffectMap[EffectToIdMap.HEAT]}`
+};
+
 const inputScaleControlValue = document.querySelector('.scale__control--value');
 const buttonScaleControlSmaller = document.querySelector('.scale__control--smaller');
 const buttonScaleControlBigger = document.querySelector('.scale__control--bigger');
-
 const divImgUploadPreview = document.querySelector('.img-upload__preview');
 const imagePreview = divImgUploadPreview.querySelector('img');
-
 const listEffects = document.querySelector('.effects__list');
 
 const fieldSetForUiSlider = document.querySelector('.img-upload__effect-level');
@@ -44,33 +69,6 @@ sliderElement.noUiSlider.on('update', () => {
   sliderValue.value = sliderElement.noUiSlider.get();
   updateEffectOnImage();
 });
-
-const EffectToIdMap = {
-  NONE : 'effect-none',
-  CHROME: 'effect-chrome',
-  SEPIA: 'effect-sepia',
-  MARVIN: 'effect-marvin',
-  PHOBOS: 'effect-phobos',
-  HEAT: 'effect-heat'
-};
-
-const InputIdToEffectMap = {
-  [EffectToIdMap.NONE] : 'none',
-  [EffectToIdMap.CHROME] : 'chrome',
-  [EffectToIdMap.SEPIA] : 'sepia',
-  [EffectToIdMap.MARVIN] : 'marvin',
-  [EffectToIdMap.PHOBOS] : 'phobos',
-  [EffectToIdMap.HEAT] : 'heat'
-};
-
-const InputIdToClassMap = {
-  [EffectToIdMap.NONE] : `effects__preview--${InputIdToEffectMap[EffectToIdMap.NONE]}`,
-  [EffectToIdMap.CHROME] : `effects__preview--${InputIdToEffectMap[EffectToIdMap.CHROME]}`,
-  [EffectToIdMap.SEPIA] : `effects__preview--${InputIdToEffectMap[EffectToIdMap.SEPIA]}`,
-  [EffectToIdMap.MARVIN] : `effects__preview--${InputIdToEffectMap[EffectToIdMap.MARVIN]}`,
-  [EffectToIdMap.PHOBOS] : `effects__preview--${InputIdToEffectMap[EffectToIdMap.PHOBOS]}`,
-  [EffectToIdMap.HEAT] : `effects__preview--${InputIdToEffectMap[EffectToIdMap.HEAT]}`
-};
 
 const onClickListEffects = (evt) => {
   imagePreview.className = '';

@@ -1,6 +1,8 @@
 import {isEscapeKey,pluralize} from './utils.js';
 import {createRangeElementsForFragment} from './render-comments.js';
 
+const COUNT_VIEW_COMMENTS = 5;
+
 const bigPictureSection = document.querySelector('.big-picture');
 const bigPictureDiv = bigPictureSection.querySelector('.big-picture__img');
 const bigPicture = bigPictureDiv.querySelector('img');
@@ -15,7 +17,6 @@ const bigPictureSocialComments = bigPictureSection.querySelector('.social__comme
 const pictureCommentTemplate = bigPictureSocialComments.querySelector('.social__comment');
 const pictureCommentTemplateClone = pictureCommentTemplate.cloneNode(true);
 
-const COUNT_VIEW_COMMENTS = 5;
 let commentsUpBoundary = COUNT_VIEW_COMMENTS;
 let commentsDownBoundary = 0;
 

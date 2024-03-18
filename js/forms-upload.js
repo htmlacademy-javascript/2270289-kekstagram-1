@@ -5,14 +5,16 @@ import {sendData} from './api.js';
 import {openMessageAboutSuccessUpload} from './message-success.js';
 import {openMessageAboutErrorUpload} from './message-error.js';
 
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
+
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
-
 const inputUploadFile = document.querySelector('#upload-file');
-
 const buttonUploadCancel = document.querySelector('#upload-cancel');
 const divImgUploadPreview = document.querySelector('.img-upload__preview');
 const imgUploadPreview = divImgUploadPreview.querySelector('img');
-
 const formUpload = document.querySelector('#upload-select-image');
 
 const inputHashTags = document.querySelector('#hashtags');
@@ -22,12 +24,6 @@ const submitButton = document.querySelector('#upload-submit');
 const radioButtonOriginalEffect = document.querySelector('#effect-none');
 const imagePreview = divImgUploadPreview.querySelector('img');
 const inputScaleControlValue = document.querySelector('.scale__control--value');
-
-
-const SubmitButtonText = {
-  IDLE: 'Сохранить',
-  SENDING: 'Сохраняю...'
-};
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;

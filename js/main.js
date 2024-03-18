@@ -5,8 +5,6 @@ import {onChangeInputFile} from './forms-upload.js';
 import {getPictureList,showImageFilter} from './image-filter.js';
 
 const inputUploadFile = document.querySelector('#upload-file');
-
-
 inputUploadFile.addEventListener('change', onChangeInputFile);
 
 getData()
