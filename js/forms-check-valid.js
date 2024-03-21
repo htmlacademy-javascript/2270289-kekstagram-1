@@ -38,7 +38,8 @@ const checkHashTag = (elements, maxCount, re) => {
       if (!isValidItem && hashTag.length > 0) { // Добавили возможность, что ХэшТэг, может быть пустым
         return hashTag.length > 20 ? ErrorCodes.LONG_LENGTH : ErrorCodes.FORMAT; // Добавили обработку большой длины хэштэега
       }
-      const uniqElements = new Set(elements); // Использование множества для определения уникальности
+      const lowCaseElements = elements.map((element) => element.toLowerCase());
+      const uniqElements = new Set(lowCaseElements); // Использование множества для определения уникальности
       if (uniqElements.size !== elements.length) {
         return ErrorCodes.UNIQUE;
       }
