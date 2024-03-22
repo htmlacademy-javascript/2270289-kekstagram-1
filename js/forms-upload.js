@@ -69,7 +69,7 @@ const onChangeInputFile = () => {
 
   const file = inputUploadFile.files[0]; // Выбрали файл(изображение)
   const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it)); // проверка загруженого файла на допустимое расширение
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it)); // проверка загруженного файла на допустимое расширение
 
   if (matches) {
     imgUploadPreview.src = URL.createObjectURL(file); // Загружаемый файл правильный, создаем ссылку на файл

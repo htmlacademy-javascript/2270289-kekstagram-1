@@ -62,7 +62,7 @@ const onClickButtonForLoadNextMessage = () => {
 
 const openBigPicture = (picture) => {
   commentsDownBoundary = 0;
-  listComments.length = 0; // очищаем содиржимое массива
+  listComments.length = 0; // очищаем содержимое массива
   picture.comments.forEach((comment) => listComments.push(comment));
   commentsUpBoundary = (listComments.length <= 5) ? picture.comments.length : COUNT_VIEW_COMMENTS;
 
