@@ -79,6 +79,8 @@ const getErrorCodeComment = (value) => {
   return ErrorCodes.VALID;
 };
 
+const clearChangesFromPristine = () => pristine.reset();
+
 // добавляем валидатор на поле ХэшТег
 pristine.addValidator(
   inputHashTag,
@@ -98,7 +100,5 @@ pristine.addValidator(
   },
   getErrorMessageComment
 );
-
-const clearChangesFromPristine = () => pristine.reset();
 
 export {validateFormUploadPhoto as validateFormUploadPhoto,clearChangesFromPristine};
