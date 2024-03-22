@@ -11,7 +11,7 @@ const renderPictureUsers = (pictureList) => {
     const userPicture = pictureUserTemplate.cloneNode(true);
     const userPictureImage = userPicture.querySelector('.picture__img');
     userPictureImage.src = url;
-    userPictureImage.setAttribute('data-id-picturelist',id); // Добавим атрибут для связи с идентификатором списка пользователей
+    userPictureImage.setAttribute('data-id-picture-list',id); // Добавим атрибут для связи с идентификатором списка пользователей
     userPicture.querySelector('.picture__likes').textContent = likes;
     userPicture.querySelector('.picture__comments').textContent = comments.length;
     pictureUserFragment.appendChild(userPicture);
@@ -20,7 +20,7 @@ const renderPictureUsers = (pictureList) => {
 
   const onClickPicture = (evt) => {
     if (evt.target.matches('.picture__img')) {
-      const idUser = evt.target.getAttribute('data-id-picturelist');
+      const idUser = evt.target.getAttribute('data-id-picture-list');
       const indexList = pictureList.findIndex((picture) => +picture.id === +idUser);
       openBigPicture(pictureList[indexList]);
     }
