@@ -75,8 +75,6 @@ const openBigPicture = (picture) => {
     document.removeEventListener('keydown',onDocumentKeyDown);
     bigPictureSocialCommentsLoader.removeEventListener('click',loadNextMessage);
     bigPictureSocialCommentsLoader.classList.remove('hidden');
-    commentsUpBoundary = COUNT_VIEW_COMMENTS;
-    commentsDownBoundary = 0;
   }
 };
 
