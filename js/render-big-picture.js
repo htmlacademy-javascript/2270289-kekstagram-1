@@ -100,8 +100,6 @@ function onClickButtonForCloseBigPicture() {
   document.removeEventListener('keydown', onDocumentKeyDown);
   bigPictureSocialCommentsLoader.removeEventListener('click', onClickButtonForLoadNextMessage);
   bigPictureSocialCommentsLoader.classList.remove('hidden');
-  commentsUpBoundary = COUNT_VIEW_COMMENTS;
-  commentsDownBoundary = 0;
 }
 
 export { openBigPicture };
