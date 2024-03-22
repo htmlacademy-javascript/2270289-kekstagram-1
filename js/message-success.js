@@ -21,7 +21,7 @@ const onDocumentKeyDownOnMessageSuccess = (evt) => {
 const onDocumentClickOnMessageSuccess = (evt) => {
   const sectionMessageSuccess = document.body.querySelector('#section-message-success');
   const innerBlock = sectionMessageSuccess.querySelector('.success__inner');
-  if (evt.target.id !== innerBlock.id) {
+  if (evt.target.id !== innerBlock.id && evt.target.nodeName !== 'H2') {
     restoreStateAfterSuccessUpload (sectionMessageSuccess);
   }
 };
