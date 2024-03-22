@@ -34,9 +34,9 @@ const listEffects = document.querySelector('.effects__list');
 
 const fieldSetForUiSlider = document.querySelector('.img-upload__effect-level');
 const sliderValue = fieldSetForUiSlider.querySelector('.effect-level__value');
-const sliderElement = fieldSetForUiSlider.querySelector('.effect-level__slider');
+const slider = fieldSetForUiSlider.querySelector('.effect-level__slider');
 
-noUiSlider.create(sliderElement,{
+noUiSlider.create(slider,{
   range : {
     min: 0,
     max: 100,
@@ -65,8 +65,8 @@ const updateEffectOnImage = () => {
   imagePreview.style.filter = newFilter;
 };
 
-sliderElement.noUiSlider.on('update', () => {
-  sliderValue.value = sliderElement.noUiSlider.get();
+slider.noUiSlider.on('update', () => {
+  sliderValue.value = slider.noUiSlider.get();
   updateEffectOnImage();
 });
 
@@ -85,62 +85,62 @@ const onClickListEffects = (evt) => {
       break;
     case EffectToIdMap.CHROME : {
       // filter: grayscale(0..1) с шагом 0.1;
-      sliderElement.noUiSlider.updateOptions({
+      slider.noUiSlider.updateOptions({
         range : {
           min : 0,
           max : 1,
         },
         step : 0.1,
       });
-      sliderElement.noUiSlider.set(1);
+      slider.noUiSlider.set(1);
     }
       break;
     case EffectToIdMap.SEPIA : {
       // filter: sepia(0..1) с шагом 0.1;
-      sliderElement.noUiSlider.updateOptions({
+      slider.noUiSlider.updateOptions({
         range : {
           min : 0,
           max : 1,
         },
         step : 0.1,
       });
-      sliderElement.noUiSlider.set(1);
+      slider.noUiSlider.set(1);
     }
       break;
     case EffectToIdMap.MARVIN : {
       // filter: invert(0..100%) с шагом 1%;
-      sliderElement.noUiSlider.updateOptions({
+      slider.noUiSlider.updateOptions({
         range : {
           min : 0,
           max : 100,
         },
         step : 1,
       });
-      sliderElement.noUiSlider.set(100);
+      slider.noUiSlider.set(100);
     }
       break;
     case EffectToIdMap.PHOBOS : {
       // filter: blur(0..3px) с шагом 0.1px;
-      sliderElement.noUiSlider.updateOptions({
+      slider.noUiSlider.updateOptions({
         range : {
           min : 0,
           max : 3,
         },
         step : 0.1,
       });
-      sliderElement.noUiSlider.set(3);
+      slider.noUiSlider.set(3);
     }
       break;
     case EffectToIdMap.HEAT : {
       // filter: brightness(1..3) с шагом 0.1;
-      sliderElement.noUiSlider.updateOptions({
+      slider.noUiSlider.updateOptions({
         range : {
           min : 1,
           max : 3,
         },
         step : 0.1,
       });
-      sliderElement.noUiSlider.set(3);
+      slider.noUiSlider.set(3);
     }
       break;
   }
