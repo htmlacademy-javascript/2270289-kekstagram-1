@@ -36,16 +36,6 @@ const fieldSetForUiSlider = document.querySelector('.img-upload__effect-level');
 const sliderValue = fieldSetForUiSlider.querySelector('.effect-level__value');
 const slider = fieldSetForUiSlider.querySelector('.effect-level__slider');
 
-noUiSlider.create(slider,{
-  range : {
-    min: 0,
-    max: 100,
-  },
-  start: 100,
-  step: 1,
-  connect: 'lower',
-});
-
 const getFilterStyle = (filter, value) => {
   if (filter.length !== 0) {
     const nameFilter = filter.slice(0,filter.indexOf('('));
@@ -64,11 +54,6 @@ const updateEffectOnImage = () => {
   const newFilter = getFilterStyle(imagePreviewComputedStyle.filter,sliderValue.value);
   imagePreview.style.filter = newFilter;
 };
-
-slider.noUiSlider.on('update', () => {
-  sliderValue.value = slider.noUiSlider.get();
-  updateEffectOnImage();
-});
 
 const onClickListEffects = (evt) => {
   imagePreview.className = '';
@@ -184,5 +169,20 @@ const removeEventOnElementsWrapper = () => {
   imagePreview.style.removeProperty('transform');
   imagePreview.className = '';
 };
+
+noUiSlider.create(slider,{
+  range : {
+    min: 0,
+    max: 100,
+  },
+  start: 100,
+  step: 1,
+  connect: 'lower',
+});
+
+slider.noUiSlider.on('update', () => {
+  sliderValue.value = slider.noUiSlider.get();
+  updateEffectOnImage();
+});
 
 export {addEventOnElementsWrapper, removeEventOnElementsWrapper};
