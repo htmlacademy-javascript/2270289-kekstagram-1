@@ -6,25 +6,6 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-//const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
-/*
-const getRandomID = (min,max) => {
-  const previousValues = [];
-  return () => {
-    let currentValue = getRandomInteger(min, max);
-    if (previousValues.length >= (max - min + 1)) {
-      return null;
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-};
-*/
-
 const isEscapeKey = (evt) => evt.key === 'Escape'; // вернет true если в объекте события evt, свойство key равно Escape (Нажата ESC)
 const isEnterKey = (evt) => evt.key === 'Enter'; // (Нажата Enter)
 
