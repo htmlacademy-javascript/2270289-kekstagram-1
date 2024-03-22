@@ -1,4 +1,4 @@
-import {renderingPictureUsers} from './render-picture.js';
+import {renderPictureUsers} from './render-picture.js';
 import {getPublicationsEnrollment} from './data.js';
 import {getRandomInteger,debounce} from './utils.js';
 
@@ -58,9 +58,9 @@ const removeTagWithClass = (removeClass) => {
   tags.forEach((tag) => tag.parentNode.removeChild(tag));
 };
 
-const debounceDefaultList = debounce(() => renderingPictureUsers(pictureList),RERENDER_DELAY,);
-const debounceRandomList = debounce(() => renderingPictureUsers(getRandomPicturesFromList(pictureList)),RERENDER_DELAY,);
-const debounceRatingList = debounce(() => renderingPictureUsers(getPicturesListByRating(pictureList)),RERENDER_DELAY,);
+const debounceDefaultList = debounce(() => renderPictureUsers(pictureList),RERENDER_DELAY,);
+const debounceRandomList = debounce(() => renderPictureUsers(getRandomPicturesFromList(pictureList)),RERENDER_DELAY,);
+const debounceRatingList = debounce(() => renderPictureUsers(getPicturesListByRating(pictureList)),RERENDER_DELAY,);
 
 const onClickImageFilterForm = (evt) => {
   removeClassFromRadioButton();
@@ -85,7 +85,7 @@ const onClickImageFilterForm = (evt) => {
 };
 
 const showImageFilter = () => {
-  renderingPictureUsers(pictureList);
+  renderPictureUsers(pictureList);
   imageFilter.classList.remove('img-filters--inactive');
   imageFilterForm.addEventListener('click',onClickImageFilterForm);
 };
