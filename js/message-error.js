@@ -4,32 +4,31 @@ import {onDocumentFormKeyDown} from './forms-upload.js';
 const ALERT_SHOW_TIME = 6000;
 const messageErrorUploadTemplate = document.querySelector('#error').content;
 
-const closeMessageErrorUpload = (evt) => {
+const onClickButtonForCloseMessageErrorUpload = (evt) => {
   const currentElement = evt.target;
   const parentElement = currentElement.parentElement;
   const grandParentElement = parentElement.parentElement;
-
-  restoringStateAfterErrorUpload(grandParentElement);
+  restoreStateAfterErrorUpload(grandParentElement);
 };
 
 const onDocumentKeyDownOnMessageError = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     const sectionMessageError = document.body.querySelector('#section-message-error');
-    restoringStateAfterErrorUpload(sectionMessageError);
+    restoreStateAfterErrorUpload(sectionMessageError);
   }
 };
 
 const onDocumentClickOnMessageError = (evt) => {
   const sectionMessageError = document.body.querySelector('#section-message-error');
   const innerBlock = sectionMessageError.querySelector('.error__inner');
-  if (evt.target.id !== innerBlock.id) {
-    restoringStateAfterErrorUpload(sectionMessageError);
+  if (evt.target.id !== innerBlock.id && evt.target.nodeName !== 'H2') {
+    restoreStateAfterErrorUpload(sectionMessageError);
   }
 };
 
-// Функционадьное объявление, для поднятия.
-function restoringStateAfterErrorUpload (element) {
+// Функциональное объявление, для поднятия.
+function restoreStateAfterErrorUpload (element) {
   element.remove();
   document.removeEventListener('keydown',onDocumentKeyDownOnMessageError);
   document.removeEventListener('click',onDocumentClickOnMessageError);
@@ -42,7 +41,7 @@ const openMessageAboutErrorUpload = () => {
   const containerMessageError = messageError.querySelector('section');
   const buttonError = messageError.querySelector('.error__button');
   const innerBlockMessageError = containerMessageError.querySelector('.error__inner');
-  buttonError.addEventListener('click', closeMessageErrorUpload);
+  buttonError.addEventListener('click', onClickButtonForCloseMessageErrorUpload);
   containerMessageError.id = 'section-message-error';
   innerBlockMessageError.id = 'inner-block-message-error';
 
