@@ -7,14 +7,14 @@ const onClickButtonForCloseMessageSuccessUpload = (evt) => {
   const currentElement = evt.target;
   const parentElement = currentElement.parentElement;
   const grandParentElement = parentElement.parentElement;
-  restoringStateAfterSuccessUpload (grandParentElement);
+  restoreStateAfterSuccessUpload (grandParentElement);
 };
 
 const onDocumentKeyDownOnMessageSuccess = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     const sectionMessageSuccess = document.body.querySelector('#section-message-success');
-    restoringStateAfterSuccessUpload (sectionMessageSuccess);
+    restoreStateAfterSuccessUpload (sectionMessageSuccess);
   }
 };
 
@@ -22,12 +22,12 @@ const onDocumentClickOnMessageSuccess = (evt) => {
   const sectionMessageSuccess = document.body.querySelector('#section-message-success');
   const innerBlock = sectionMessageSuccess.querySelector('.success__inner');
   if (evt.target.id !== innerBlock.id) {
-    restoringStateAfterSuccessUpload (sectionMessageSuccess);
+    restoreStateAfterSuccessUpload (sectionMessageSuccess);
   }
 };
 
 // Функциональное объявление, для поднятия.
-function restoringStateAfterSuccessUpload (element) {
+function restoreStateAfterSuccessUpload (element) {
   element.remove();
   document.removeEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
   document.removeEventListener('click',onDocumentClickOnMessageSuccess);
