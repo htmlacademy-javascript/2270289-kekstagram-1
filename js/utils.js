@@ -1,4 +1,3 @@
-
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a,b));
   const upper = Math.floor(Math.max(a,b));
@@ -7,7 +6,6 @@ const getRandomInteger = (a, b) => {
 };
 
 const isEscapeKey = (evt) => evt.key === 'Escape'; // вернет true если в объекте события evt, свойство key равно Escape (Нажата ESC)
-const isEnterKey = (evt) => evt.key === 'Enter'; // (Нажата Enter)
 
 /**
  * Plural forms for russian words
@@ -29,4 +27,4 @@ const debounce = (callback, timeoutDelay) => {
 };
 
 //export {getRandomInteger, getRandomArrayElement, getRandomID, isEscapeKey, isEnterKey, pluralize, debounce};
-export {getRandomInteger, isEscapeKey, isEnterKey, pluralize, debounce};
+export {getRandomInteger, isEscapeKey, pluralize, debounce};
