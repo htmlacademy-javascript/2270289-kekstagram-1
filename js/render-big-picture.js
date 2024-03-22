@@ -47,7 +47,7 @@ const createRangeElementsForFragment = () => {
 };
 
 const onClickButtonForLoadNextMessage = () => {
-  const commentDeclension = pluralize(listComments.length, ['комментария', 'комментариев', 'комментариев']); // Для склонения слова
+  const commentDeclension = pluralize(listComments.length, ['комментария', 'комментариев', 'комментариев']);
 
   commentsDownBoundary += COUNT_VIEW_COMMENTS;
   const increaseBoundary = commentsDownBoundary + COUNT_VIEW_COMMENTS;
@@ -61,12 +61,12 @@ const onClickButtonForLoadNextMessage = () => {
 };
 
 const openBigPicture = (picture) => {
-  const commentDeclension = pluralize(picture.comments.length, ['комментария', 'комментариев', 'комментариев']); // Для склонения слова
-
   commentsDownBoundary = 0;
-  commentsUpBoundary = (picture.comments.length <= 5) ? picture.comments.length : COUNT_VIEW_COMMENTS;
   listComments.length = 0; // очищаем содиржимое массива
   picture.comments.forEach((comment) => listComments.push(comment));
+  commentsUpBoundary = (listComments.length <= 5) ? picture.comments.length : COUNT_VIEW_COMMENTS;
+
+  const commentDeclension = pluralize(listComments.length, ['комментария', 'комментариев', 'комментариев']);
 
   bigPicture.src = picture.url;
   bigPictureLikesCount.textContent = picture.likes;
@@ -103,6 +103,5 @@ function onClickButtonForCloseBigPicture() {
   commentsUpBoundary = COUNT_VIEW_COMMENTS;
   commentsDownBoundary = 0;
 }
-
 
 export { openBigPicture };
