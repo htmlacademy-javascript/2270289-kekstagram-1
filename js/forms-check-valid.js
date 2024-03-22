@@ -36,9 +36,9 @@ const checkHashTag = (elements, maxCount, re) => {
       const hashTag = elements[i];
       const isValidItem = re.test(hashTag);
       if (!isValidItem && hashTag.length > 0) { // Добавили возможность, что ХэшТэг, может быть пустым
-        return hashTag.length > 20 ? ErrorCodes.LONG_LENGTH : ErrorCodes.FORMAT; // Добавили обработку большой длины хэштэега
+        return hashTag.length > 20 ? ErrorCodes.LONG_LENGTH : ErrorCodes.FORMAT; // Добавили обработку большой длины ХэшТэга
       }
-      const lowCaseElements = elements.map((element) => element.toLowerCase());
+      const lowCaseElements = elements.map((element) => element.toLowerCase()); // Приводим к одному регистру.
       const uniqElements = new Set(lowCaseElements); // Использование множества для определения уникальности
       if (uniqElements.size !== elements.length) {
         return ErrorCodes.UNIQUE;
@@ -68,7 +68,7 @@ const validateFormUploadFoto = () => {
 };
 
 const getErrorCodeHashTag = (value) => {
-  const hashtags = value.trim().replaceAll(/ +/g, ' ').split(HASHTAG_DIVIDER); // Добавили удаление концевых пробелов, а также удаление лишних прбелов внутри строки
+  const hashtags = value.trim().replaceAll(/ +/g, ' ').split(HASHTAG_DIVIDER); // Добавили удаление концевых пробелов, а также удаление лишних пробелов внутри строки
   return checkHashTag(hashtags, MAX_COUNT_HASHTAG, regularHashTag);
 };
 

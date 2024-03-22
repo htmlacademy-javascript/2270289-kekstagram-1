@@ -28,7 +28,7 @@ const onDocumentClickOnMessageError = (evt) => {
   }
 };
 
-// Функционадьное объявление, для поднятия.
+// Функциональное объявление, для поднятия.
 function restoringStateAfterErrorUpload (element) {
   element.remove();
   document.removeEventListener('keydown',onDocumentKeyDownOnMessageError);

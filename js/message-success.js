@@ -26,7 +26,7 @@ const onDocumentClickOnMessageSuccess = (evt) => {
   }
 };
 
-// Функционадьное объявление, для поднятия.
+// Функциональное объявление, для поднятия.
 function restoringStateAfterSuccessUpload (element) {
   element.remove();
   document.removeEventListener('keydown',onDocumentKeyDownOnMessageSuccess);

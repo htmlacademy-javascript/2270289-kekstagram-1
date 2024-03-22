@@ -51,7 +51,7 @@ const radioButtonDefault = imageFilter.querySelector(`#${RadioButtonIdMap.DEFAUL
 const radioButtonRandom = imageFilter.querySelector(`#${RadioButtonIdMap.RANDOM}`);
 const radioButtonDiscussed = imageFilter.querySelector(`#${RadioButtonIdMap.DISCUSSED}`);
 
-const radioButtonsRemoveClass = () => imageFilterRadioButtons.forEach((radioButton) => radioButton.classList.remove('img-filters__button--active'));
+const removeClassFromRadioButton = () => imageFilterRadioButtons.forEach((radioButton) => radioButton.classList.remove('img-filters__button--active'));
 
 const removeTagWithClass = (removeClass) => {
   const tags = document.querySelectorAll(removeClass);
@@ -63,7 +63,7 @@ const debounceRandomList = debounce(() => renderingPictureUsers(getRandomPicture
 const debounceRatingList = debounce(() => renderingPictureUsers(getPicturesListByRating(pictureList)),RERENDER_DELAY,);
 
 const onClickImageFilterForm = (evt) => {
-  radioButtonsRemoveClass();
+  removeClassFromRadioButton();
   removeTagWithClass('.picture');
   switch (evt.target.id) {
     case RadioButtonIdMap.DEFAULT : {

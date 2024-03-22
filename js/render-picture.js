@@ -1,6 +1,6 @@
 import {openBigPicture} from './render-big-picture.js';
 
-const renderingPictureUsers = (pictureList) => {
+const renderPictureUsers = (pictureList) => {
 
   const picturesUserContainer = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content;
@@ -31,4 +31,4 @@ const renderingPictureUsers = (pictureList) => {
 
 };
 
-export {renderingPictureUsers};
+export {renderPictureUsers};

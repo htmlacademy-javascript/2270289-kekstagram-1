@@ -35,9 +35,9 @@ const openBigPicture = (picture) => {
   bigPictureLikesCount.textContent = picture.likes;
   bigPictureCommentsCount.textContent = picture.comments.length;
 
-  bigPictureCancel.addEventListener('click',closeBigPicture); // обработчик на закратие секции  большой фотграфии при щелчке на кнопке закрытия
-  document.addEventListener('keydown',onDocumentKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
-  const commentDeclension = pluralize(picture.comments.length,['комментария','комментариев','комментариев']); // Для склонение слова в зависимости от количества
+  bigPictureCancel.addEventListener('click',closeBigPicture); // обработчик на закрытие секции большой фотографии, при щелчке на кнопке закрытия
+  document.addEventListener('keydown',onDocumentKeyDown); // обработчик нажатия клавиш на клавиатуре, на document
+  const commentDeclension = pluralize(picture.comments.length,['комментария','комментариев','комментариев']); // Для склонения слова
 
   const loadNextMessage = () => {
     commentsDownBoundary += COUNT_VIEW_COMMENTS;
@@ -67,7 +67,7 @@ const openBigPicture = (picture) => {
     bigPictureSocialCommentsLoader.classList.add('hidden');
   }
 
-  // Функционадьное объявление, для поднятия.
+  // Функциональное объявление, для поднятия.
   function closeBigPicture () {
     bigPictureSection.classList.add('hidden');
     document.body.classList.remove('modal-open');
