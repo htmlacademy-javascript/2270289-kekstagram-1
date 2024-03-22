@@ -1,9 +1,9 @@
 import {isEscapeKey} from './utils.js';
-import {closeFormUploadPhoto} from './forms-upload.js';
+import {onClickButtonForCloseFormUploadPhoto} from './forms-upload.js';
 
 const messageSuccessUploadTemplate = document.querySelector('#success').content;
 
-const closeMessageSuccessUpload = (evt) => {
+const onClickButtonForCloseMessageSuccessUpload = (evt) => {
   const currentElement = evt.target;
   const parentElement = currentElement.parentElement;
   const grandParentElement = parentElement.parentElement;
@@ -41,11 +41,11 @@ const openMessageAboutSuccessUpload = () => {
   containerMessageSuccess.id = 'section-message-success';
   innerBlockMessageSuccess.id = 'inner-block-message-success';
 
-  buttonSuccess.addEventListener('click', closeMessageSuccessUpload);
+  buttonSuccess.addEventListener('click', onClickButtonForCloseMessageSuccessUpload);
   document.addEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
   document.addEventListener('click',onDocumentClickOnMessageSuccess);
 
-  closeFormUploadPhoto();
+  onClickButtonForCloseFormUploadPhoto();
   document.body.append(messageSuccess);
 };
 

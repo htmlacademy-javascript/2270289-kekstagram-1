@@ -1,5 +1,5 @@
 import {isEscapeKey} from './utils.js';
-import {validateFormUploadFoto,clearChangesFromPristine} from './forms-check-valid.js';
+import {validateFormUploadPhoto,clearChangesFromPristine} from './forms-check-valid.js';
 import {addEventOnElementsWrapper, removeEventOnElementsWrapper} from './image-modify.js';
 import {sendData} from './api.js';
 import {openMessageAboutSuccessUpload} from './message-success.js';
@@ -39,7 +39,7 @@ const unblockSubmitButton = () => {
 
 const onUserFormSubmit = (evt) => {
   evt.preventDefault();
-  const isValid = validateFormUploadFoto();
+  const isValid = validateFormUploadPhoto();
   if (isValid) {
     blockSubmitButton();
     sendData(new FormData(evt.target))
@@ -56,7 +56,7 @@ const onDocumentFormKeyDown = (evt) => {
     evt.preventDefault();
     const idElement = String(evt.target.id);
     if (idElement !== 'hashtags' && idElement !== 'comment-field') {
-      closeFormUploadPhoto ();
+      onClickButtonForCloseFormUploadPhoto ();
     }
   }
 };
@@ -64,7 +64,7 @@ const onDocumentFormKeyDown = (evt) => {
 const onChangeInputFile = () => {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  buttonUploadCancel.addEventListener('click',closeFormUploadPhoto);
+  buttonUploadCancel.addEventListener('click',onClickButtonForCloseFormUploadPhoto);
   document.addEventListener('keydown',onDocumentFormKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
 
   const file = inputUploadFile.files[0]; // Выбрали файл(изображение)
@@ -89,10 +89,10 @@ const clearToDefaultValue = () => {
 };
 
 // Функциональное объявление, для поднятия.
-function closeFormUploadPhoto () {
+function onClickButtonForCloseFormUploadPhoto () {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  buttonUploadCancel.removeEventListener('click',closeFormUploadPhoto);
+  buttonUploadCancel.removeEventListener('click',onClickButtonForCloseFormUploadPhoto);
   formUpload.removeEventListener('submit',onUserFormSubmit);
   document.removeEventListener('keydown',onDocumentFormKeyDown);
 
@@ -101,4 +101,4 @@ function closeFormUploadPhoto () {
   removeEventOnElementsWrapper();
 }
 
-export {onChangeInputFile,onDocumentFormKeyDown, closeFormUploadPhoto};
+export {onChangeInputFile,onDocumentFormKeyDown, onClickButtonForCloseFormUploadPhoto};

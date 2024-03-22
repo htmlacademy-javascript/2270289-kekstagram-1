@@ -24,7 +24,7 @@ const openBigPicture = (picture) => {
   const onDocumentKeyDown = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
-      closeBigPicture();
+      onClickButtonForCloseBigPicture();
     }
   };
 
@@ -35,11 +35,11 @@ const openBigPicture = (picture) => {
   bigPictureLikesCount.textContent = picture.likes;
   bigPictureCommentsCount.textContent = picture.comments.length;
 
-  bigPictureCancel.addEventListener('click',closeBigPicture); // обработчик на закрытие секции большой фотографии, при щелчке на кнопке закрытия
+  bigPictureCancel.addEventListener('click',onClickButtonForCloseBigPicture); // обработчик на закрытие секции большой фотографии, при щелчке на кнопке закрытия
   document.addEventListener('keydown',onDocumentKeyDown); // обработчик нажатия клавиш на клавиатуре, на document
   const commentDeclension = pluralize(picture.comments.length,['комментария','комментариев','комментариев']); // Для склонения слова
 
-  const loadNextMessage = () => {
+  const onClickButtonForLoadNextMessage = () => {
     commentsDownBoundary += COUNT_VIEW_COMMENTS;
     const increaseBoundary = commentsDownBoundary + COUNT_VIEW_COMMENTS;
     commentsUpBoundary = increaseBoundary < picture.comments.length ? increaseBoundary : picture.comments.length;
@@ -60,7 +60,7 @@ const openBigPicture = (picture) => {
   bigPictureCommentsCount.textContent = picture.comments.length;
 
   bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplateClone,'img','p',commentsDownBoundary,commentsUpBoundary,picture));
-  bigPictureSocialCommentsLoader.addEventListener('click', loadNextMessage);
+  bigPictureSocialCommentsLoader.addEventListener('click', onClickButtonForLoadNextMessage);
 
   bigPictureSocialCaption.textContent = picture.description;
   if (picture.comments.length <= 5) {
@@ -68,13 +68,13 @@ const openBigPicture = (picture) => {
   }
 
   // Функциональное объявление, для поднятия.
-  function closeBigPicture () {
+  function onClickButtonForCloseBigPicture () {
     bigPictureSection.classList.add('hidden');
     document.body.classList.remove('modal-open');
     bigPictureSocialCommentCount.classList.remove('hidden');
     bigPictureSocialCommentsLoader.classList.remove('hidden');
     document.removeEventListener('keydown',onDocumentKeyDown);
-    bigPictureSocialCommentsLoader.removeEventListener('click',loadNextMessage);
+    bigPictureSocialCommentsLoader.removeEventListener('click',onClickButtonForLoadNextMessage);
     bigPictureSocialCommentsLoader.classList.remove('hidden');
     commentsUpBoundary = COUNT_VIEW_COMMENTS;
     commentsDownBoundary = 0;

@@ -62,7 +62,7 @@ const pristine = new Pristine(formUpload,{
   errorTextClass: 'form__error' // Класс для элемента с текстом ошибки
 });
 
-const validateFormUploadFoto = () => {
+const validateFormUploadPhoto = () => {
   currentErrorCode = ErrorCodes.VALID;
   return pristine.validate();
 };
@@ -101,4 +101,4 @@ pristine.addValidator(
 
 const clearChangesFromPristine = () => pristine.reset();
 
-export {validateFormUploadFoto,clearChangesFromPristine};
+export {validateFormUploadPhoto as validateFormUploadPhoto,clearChangesFromPristine};
