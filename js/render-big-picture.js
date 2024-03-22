@@ -66,7 +66,7 @@ const openBigPicture = (picture) => {
     bigPictureSocialCommentsLoader.classList.add('hidden');
   }
 
-  // Функционадьное объявление, для поднятия.
+  // Функционадьное объявление , для поднятия.
   function closeBigPicture () {
     bigPictureSection.classList.add('hidden');
     document.body.classList.remove('modal-open');
