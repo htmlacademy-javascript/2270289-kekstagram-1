@@ -1,12 +1,9 @@
-import {renderingPictureUsers} from './render-picture.js';
+import {renderPictureUsers} from './render-picture.js';
 import {getPublicationsEnrollment} from './data.js';
 import {getRandomInteger,debounce} from './utils.js';
 
-const imageFilter = document.querySelector('.img-filters');
-const imageFilterForm = imageFilter.querySelector('form');
-const imageFilterRadioButtons = imageFilter.querySelectorAll('.img-filters__button');
-
 const RERENDER_DELAY = 500;
+const COUNT_RANDOM_PICTURE = 10;
 
 const RadioButtonIdMap = {
   DEFAULT : 'filter-default',
@@ -14,8 +11,11 @@ const RadioButtonIdMap = {
   DISCUSSED : 'filter-discussed'
 };
 
+const imageFilter = document.querySelector('.img-filters');
+const imageFilterForm = imageFilter.querySelector('form');
+const imageFilterRadioButtons = imageFilter.querySelectorAll('.img-filters__button');
+
 let pictureList;
-const COUNT_RANDOM_PICTURE = 10;
 
 const getPictureList = (miniatures) => {
   pictureList = getPublicationsEnrollment(miniatures);
@@ -51,19 +51,19 @@ const radioButtonDefault = imageFilter.querySelector(`#${RadioButtonIdMap.DEFAUL
 const radioButtonRandom = imageFilter.querySelector(`#${RadioButtonIdMap.RANDOM}`);
 const radioButtonDiscussed = imageFilter.querySelector(`#${RadioButtonIdMap.DISCUSSED}`);
 
-const radioButtonsRemoveClass = () => imageFilterRadioButtons.forEach((radioButton) => radioButton.classList.remove('img-filters__button--active'));
+const removeClassFromRadioButton = () => imageFilterRadioButtons.forEach((radioButton) => radioButton.classList.remove('img-filters__button--active'));
 
 const removeTagWithClass = (removeClass) => {
   const tags = document.querySelectorAll(removeClass);
   tags.forEach((tag) => tag.parentNode.removeChild(tag));
 };
 
-const debounceDefaultList = debounce(() => renderingPictureUsers(pictureList),RERENDER_DELAY,);
-const debounceRandomList = debounce(() => renderingPictureUsers(getRandomPicturesFromList(pictureList)),RERENDER_DELAY,);
-const debounceRatingList = debounce(() => renderingPictureUsers(getPicturesListByRating(pictureList)),RERENDER_DELAY,);
+const debounceDefaultList = debounce(() => renderPictureUsers(pictureList),RERENDER_DELAY,);
+const debounceRandomList = debounce(() => renderPictureUsers(getRandomPicturesFromList(pictureList)),RERENDER_DELAY,);
+const debounceRatingList = debounce(() => renderPictureUsers(getPicturesListByRating(pictureList)),RERENDER_DELAY,);
 
 const onClickImageFilterForm = (evt) => {
-  radioButtonsRemoveClass();
+  removeClassFromRadioButton();
   removeTagWithClass('.picture');
   switch (evt.target.id) {
     case RadioButtonIdMap.DEFAULT : {
@@ -85,7 +85,7 @@ const onClickImageFilterForm = (evt) => {
 };
 
 const showImageFilter = () => {
-  renderingPictureUsers(pictureList);
+  renderPictureUsers(pictureList);
   imageFilter.classList.remove('img-filters--inactive');
   imageFilterForm.addEventListener('click',onClickImageFilterForm);
 };

@@ -8,11 +8,11 @@ const createUserPublication = (idPhoto,urlPhoto,descriptionPhoto,likesPhoto,comm
 });
 
 const getPublicationsEnrollment = (miniatures) => {
-  const enrollment = [];
+  const enrollments = [];
   miniatures.forEach(({id,url,description,likes,comments}) => {
-    enrollment.push(createUserPublication(id,url,description,likes,comments));
+    enrollments.push(createUserPublication(id,url,description,likes,comments));
   });
-  return enrollment;
+  return enrollments;
 };
 
 export {getPublicationsEnrollment};

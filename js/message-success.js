@@ -1,33 +1,33 @@
 import {isEscapeKey} from './utils.js';
-import {closeFormUploadPhoto} from './forms-upload.js';
+import {onClickButtonForCloseFormUploadPhoto} from './forms-upload.js';
 
 const messageSuccessUploadTemplate = document.querySelector('#success').content;
 
-const closeMessageSuccessUpload = (evt) => {
+const onClickButtonForCloseMessageSuccessUpload = (evt) => {
   const currentElement = evt.target;
   const parentElement = currentElement.parentElement;
   const grandParentElement = parentElement.parentElement;
-  restoringStateAfterSuccessUpload (grandParentElement);
+  restoreStateAfterSuccessUpload (grandParentElement);
 };
 
 const onDocumentKeyDownOnMessageSuccess = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     const sectionMessageSuccess = document.body.querySelector('#section-message-success');
-    restoringStateAfterSuccessUpload (sectionMessageSuccess);
+    restoreStateAfterSuccessUpload (sectionMessageSuccess);
   }
 };
 
 const onDocumentClickOnMessageSuccess = (evt) => {
   const sectionMessageSuccess = document.body.querySelector('#section-message-success');
   const innerBlock = sectionMessageSuccess.querySelector('.success__inner');
-  if (evt.target.id !== innerBlock.id) {
-    restoringStateAfterSuccessUpload (sectionMessageSuccess);
+  if (evt.target.id !== innerBlock.id && evt.target.nodeName !== 'H2') {
+    restoreStateAfterSuccessUpload (sectionMessageSuccess);
   }
 };
 
-// Функционадьное объявление, для поднятия.
-function restoringStateAfterSuccessUpload (element) {
+// Функциональное объявление, для поднятия.
+function restoreStateAfterSuccessUpload (element) {
   element.remove();
   document.removeEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
   document.removeEventListener('click',onDocumentClickOnMessageSuccess);
@@ -41,11 +41,11 @@ const openMessageAboutSuccessUpload = () => {
   containerMessageSuccess.id = 'section-message-success';
   innerBlockMessageSuccess.id = 'inner-block-message-success';
 
-  buttonSuccess.addEventListener('click', closeMessageSuccessUpload);
+  buttonSuccess.addEventListener('click', onClickButtonForCloseMessageSuccessUpload);
   document.addEventListener('keydown',onDocumentKeyDownOnMessageSuccess);
   document.addEventListener('click',onDocumentClickOnMessageSuccess);
 
-  closeFormUploadPhoto();
+  onClickButtonForCloseFormUploadPhoto();
   document.body.append(messageSuccess);
 };
 

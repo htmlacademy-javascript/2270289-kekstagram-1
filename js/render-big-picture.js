@@ -1,5 +1,6 @@
-import {isEscapeKey,pluralize} from './utils.js';
-import {createRangeElementsForFragment} from './render-comments.js';
+import { isEscapeKey, pluralize } from './utils.js';
+
+const COUNT_VIEW_COMMENTS = 5;
 
 const bigPictureSection = document.querySelector('.big-picture');
 const bigPictureDiv = bigPictureSection.querySelector('.big-picture__img');
@@ -15,69 +16,92 @@ const bigPictureSocialComments = bigPictureSection.querySelector('.social__comme
 const pictureCommentTemplate = bigPictureSocialComments.querySelector('.social__comment');
 const pictureCommentTemplateClone = pictureCommentTemplate.cloneNode(true);
 
-const COUNT_VIEW_COMMENTS = 5;
 let commentsUpBoundary = COUNT_VIEW_COMMENTS;
 let commentsDownBoundary = 0;
+const listComments = [];
+
+const onDocumentKeyDown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    onClickButtonForCloseBigPicture();
+  }
+};
+
+const createRangeElementsForFragment = () => {
+  const commentsFragment = document.createDocumentFragment();
+
+  for (let i = commentsDownBoundary; i < commentsUpBoundary; i++) {
+    const comment = pictureCommentTemplateClone.cloneNode(true);
+    const commentImage = comment.querySelector('img');
+    const commentText = comment.querySelector('p');
+
+    commentImage.src = listComments[i].avatar;
+    commentImage.width = 35;
+    commentImage.height = 35;
+    commentImage.alt = listComments[i].name;
+    commentText.textContent = listComments[i].message;
+
+    commentsFragment.appendChild(comment);
+  }
+  return commentsFragment;
+};
+
+const onClickButtonForLoadNextMessage = () => {
+  const commentDeclension = pluralize(listComments.length, ['комментария', 'комментариев', 'комментариев']);
+
+  commentsDownBoundary += COUNT_VIEW_COMMENTS;
+  const increaseBoundary = commentsDownBoundary + COUNT_VIEW_COMMENTS;
+  commentsUpBoundary = increaseBoundary < listComments.length ? increaseBoundary : listComments.length;
+
+  bigPictureSocialComments.appendChild(createRangeElementsForFragment());
+  bigPictureSocialCommentCount.innerHTML = `${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML} ${commentDeclension}`; // Использую innerHTML, вместо textContent, для того чтобы внутри элемента сохранить тэг span, который был в изначальной разметке.
+  if (commentsUpBoundary === listComments.length) {
+    bigPictureSocialCommentsLoader.classList.add('hidden');
+  }
+};
 
 const openBigPicture = (picture) => {
-  const onDocumentKeyDown = (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      closeBigPicture();
-    }
-  };
+  commentsDownBoundary = 0;
+  listComments.length = 0; // очищаем содержимое массива
+  picture.comments.forEach((comment) => listComments.push(comment));
+  commentsUpBoundary = (listComments.length <= 5) ? picture.comments.length : COUNT_VIEW_COMMENTS;
 
-  bigPictureSection.classList.remove('hidden'); // показываем секцию большой фотографии
-  document.body.classList.add('modal-open');
+  const commentDeclension = pluralize(listComments.length, ['комментария', 'комментариев', 'комментариев']);
 
   bigPicture.src = picture.url;
   bigPictureLikesCount.textContent = picture.likes;
   bigPictureCommentsCount.textContent = picture.comments.length;
+  bigPictureSocialCaption.textContent = picture.description;
 
-  bigPictureCancel.addEventListener('click',closeBigPicture); // обработчик на закратие секции  большой фотграфии при щелчке на кнопке закрытия
-  document.addEventListener('keydown',onDocumentKeyDown); // обработчик нажатие клавиш на клавиатуре, на document
-  const commentDeclension = pluralize(picture.comments.length,['комментария','комментариев','комментариев']); // Для склонение слова в зависимости от количества
-
-  const loadNextMessage = () => {
-    commentsDownBoundary += COUNT_VIEW_COMMENTS;
-    const increaseBoundary = commentsDownBoundary + COUNT_VIEW_COMMENTS;
-    commentsUpBoundary = increaseBoundary < picture.comments.length ? increaseBoundary : picture.comments.length;
-
-    bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplateClone,'img','p',commentsDownBoundary,commentsUpBoundary,picture));
-    bigPictureSocialCommentCount.innerHTML = `${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML} ${commentDeclension}`; // Использую innerHTML, вместо textContent, для того чтобы внутри элемента сохранить тэг span, который был в изначальной разметке.
-    if (commentsUpBoundary === picture.comments.length) {
-      bigPictureSocialCommentsLoader.classList.add('hidden');
-    }
-  };
-
+  bigPictureSection.classList.remove('hidden'); // показываем секцию большой фотографии
+  document.body.classList.add('modal-open');
   if (picture.comments.length <= 5) {
-    commentsUpBoundary = picture.comments.length;
+    bigPictureSocialCommentsLoader.classList.add('hidden');
   }
+
+  bigPictureCancel.addEventListener('click', onClickButtonForCloseBigPicture); // обработчик на закрытие секции большой фотографии, при щелчке на кнопке закрытия
+  document.addEventListener('keydown', onDocumentKeyDown); // обработчик нажатия клавиш на клавиатуре, на document
 
   bigPictureSocialComments.innerHTML = '';
   bigPictureSocialCommentCount.innerHTML = `${commentsUpBoundary} из ${bigPictureCommentsCount.outerHTML} ${commentDeclension}`;
   bigPictureCommentsCount.textContent = picture.comments.length;
 
-  bigPictureSocialComments.appendChild(createRangeElementsForFragment(pictureCommentTemplateClone,'img','p',commentsDownBoundary,commentsUpBoundary,picture));
-  bigPictureSocialCommentsLoader.addEventListener('click', loadNextMessage);
+  bigPictureSocialComments.appendChild(createRangeElementsForFragment());
 
-  bigPictureSocialCaption.textContent = picture.description;
-  if (picture.comments.length <= 5) {
-    bigPictureSocialCommentsLoader.classList.add('hidden');
-  }
-
-  // Функционадьное объявление, для поднятия.
-  function closeBigPicture () {
-    bigPictureSection.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-    bigPictureSocialCommentCount.classList.remove('hidden');
-    bigPictureSocialCommentsLoader.classList.remove('hidden');
-    document.removeEventListener('keydown',onDocumentKeyDown);
-    bigPictureSocialCommentsLoader.removeEventListener('click',loadNextMessage);
-    bigPictureSocialCommentsLoader.classList.remove('hidden');
-    commentsUpBoundary = COUNT_VIEW_COMMENTS;
-    commentsDownBoundary = 0;
-  }
+  bigPictureSocialCommentsLoader.addEventListener('click', onClickButtonForLoadNextMessage);
 };
 
-export {openBigPicture};
+// Функциональное объявление, для поднятия.
+function onClickButtonForCloseBigPicture() {
+  bigPictureSection.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  bigPictureSocialCommentCount.classList.remove('hidden');
+  bigPictureSocialCommentsLoader.classList.remove('hidden');
+  document.removeEventListener('keydown', onDocumentKeyDown);
+  bigPictureSocialCommentsLoader.removeEventListener('click', onClickButtonForLoadNextMessage);
+  bigPictureSocialCommentsLoader.classList.remove('hidden');
+  commentsUpBoundary = COUNT_VIEW_COMMENTS;
+  commentsDownBoundary = 0;
+}
+
+export { openBigPicture };
