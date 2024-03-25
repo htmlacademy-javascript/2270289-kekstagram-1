@@ -59,6 +59,13 @@ const updateEffectOnImage = () => {
   imagePreview.style.filter = newFilter;
 };
 
+/**
+ * Функция для установки значений слайдеру.
+ * @param  {Integer} minValue минимальная граница диапазона
+ * @param  {Integer} maxValue максимальная граница диапазона
+ * @param  {float} stepValue шаг
+ * @param  {Integer} currentValue начальное значение
+ */
 const setSliderValue = (minValue,maxValue,stepValue,currentValue) => {
   slider.noUiSlider.updateOptions({
     range : {
