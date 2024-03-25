@@ -64,7 +64,7 @@ const openBigPicture = (picture) => {
   commentsDownBoundary = 0;
   listComments.length = 0; // очищаем содержимое массива
   picture.comments.forEach((comment) => listComments.push(comment));
-  commentsUpBoundary = (listComments.length <= 5) ? picture.comments.length : COUNT_VIEW_COMMENTS;
+  commentsUpBoundary = (listComments.length <= COUNT_VIEW_COMMENTS) ? picture.comments.length : COUNT_VIEW_COMMENTS;
 
   const commentDeclension = pluralize(listComments.length, ['комментария', 'комментариев', 'комментариев']);
 
@@ -75,7 +75,7 @@ const openBigPicture = (picture) => {
 
   bigPictureSection.classList.remove('hidden'); // показываем секцию большой фотографии
   document.body.classList.add('modal-open');
-  if (picture.comments.length <= 5) {
+  if (picture.comments.length <= COUNT_VIEW_COMMENTS) {
     bigPictureSocialCommentsLoader.classList.add('hidden');
   }
 

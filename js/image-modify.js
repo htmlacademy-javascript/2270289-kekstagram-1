@@ -1,3 +1,7 @@
+const MIN_VALUE_SCALE = 25;
+const MAX_VALUE_SCALE = 100;
+const STEP_VALUE_SCALE = 25;
+
 const EffectToIdMap = {
   NONE : 'effect-none',
   CHROME: 'effect-chrome',
@@ -137,17 +141,17 @@ const onChangeScaleControlValue = () => {
 };
 
 const onClickButtonScaleControlSmaller = () => {
-  if (inputScaleControlValue.value > 25 && inputScaleControlValue.value <= 100) {
+  if (inputScaleControlValue.value > MIN_VALUE_SCALE && inputScaleControlValue.value <= MAX_VALUE_SCALE) {
     const rangeValue = parseInt(inputScaleControlValue.value, 10);
-    inputScaleControlValue.value = rangeValue - 25;
+    inputScaleControlValue.value = rangeValue - STEP_VALUE_SCALE;
     onChangeScaleControlValue();
   }
 };
 
 const onClickButtonScaleControlBigger = () => {
-  if (inputScaleControlValue.value < 100 && inputScaleControlValue.value >= 25) {
+  if (inputScaleControlValue.value < MAX_VALUE_SCALE && inputScaleControlValue.value >= MIN_VALUE_SCALE) {
     const rangeValue = parseInt(inputScaleControlValue.value, 10);
-    inputScaleControlValue.value = rangeValue + 25;
+    inputScaleControlValue.value = rangeValue + STEP_VALUE_SCALE;
     onChangeScaleControlValue();
   }
 };
