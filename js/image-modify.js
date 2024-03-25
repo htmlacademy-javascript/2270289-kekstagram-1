@@ -59,6 +59,17 @@ const updateEffectOnImage = () => {
   imagePreview.style.filter = newFilter;
 };
 
+const setSliderValue = (minValue,maxValue,stepValue,currentValue) => {
+  slider.noUiSlider.updateOptions({
+    range : {
+      min : minValue,
+      max : maxValue,
+    },
+    step : stepValue,
+  });
+  slider.noUiSlider.set(currentValue);
+};
+
 const onClickListEffects = (evt) => {
   imagePreview.className = '';
   imagePreview.style.removeProperty('filter');
@@ -66,70 +77,29 @@ const onClickListEffects = (evt) => {
   fieldSetForUiSlider.classList.remove('hidden');
 
   switch (evt.target.id) {
-    case EffectToIdMap.NONE : {
+    case EffectToIdMap.NONE : { // CSS-стили filter удаляются.;  слайдер и его контейнер (элемент .img-upload__effect-level) скрываются.
       imagePreview.className = '';
-      // CSS-стили filter удаляются.;  слайдер и его контейнер (элемент .img-upload__effect-level) скрываются.
       fieldSetForUiSlider.classList.add('hidden');
     }
       break;
-    case EffectToIdMap.CHROME : {
-      // filter: grayscale(0..1) с шагом 0.1;
-      slider.noUiSlider.updateOptions({
-        range : {
-          min : 0,
-          max : 1,
-        },
-        step : 0.1,
-      });
-      slider.noUiSlider.set(1);
+    case EffectToIdMap.CHROME : { // filter: grayscale(0..1) с шагом 0.1;
+      setSliderValue(0,1,0.1,1);
     }
       break;
-    case EffectToIdMap.SEPIA : {
-      // filter: sepia(0..1) с шагом 0.1;
-      slider.noUiSlider.updateOptions({
-        range : {
-          min : 0,
-          max : 1,
-        },
-        step : 0.1,
-      });
-      slider.noUiSlider.set(1);
+    case EffectToIdMap.SEPIA : { // filter: sepia(0..1) с шагом 0.1;
+      setSliderValue(0,1,0.1,1);
     }
       break;
-    case EffectToIdMap.MARVIN : {
-      // filter: invert(0..100%) с шагом 1%;
-      slider.noUiSlider.updateOptions({
-        range : {
-          min : 0,
-          max : 100,
-        },
-        step : 1,
-      });
-      slider.noUiSlider.set(100);
+    case EffectToIdMap.MARVIN : { // filter: invert(0..100%) с шагом 1%;
+      setSliderValue(0,100,1,100);
     }
       break;
-    case EffectToIdMap.PHOBOS : {
-      // filter: blur(0..3px) с шагом 0.1px;
-      slider.noUiSlider.updateOptions({
-        range : {
-          min : 0,
-          max : 3,
-        },
-        step : 0.1,
-      });
-      slider.noUiSlider.set(3);
+    case EffectToIdMap.PHOBOS : { // filter: blur(0..3px) с шагом 0.1px;
+      setSliderValue(0,3,0.1,3);
     }
       break;
-    case EffectToIdMap.HEAT : {
-      // filter: brightness(1..3) с шагом 0.1;
-      slider.noUiSlider.updateOptions({
-        range : {
-          min : 1,
-          max : 3,
-        },
-        step : 0.1,
-      });
-      slider.noUiSlider.set(3);
+    case EffectToIdMap.HEAT : { // filter: brightness(1..3) с шагом 0.1;
+      setSliderValue(1,3,0.1,3);
     }
       break;
   }

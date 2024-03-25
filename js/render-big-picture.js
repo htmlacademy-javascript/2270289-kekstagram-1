@@ -16,9 +16,10 @@ const bigPictureSocialComments = bigPictureSection.querySelector('.social__comme
 const pictureCommentTemplate = bigPictureSocialComments.querySelector('.social__comment');
 const pictureCommentTemplateClone = pictureCommentTemplate.cloneNode(true);
 
+const listComments = [];
 let commentsUpBoundary = COUNT_VIEW_COMMENTS;
 let commentsDownBoundary = 0;
-const listComments = [];
+
 
 const onDocumentKeyDown = (evt) => {
   if (isEscapeKey(evt)) {

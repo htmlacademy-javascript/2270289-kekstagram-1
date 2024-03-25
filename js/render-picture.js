@@ -31,7 +31,7 @@ const renderPictureUsers = (pictureList) => {
   picturesUserContainer.appendChild(pictureUserFragment);
 
   // При переключении фильтра фотографий, происходит добавление обработчика по клику на секцию фотографий.
-  // Проверим, есть ли обработчик, и если есть то, просто не добавляем его
+  // Проверим, есть ли обработчик, и если есть, то просто не добавляем его
   if (!isEventExist) {
     picturesUserContainer.addEventListener('click',onClickPicture); // добавим обработку по клику на секцию фотографий
     isEventExist = true;
