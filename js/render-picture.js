@@ -1,5 +1,7 @@
 import {openBigPicture} from './render-big-picture.js';
 
+let isEventExist = false; // Для определения, повешено ли уже событие
+
 const renderPictureUsers = (pictureList) => {
 
   const picturesUserContainer = document.querySelector('.pictures');
@@ -27,7 +29,13 @@ const renderPictureUsers = (pictureList) => {
   };
 
   picturesUserContainer.appendChild(pictureUserFragment);
-  picturesUserContainer.addEventListener('click',onClickPicture); // добавим обработку по клику на секцию фотографий
+
+  // При переключении фильтра фотографий, происходит добавление обработчика по клику на секцию фотографий.
+  // Проверим, есть ли обработчик, и если есть, то просто не добавляем его
+  if (!isEventExist) {
+    picturesUserContainer.addEventListener('click',onClickPicture); // добавим обработку по клику на секцию фотографий
+    isEventExist = true;
+  }
 
 };
 
